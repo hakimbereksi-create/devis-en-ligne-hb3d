@@ -1,0 +1,25 @@
+#tip {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: "Monospace";
+    opacity: 0.8;
+}
+
+#loading {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    opacity: 0.8;
+}
+
+textarea {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}

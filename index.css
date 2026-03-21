@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<strong>HB3D analyse volume calculateur STL</strong>
+<head>
+        <meta charset="utf-8">
+        <title>STL 3D Viewer</title>
+    <style type="text/css">
+    #div .row .col-md-4 .list-group.container-fluid #form #submit {
+	font-size: 9px;
+	color: #FFF;
+}
+    body,td,th {
+	font-size: 18px;
+}
+    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+        <!-- Main div -->
+        <div id="div" class="container">
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div id="stlselector" class="bg-warning">
+                    
+                        <label for="file"><b>Votre fichier STL:</b></label>
+                        <input type="file" name="file" id="file"/>
+                    </div>
+
+                    <div id="view3d">
+                        <!-- HTML5 Canvas -->
+                        <canvas id="cv" width="400" height="400"></canvas>
+
+                        <!-- Rotate and Zoom Tip -->
+                        <div class="panel panel-info" id="tip">
+                            <table class="table">
+                                <tr><td>
+                                    Zoom </td> <td><kbd>Wheel</kbd>
+                                    </td></tr>
+                                <tr><td>
+                                    Rotate </td> <td><kbd>Drag</kbd> 
+                                    </td></tr>
+                                <tr><td>
+                                    Pan </td> <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd>
+                                    </td></tr>
+                            </table>
+                        </div>
+                        
+                        <div id="loading">
+                            <img src="../dist/css/images/loading.gif" alt="Turning the crank ..."/>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Render type selection menu -->
+                    <table class="table">
+                        <tr><td>
+                            <button class="btn btn-default btn-xs pull-left" id="info">
+                                <span class="glyphicon glyphicon-info-sign"></span> Interact
+                            </button>
+                            </td>
+                            <td>
+                                <div class="btn-group dropup pull-right">
+                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-eye-open"></span> View <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#wireframe" class="rendermode">Wireframe</a></li>
+                                        <li><a href="#point" class="rendermode">Points</a></li>
+                                        <li><a href="#flat" class="rendermode">Filled</a></li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Customizer -->
+                    <div class="list-group container-fluid">
+
+                        <form id="form">
+
+         <!-- Material -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Materiau Plastique ABS</h4>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material1" value="ABS"> ABS
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material2" value="PLA"> PLA
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material3" value="NYLON"> NYLON
+                              </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material3" value="PETG"> PETG
+                              </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material4" value="Flex"> Flex
+                                </label>
+                            </div>
+                            <!-- Color -->
+                          <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Color</h4>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color2" value="Black"> Noir
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color3" value="Grey"> Gris
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color4" value="RED"> Rouge
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color5" value="GREEN"> vert
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color6" value="BLUE"> 
+                                    Bleu
+                                </label>
+    </div>
+                                <!-- Material -->
+                            <div class="list-group-item">
+                            <h4 class="list-group-item-heading">Materiau Résine</h4>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material4" value="Résine Standad"> Résine standard
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material5" value="Flex"> Flexible 
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material6" value="Clear"> Translucide
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="materialOptions" id="material7" value="Castable">Calcinable
+                                </label>
+           
+                            </div>
+                            <!-- Color -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Color</h4>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="Black"> Noir
+                                </label>
+                                 <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="Grey"> Gris
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color1" value="RED"> Rouge
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color2" value="GREEN"> vert
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="colorOptions" id="color3" value="BLUE"> 
+                                    Bleu
+                                </label>
+                                
+                          
+                            </div>
+                            <!-- Quantity -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Quantity</h4>
+                                <div class="input-group">
+                                    <input name="qty" type="number" class="form-control" min="1" placeholder="1">
+                                </div>
+                            </div>
+                            <!-- Note -->
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">Prcisez votre demande</h4>
+                                <div class="input-group">
+                                    <textarea name="note" form="form" class="form-control" rows="3" maxlength="200"></textarea>
+                                </div>
+                            </div>
+                            <!-- Email -->
+                            <div class="list-group-item list-group-item-info">
+                                <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-envelope"></span> Votre mail:</h4>
+                                <div class="input-group">
+                                    <input name="email" type="email" class="form-control" maxlength="100" placeholder="user@example.com">
+                                </div>
+                            </div>
+
+                            <p>
+                            <!--Submit-->
+                            </span></p>
+                            <span class="list-group" id="form">
+                            <button id="submit" type="button" class="btn btn-primary btn-block list-group-item">
+                            <h4 class=p><strong>Obtenir un devis</strong></p>
+                            </button>
+                            </span>
+                        </form>
+                        
+<FORM>
+<INPUT TYPE="submit" NAME="nom" VALUE="envoyer">
+</FORM>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- END Main div -->
+
+
+        <!-- 
+CSS and Javascript library definitions.
+-->
+        <link rel="stylesheet" href="../dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../dist/css/style.css">
+
+        <script type="text/javascript" src="../dist/js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="../dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../dist/js/jsc3d_mod.js"></script>
+        <script type="text/javascript" src="../dist/js/jsc3d.console.js"></script>
+
+        <!-- JSC3D based code for 3D rendering -->
+        <script type="text/javascript" src="../dist/js/object_viewer.js"></script>
+        <!-- Upload handler -->
+        <script type="text/javascript" src="../dist/js/upload_handler.js"></script>
+
+    </body>
+</html>
