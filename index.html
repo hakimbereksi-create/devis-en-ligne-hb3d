@@ -1,217 +1,479 @@
-<!doctype html>
-<html lang="en">
-<strong>HB3D analyse volume calculateur STL</strong>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-        <meta charset="utf-8">
-        <title>STL 3D Viewer</title>
-    </head>
-    <body>
+  <meta charset="UTF-8" />
+  <title>HB3D - Calculateur de volume en ligne</title>
 
-        <!-- Main div -->
-        <div id="div" class="container">
+  <!-- Orbitron (Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <!-- Space Age (CDNFonts) -->
+  <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
 
-            <div class="row">
+  <style>
+    /* Aligner les boutons en bas de chaque volet */
+.top-columns .panel {
+  display: flex;
+  flex-direction: column;
+}
 
-                <div class="col-md-4">
+.top-columns .panel > *:last-child {
+  margin-top: auto;  /* pousse le bouton vers le bas du volet */
+}
+.btn {
+  display: inline-block;
+  background: #e11d48;          /* rouge HB3D */
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  width: 100%;                  /* même largeur dans chaque volet */
+  border-radius: 0;             /* tuiles rectangulaires */
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 16px;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
 
-                    <div id="stlselector" class="bg-warning">
-                    
-                        <label for="file"><b>Votre fichier STL:</b></label>
-                        <input type="file" name="file" id="file"/>
-                    </div>
+.btn.secondary {
+  background: #e11d48;          /* même rouge pour tous */
+}
 
-                    <div id="view3d">
-                        <!-- HTML5 Canvas -->
-                        <canvas id="cv" width="400" height="400"></canvas>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-                        <!-- Rotate and Zoom Tip -->
-                        <div class="panel panel-info" id="tip">
-                            <table class="table">
-                                <tr><td>
-                                    Zoom </td> <td><kbd>Wheel</kbd>
-                                    </td></tr>
-                                <tr><td>
-                                    Rotate </td> <td><kbd>Drag</kbd> 
-                                    </td></tr>
-                                <tr><td>
-                                    Pan </td> <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd>
-                                    </td></tr>
-                            </table>
-                        </div>
-                        
-                        <div id="loading">
-                            <img src="css/images/loading.gif" alt="Turning the crank ..."/>
-                        </div>
+    body {
+      background: #f4f5fb;
+      color: #111827;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-                    </div>
+    header {
+      background: #ffffff;
+      color: #111827;
+      padding: 18px 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
 
+    footer {
+      background: #ffffff;
+      color: #111827;
+      padding: 12px 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 24px;
+      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
 
-                    <!-- Render type selection menu -->
-                    <table class="table">
-                        <tr><td>
-                            <button class="btn btn-default btn-xs pull-left" id="info">
-                                <span class="glyphicon glyphicon-info-sign"></span> Interact
-                            </button>
-                            </td>
-                            <td>
-                                <div class="btn-group dropup pull-right">
-                                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-                                        <span class="glyphicon glyphicon-eye-open"></span> View <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#wireframe" class="rendermode">Wireframe</a></li>
-                                        <li><a href="#point" class="rendermode">Points</a></li>
-                                        <li><a href="#flat" class="rendermode">Filled</a></li>
-                                    </ul>
-                                </div>
+    header .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-                            </td>
-                        </tr>
-                    </table>
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
 
-                </div>
+    .logo {
+      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.16em;
+      color: #e11d48;
+    }
 
-                <div class="col-md-4">
-                    <!-- Customizer -->
-                    <div class="list-group container-fluid">
+    .steps-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 1400px;
+      margin: 0 auto;
+      margin-top: 4px;
+      column-gap: 20px;
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+    }
 
-                        <form id="form">
+    .step-item {
+      text-align: center;
+    }
 
-         <!-- Material -->
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Materiau Plastique ABS</h4>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material1" value="ABS"> ABS
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material2" value="PLA"> PLA
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material3" value="NYLON"> NYLON
-                              </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material3" value="PETG"> PETG
-                              </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material4" value="Flex"> Flex
-                                </label>
-                            </div>
-                            <!-- Color -->
-                          <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Color</h4>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
-                                </label>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color2" value="Black"> Noir
-                                </label>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color3" value="Grey"> Gris
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color4" value="RED"> Rouge
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color5" value="GREEN"> vert
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color6" value="BLUE"> 
-                                    Bleu
-                                </label>
-    </div>
-                                <!-- Material -->
-                            <div class="list-group-item">
-                            <h4 class="list-group-item-heading">Materiau Résine</h4>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material4" value="Résine Standad"> Résine standard
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material5" value="Flex"> Flexible 
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material6" value="Clear"> Translucide
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="materialOptions" id="material7" value="Castable">Calcinable
-                                </label>
-           
-                            </div>
-                            <!-- Color -->
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Color</h4>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color1" value="WhiteD"> Blanc
-                                </label>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color1" value="Black"> Noir
-                                </label>
-                                 <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color1" value="Grey"> Gris
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color1" value="RED"> Rouge
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color2" value="GREEN"> vert
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="colorOptions" id="color3" value="BLUE"> 
-                                    Bleu
-                                </label>
-                                
-                          
-                            </div>
-                            <!-- Quantity -->
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Quantity</h4>
-                                <div class="input-group">
-                                    <input name="qty" type="number" class="form-control" min="1" placeholder="1">
-                                </div>
-                            </div>
-                            <!-- Note -->
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">Prcisez votre demande</h4>
-                                <div class="input-group">
-                                    <textarea name="note" form="form" class="form-control" rows="3" maxlength="200"></textarea>
-                                </div>
-                            </div>
-                            <!-- Email -->
-                            <div class="list-group-item list-group-item-info">
-                                <h4 class="list-group-item-heading"><span class="glyphicon glyphicon-envelope"></span> Votre mail:</h4>
-                                <div class="input-group">
-                                    <input name="email" type="email" class="form-control" maxlength="100" placeholder="user@example.com">
-                                </div>
-                            </div>
+    .step-item span.step-number {
+      display: block;
+      font-weight: 600;
+      color: #e11d48;
+      margin-bottom: 2px;
+    }
 
-                            <!--Submit-->
-                            <button id="submit" type="button" class="btn btn-primary btn-block list-group-item"><h3>obtenir un devis <span class="glyphicon glyphicon-cloud-download pull-right"></span></h3></button>
+    .step-item span.step-label {
+      display: block;
+      font-size: 0.78rem;
+    }
 
-                        </form>
+    main {
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-                    </div>
-                </div>
-            </div>
+    .top-columns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
 
+    .panel {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .panel h2 {
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+      color: #111827;
+    }
+
+    .panel h3 {
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 0.8rem;
+      margin: 10px 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4b5563;
+    }
+
+    .upload-zone {
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 16px;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .upload-zone strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .viewer {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: #6b7280;
+      background: #f9fafb;
+    }
+
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #4b5563;
+    }
+
+    select, input[type="number"], input[type="text"], input[type="email"], textarea {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 3px;
+      border-radius: 5px;
+      border: 1px solid #d1d5db;
+      font-size: 0.87rem;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #e11d48, #fb7185);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      font-family: 'Orbitron', system-ui, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .btn.secondary {
+      background: linear-gradient(135deg, #2563eb, #38bdf8);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 6px;
+      margin-bottom: 10px;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 5px 6px;
+      text-align: left;
+    }
+
+    th {
+      background: #f3f4f6;
+      color: #374151;
+    }
+
+    .status-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hb3d-mark {
+      text-align: center;
+      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+    }
+
+    .hb3d-mark .name {
+      font-size: 1.3rem;
+      letter-spacing: 0.18em;
+      color: #e11d48;
+    }
+
+    .hb3d-mark .subtitle {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .circular-upload {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background:
+        conic-gradient(#e11d48 calc(40 * 1%), #e5e7eb 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(225, 29, 72, 0.35);
+    }
+
+    .circular-upload::before {
+      content: "";
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+
+    .circular-upload span {
+      position: relative;
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .upload-text {
+      font-size: 0.82rem;
+      color: #4b5563;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .top-columns {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .steps-bar {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 6px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .top-columns {
+        grid-template-columns: 1fr;
+      }
+      .steps-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-top">
+        <div class="logo">HB3D</div>
+      </div>
+      <div class="steps-bar">
+        <div class="step-item">
+          <span class="step-number">Étape 1</span>
+          <span class="step-label">Téléversez</span>
         </div>
-        <!-- END Main div -->
+        <div class="step-item">
+          <span class="step-number">Étape 2</span>
+          <span class="step-label">Configuration</span>
+        </div>
+        <div class="step-item">
+          <span class="step-number">Étape 3</span>
+          <span class="step-label">Panier & détails</span>
+        </div>
+        <div class="step-item">
+          <span class="step-number">Étape 4</span>
+          <span class="step-label">Upload & envoi</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
+  <main>
+    <section class="top-columns">
+      <!-- VOLET 1 -->
+      <div class="panel">
+        <h2>1. Téléversez votre fichier 3D</h2>
+        <div class="upload-zone">
+          <strong>Zone de dépôt</strong>
+          Glissez-déposez vos fichiers ici<br />
+          ou cliquez pour sélectionner (STL, OBJ, 3MF…)
+        </div>
+        <div class="viewer">
+          Aperçu 3D / Viewer (placeholder)
+        </div>
+      </div>
 
-        <!-- 
-CSS and Javascript library definitions.
--->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/style.css">
+      <!-- VOLET 2 -->
+      <div class="panel">
+        <h2>2. Configuration impression & devis</h2>
 
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/jsc3d_mod.js"></script>
-        <script type="text/javascript" src="js/jsc3d.console.js"></script>
+        <label for="techno">Technologie</label>
+        <select id="techno">
+          <option>FDM</option>
+          <option>SLA</option>
+          <option>SLS</option>
+        </select>
 
-        <!-- JSC3D based code for 3D rendering -->
-        <script type="text/javascript" src="js/object_viewer.js"></script>
-        <!-- Upload handler -->
-        <script type="text/javascript" src="js/upload_handler.js"></script>
+        <label for="materiau">Matériau</label>
+        <select id="materiau">
+          <option>PLA</option>
+          <option>PETG</option>
+          <option>Résine</option>
+        </select>
 
-    </body>
+        <label for="couleur">Couleur</label>
+        <select id="couleur">
+          <option>Blanc</option>
+          <option>Noir</option>
+          <option>Gris</option>
+        </select>
+
+        <label for="quantite">Quantité</label>
+        <input id="quantite" type="number" min="1" value="1" />
+
+        <label for="notes">Précisez votre demande</label>
+        <textarea id="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+
+        <button class="btn" id="btn-devis">Obtenir un devis</button>
+      </div>
+
+      <!-- VOLET 3 -->
+      <div class="panel">
+        <h2>3. Panier & détails personnels</h2>
+
+        <h3>Votre panier</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Fichier</th>
+              <th>Techno</th>
+              <th>Matériau</th>
+              <th>Qté</th>
+              <th>Prix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>piece_v1.stl</td>
+              <td>FDM</td>
+              <td>PLA</td>
+              <td>1</td>
+              <td>12,00 €</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Détails personnels</h3>
+        <label for="nom">Nom / Prénom</label>
+        <input id="nom" type="text" />
+
+        <label for="email">Email</label>
+        <input id="email" type="email" />
+
+        <label for="tel">Téléphone</label>
+        <input id="tel" type="text" />
+
+        <label for="societe">Société (optionnel)</label>
+        <input id="societe" type="text" />
+
+        <button class="btn secondary" id="btn-etape-suivante">Étape suivante</button>
+      </div>
+
+      <!-- VOLET 4 -->
+      <div class="panel">
+        <h2>4. Upload & logo HB3D</h2>
+        <div class="status-panel">
+          <div class="hb3d-mark">
+            <div class="name">HB3D</div>
+            <div class="subtitle">Calculateur de volume en ligne</div>
+          </div>
+
+          <div class="circular-upload">
+            <span>40%</span>
+          </div>
+
+          <div class="upload-text">
+            Upload en cours<br>
+            Fichier 1 / 1
+          </div>
+        </div>
+
+        <button class="btn secondary" id="btn-upload">Upload files</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    HB3D / Calculateur de volume en ligne
+  </footer>
+</body>
 </html>
