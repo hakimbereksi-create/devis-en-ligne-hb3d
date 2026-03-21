@@ -1,4 +1,4 @@
-(function () {
+(function () { 
 	
 	var previewForm = document.getElementById('previewform');
 
