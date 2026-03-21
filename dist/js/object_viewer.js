@@ -6,7 +6,7 @@ $(document).ready(function(){
     viewer.setParameter('InitRotationX', 20);
     viewer.setParameter('InitRotationY', 20);
     viewer.setParameter('InitRotationZ', 0);
-    viewer.setParameter('ModelColor', '#46c427');
+    viewer.setParameter('ModelColor', '#4082b8');
     viewer.setParameter('BackgroundColor1', '#FFFFFF');
     viewer.setParameter('BackgroundColor2', '#FFFFFF');
     viewer.setParameter('RenderMode', 'flat');
