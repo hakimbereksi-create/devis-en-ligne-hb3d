@@ -2,11 +2,11 @@ $(document).ready(function(){
 
     var canvas = document.getElementById('cv');
     var viewer = new JSC3D.Viewer(canvas);
-    viewer.setParameter('SceneUrl', 'http://localhost:8000/models/40mmcube.stl')
+    viewer.setParameter('SceneUrl', 'dist/models/40mmcube.stl');
     viewer.setParameter('InitRotationX', 20);
     viewer.setParameter('InitRotationY', 20);
     viewer.setParameter('InitRotationZ', 0);
-    viewer.setParameter('ModelColor', '#7fca18');
+    viewer.setParameter('ModelColor', '#44689e');
     viewer.setParameter('BackgroundColor1', '#FFFFFF');
     viewer.setParameter('BackgroundColor2', '#FFFFFF');
     viewer.setParameter('RenderMode', 'flat');
