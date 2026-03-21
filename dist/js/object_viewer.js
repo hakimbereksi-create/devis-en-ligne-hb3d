@@ -1,7 +1,12 @@
-$(document).ready(function(){
+// en dehors de toute fonction, on crée une référence globale
+var viewer;
+
+$(document).ready(function() {
 
     var canvas = document.getElementById('cv');
-    var viewer = new JSC3D.Viewer(canvas);
+    // on affecte à la variable globale
+    viewer = new JSC3D.Viewer(canvas);
+
     viewer.setParameter('SceneUrl', 'dist/models/40mmcube.stl');
     viewer.setParameter('InitRotationX', 20);
     viewer.setParameter('InitRotationY', 20);
@@ -17,6 +22,13 @@ $(document).ready(function(){
     var ctx = canvas.getContext('2d');
     ctx.font = '12px Courier New';
     ctx.fillStyle = '#FF0000';
+
+    // ...
+    function loadModelByPath($path) {
+        viewer.enableDefaultInputHandler(true);
+        viewer.replaceSceneFromUrl($path);
+        viewer.update();
+    }
 
 
     //Function Definitions
