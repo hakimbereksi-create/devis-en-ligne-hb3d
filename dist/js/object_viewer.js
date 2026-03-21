@@ -6,12 +6,13 @@ $(document).ready(function(){
     viewer.setParameter('InitRotationX', 20);
     viewer.setParameter('InitRotationY', 20);
     viewer.setParameter('InitRotationZ', 0);
-    viewer.setParameter('ModelColor', '#5c79a5');
+    viewer.setParameter('ModelColor', '#27b93f');
     viewer.setParameter('BackgroundColor1', '#FFFFFF');
     viewer.setParameter('BackgroundColor2', '#FFFFFF');
     viewer.setParameter('RenderMode', 'flat');
     viewer.setParameter('Definition', 'high');
     viewer.init();
+    viewer.update();
 
     var ctx = canvas.getContext('2d');
     ctx.font = '12px Courier New';
