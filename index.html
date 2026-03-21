@@ -429,12 +429,19 @@
           <option>Résine</option>
         </select>
 
-        <label for="couleur">Couleur</label>
-        <select id="couleur">
-          <option>Blanc</option>
-          <option>Noir</option>
-          <option>Gris</option>
-        </select>
+        <label>Couleur</label>
+        <div class="couleurs">
+        <label><input type="radio" name="couleur" value="pla_blanc" checked> Blanc</label>
+        <label><input type="radio" name="couleur" value="pla_noir"> Noir</label>
+        <label><input type="radio" name="couleur" value="pla_gris"> Gris</label>
+        <label><input type="radio" name="couleur" value="pla_rouge"> Rouge</label>
+        <label><input type="radio" name="couleur" value="pla_vert"> Vert</label>
+        <label><input type="radio" name="couleur" value="pla_bleu"> Bleu</label>
+        <label><input type="radio" name="couleur" value="pla_orange"> Orange</label>
+        <label><input type="radio" name="couleur" value="pla_jaune"> Jaune</label>
+        <label><input type="radio" name="couleur" value="pla_purple"> Purple</label>
+      </div>
+
 
         <label for="quantite">Quantité</label>
         <input id="quantite" type="number" min="1" value="1" />
@@ -514,6 +521,43 @@
   <footer>
     HB3D / Calculateur de volume en ligne
   </footer>
-  <!-- test commit propre 1 -->
+  
+  <script>
+  const MATERIAUX = {
+    pla_blanc:  { label: 'PLA Blanc',   color: '#F5F5F5' },
+    pla_noir:   { label: 'PLA Noir',    color: '#222222' },
+    pla_gris:   { label: 'PLA Gris',    color: '#9F9F9F' },
+    pla_rouge:  { label: 'PLA Rouge',   color: '#FF3333' },
+    pla_vert:   { label: 'PLA Vert',    color: '#00B050' },
+    pla_bleu:   { label: 'PLA Bleu',    color: '#3366FF' },
+    pla_orange: { label: 'PLA Orange',  color: '#FF8800' },
+    pla_jaune:  { label: 'PLA Jaune',   color: '#FFD800' },
+    pla_purple: { label: 'PLA Purple',  color: '#800080' }
+  };
+
+  function appliquerCouleurViewer(codeMateriau) {
+    const mat = MATERIAUX[codeMateriau];
+    if (!mat) return;
+    viewer.setParameter('ModelColor', mat.color);
+    viewer.update();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
+    radiosCouleur.forEach(function (radio) {
+      radio.addEventListener('change', function (e) {
+        if (!e.target.checked) return;
+        appliquerCouleurViewer(e.target.value);
+      });
+    });
+
+    const radioActif = document.querySelector('input[name="couleur"]:checked');
+    if (radioActif) {
+      appliquerCouleurViewer(radioActif.value);
+    }
+  });
+</script>
+
 </body>
 </html>
+
