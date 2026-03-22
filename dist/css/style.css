@@ -1,7 +1,11 @@
-.top-columns .panel > *:last-child {
-  margin-top: 16px;   /* ou 20px si tu veux plus d’air */
+.top-columns .panel {
+  display: flex;
+  flex-direction: column;
 }
 
+.top-columns .panel > *:last-child {
+  margin-top: auto;   /* réaligne les boutons en bas */
+}
 .btn {
   display: block;
   background: #e11d48;
