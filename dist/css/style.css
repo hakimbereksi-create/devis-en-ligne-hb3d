@@ -29,7 +29,7 @@ header {
   color: #111827;
   padding: 18px 24px;
   border-bottom: 1px solid #e5e7eb;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .logo {
@@ -43,12 +43,12 @@ header {
 
 footer {
   background: #ffffff;
-  color: #111827;
+  color: #000000;
   padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-size: 1.1rem;
-  margin-top: 20px; /* pour le remonter un peu */
+  font-size: 1.5rem;
+  margin-top: 40px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.16rem;
   text-transform: uppercase;
