@@ -10,7 +10,7 @@
 
 .btn {
   display: block;
-  background: #fa0338;
+  background: #e11d48;
   color: #fff;
   border: none;
   padding: 10px 0;
@@ -47,9 +47,9 @@ footer {
   padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-top: 12px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 1.1em;
+  letter-spacing: 1.1rem;
   text-transform: uppercase;
 }
