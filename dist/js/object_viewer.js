@@ -23,12 +23,19 @@ $(document).ready(function() {
     ctx.font = '12px Courier New';
     ctx.fillStyle = '#FF0000';
 
-    // ...
-    function loadModelByPath($path) {
-        viewer.enableDefaultInputHandler(true);
-        viewer.replaceSceneFromUrl($path);
+    // Boutons de mode de rendu
+    const modeButtons = document.querySelectorAll('#viewer-modes button');
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-mode'); // 'flat' | 'wireframe' | 'point'
+        viewer.setParameter('RenderMode', mode);
         viewer.update();
-    }
+
+        modeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
 
 
     //Function Definitions
@@ -71,12 +78,15 @@ $(document).ready(function() {
         $("#tip").fadeOut("slow");
     });
 
-    //Render mode selection events
+    // Ancien système de liens de rendu : plus utile si tu n'as plus de <a class="rendermode">
+    // Tu peux le laisser commenté ou le supprimer complètement :
+    /*
     $("a.rendermode").click(function(evt){
         $mode = $(this).attr("href").substr(1);
         viewer.setRenderMode($mode);
         viewer.update();
     });
+    */
 
     // File loader
     $("#file").change(function(evt) {

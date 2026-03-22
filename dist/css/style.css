@@ -23,3 +23,12 @@ textarea {
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
+
+#viewer-modes {
+  margin-top: 8px;
+}
+
+#viewer-modes button.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
