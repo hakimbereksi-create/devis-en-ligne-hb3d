@@ -126,7 +126,7 @@
     .top-columns {
       margin-bottom: 8px;   /* au lieu de 20px */
     }
-    
+
     .panel {
       margin-bottom: 8px;
     }
@@ -187,7 +187,7 @@
     .viewer {
       border: 1px solid #e5e7eb;
       border-radius: 8px;
-      height: 200px;
+      height: 140px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -334,6 +334,25 @@
         grid-template-columns: 1fr;
       }
     }
+
+    html,
+body {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+.panel,
+.top-columns,
+main {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+footer {
+  margin-top: 0 !important;
+  position: static !important;
+}
+
   </style>
 </head>
 
