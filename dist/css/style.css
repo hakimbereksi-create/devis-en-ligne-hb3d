@@ -16,7 +16,7 @@
   border-radius: 0;
   cursor: pointer;
   font-size: 0.9rem;
-  margin-top: 16px;
+  margin-top: 20px;
   font-family: 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -45,7 +45,7 @@ footer {
   padding: 8px 24px;
   border-top: 2px solid #e5e7eb;
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-top: 80px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.16em;
