@@ -29,16 +29,16 @@ header {
   color: #111827;
   padding: 18px 24px;
   border-bottom: 1px solid #e5e7eb;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
 }
 
 .logo {
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
 }
 
 .steps-bar {
-  font-size: 0.95rem;
+  font-size: 1.2rem;
 }
 
 footer {
@@ -47,9 +47,9 @@ footer {
   padding: 16px 24px;
   border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-size: 1rem;
-  margin-top: 12px; /* pour le remonter un peu */
+  font-size: 1.1rem;
+  margin-top: 20px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.16rem;
   text-transform: uppercase;
 }
