@@ -50,6 +50,6 @@ footer {
   font-size: 1.5rem;
   margin-top: 40px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.16rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
