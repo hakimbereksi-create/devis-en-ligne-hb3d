@@ -43,12 +43,12 @@ header {
 
 footer {
   background: #ffffff;
-  color: #000000;
+  color: #0f1625;
   padding: 8px 24px;
   border-top: 2px solid #e5e7eb;
   text-align: center;
-  font-size: 2rem;
-  margin-top: 100px; /* pour le remonter un peu */
+  font-size: 1.2rem;
+  margin-top: 80px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
