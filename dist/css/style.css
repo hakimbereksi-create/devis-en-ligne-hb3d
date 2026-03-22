@@ -34,7 +34,7 @@ header {
 
 .logo {
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .steps-bar {
@@ -45,7 +45,7 @@ footer {
   background: #ffffff;
   color: #000000;
   padding: 16px 24px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 2px solid #e5e7eb;
   text-align: center;
   font-size: 2rem;
   margin-top: 40px; /* pour le remonter un peu */
