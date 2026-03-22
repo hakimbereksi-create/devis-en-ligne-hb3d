@@ -26,16 +26,19 @@ $(document).ready(function() {
     // Boutons de mode de rendu
     const modeButtons = document.querySelectorAll('#viewer-modes button');
 
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const mode = btn.getAttribute('data-mode'); // 'flat' | 'wireframe' | 'point'
-        viewer.setParameter('RenderMode', mode);
-        viewer.update();
+modeButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const mode = btn.getAttribute('data-mode'); // 'flat' | 'wireframe' | 'point'
 
-        modeButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
+    // utiliser l'API runtime dédiée
+    viewer.setRenderMode(mode);
+    viewer.update();
+
+    modeButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
 
 
     //Function Definitions
