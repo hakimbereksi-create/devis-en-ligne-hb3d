@@ -529,41 +529,44 @@
   <script src="dist/js/object_viewer.js"></script>
   <script src="dist/js/upload_handler.js"></script>
   
-  <script>
-  const MATERIAUX = {
-    pla_blanc:  { label: 'PLA Blanc',   color: '#F5F5F5' },
-    pla_noir:   { label: 'PLA Noir',    color: '#222222' },
-    pla_gris:   { label: 'PLA Gris',    color: '#9F9F9F' },
-    pla_rouge:  { label: 'PLA Rouge',   color: '#FF3333' },
-    pla_vert:   { label: 'PLA Vert',    color: '#00B050' },
-    pla_bleu:   { label: 'PLA Bleu',    color: '#3366FF' },
-    pla_orange: { label: 'PLA Orange',  color: '#FF8800' },
-    pla_jaune:  { label: 'PLA Jaune',   color: '#FFD800' },
-    pla_purple: { label: 'PLA Purple',  color: '#800080' }
-  };
+ <script>
+const MATERIAUX = {
+  pla_blanc:  { label: 'PLA Blanc',   color: '#F5F5F5' },
+  pla_noir:   { label: 'PLA Noir',    color: '#222222' },
+  pla_gris:   { label: 'PLA Gris',    color: '#9F9F9F' },
+  pla_rouge:  { label: 'PLA Rouge',   color: '#FF3333' },
+  pla_vert:   { label: 'PLA Vert',    color: '#00B050' },
+  pla_bleu:   { label: 'PLA Bleu',    color: '#3366FF' },
+  pla_orange: { label: 'PLA Orange',  color: '#FF8800' },
+  pla_jaune:  { label: 'PLA Jaune',   color: '#FFD800' },
+  pla_purple: { label: 'PLA Purple',  color: '#800080' }
+};
 
-  function appliquerCouleurViewer(codeMateriau) {
-    const mat = MATERIAUX[codeMateriau];
-    if (!mat) return;
-    viewer.setParameter('ModelColor', mat.color);
-    viewer.update();
-  }
+function appliquerCouleurViewer(codeMateriau) {
+  const mat = MATERIAUX[codeMateriau];
+  if (!mat || !window.viewer) return;
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
-    radiosCouleur.forEach(function (radio) {
-      radio.addEventListener('change', function (e) {
-        if (!e.target.checked) return;
-        appliquerCouleurViewer(e.target.value);
-      });
+  viewer.setParameter('ModelColor', mat.color);
+  viewer.update();
+}
+
+$(document).ready(function () {
+  const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
+
+  radiosCouleur.forEach(function (radio) {
+    radio.addEventListener('change', function (e) {
+      if (!e.target.checked) return;
+      appliquerCouleurViewer(e.target.value);
     });
-
-    const radioActif = document.querySelector('input[name="couleur"]:checked');
-    if (radioActif) {
-      appliquerCouleurViewer(radioActif.value);
-    }
   });
+
+  const radioActif = document.querySelector('input[name="couleur"]:checked');
+  if (radioActif) {
+    appliquerCouleurViewer(radioActif.value);
+  }
+});
 </script>
+
 
 </body>
 </html>
