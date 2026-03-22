@@ -1,11 +1,5 @@
-
-.top-columns .panel {
-  display: flex;
-  flex-direction: column;
-}
-
 .top-columns .panel > *:last-child {
-  margin-top: auto;
+  margin-top: 16px;   /* ou 20px si tu veux plus d’air */
 }
 
 .btn {
@@ -43,11 +37,11 @@ header {
 
 footer {
   background: #ffffff;
-  color: #0f1625;
+  color: #020305;
   padding: 8px 24px;
   border-top: 2px solid #e5e7eb;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   margin-top: 80px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.16em;
