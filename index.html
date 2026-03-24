@@ -1023,6 +1023,15 @@ $(document).ready(function () {
   });
 </script>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const SUPABASE_URL = 'https://ivclbctreuhipqviwmwr.supabase.co'; // ton ref projet
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2Y2xiY3RyZXVoaXBxdml3bXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NDY3NzQsImV4cCI6MjA4ODMyMjc3NH0.FLZSKjksSe7lsjpXRfZZs0Zt9ISpeWS-ko-9p-nUhsM'; // nouvelle anon
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+
+
 
 
 </body>
