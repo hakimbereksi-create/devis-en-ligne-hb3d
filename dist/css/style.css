@@ -8,14 +8,14 @@
 }
 .btn {
   display: block;
-  background: #e11d48;
+  background: #f70303c4;
   color: #fff;
   border: none;
   padding: 10px 0;
   width: 100%;
   border-radius: 0;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   margin-top: 16px;
   font-family: 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.08em;
@@ -25,7 +25,7 @@
 header {
   background: #ffffff;
   color: #111827;
-  padding: 18px 24px;
+  padding: 10px 24px;
   border-bottom: 1px solid #e5e7eb;
   font-size: 2.2rem;
 }
@@ -43,12 +43,12 @@ footer {
   background: #ffffff;
   color: #020305;
   padding: 8px 24px;
-  border-top: 2px solid #e5e7eb;
+  border-top: 1px solid #aaaaaa;
   text-align: center;
-  font-size: 1.6rem;
-  margin-top: 120px; /* pour le remonter un peu */
+  font-size: 1.8rem;
+  margin-top: 140px; /* pour le remonter un peu */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 

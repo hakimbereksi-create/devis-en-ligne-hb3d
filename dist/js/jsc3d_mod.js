@@ -5549,7 +5549,73 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
         }
     }
 
-    // add mesh to scene
+        // add mesh to scene
+
+    // --- début ajout calcul volume pour STL ---
+    var volumeMm3 = 0;
+    var vb = mesh.vertexBuffer;
+    var ib = mesh.indexBuffer;
+
+    function signedTetraVolume(ax, ay, az, bx, by, bz, cx, cy, cz) {
+      return (ax * (by * cz - bz * cy) -
+              ay * (bx * cz - bz * cy) +
+              az * (bx * cy - by * cx)) / 6.0;
+    }
+
+    for (var i = 0; i < ib.length; ) {
+      var i0 = ib[i++], i1 = ib[i++], i2 = ib[i++];
+      if (ib[i] === -1) { i++; }
+
+      var ax = vb[3 * i0], ay = vb[3 * i0 + 1], az = vb[3 * i0 + 2];
+      var bx = vb[3 * i1], by = vb[3 * i1 + 1], bz = vb[3 * i1 + 2];
+      var cx = vb[3 * i2], cy = vb[3 * i2 + 1], cz = vb[3 * i2 + 2];
+
+      volumeMm3 += signedTetraVolume(ax, ay, az, bx, by, bz, cx, cy, cz);
+    }
+
+           volumeMm3 = Math.abs(volumeMm3);
+
+    var volumeCm3 = volumeMm3 / 10000000.0;
+    var densitePLA = 1.24;
+    var poidsGrammes = volumeCm3 * densitePLA;
+    var dureeHeuresEstimee = 2;
+
+    // calcul du bounding box (dimensions)
+    var minX = Infinity, maxX = -Infinity;
+    var minY = Infinity, maxY = -Infinity;
+    var minZ = Infinity, maxZ = -Infinity;
+
+    for (var v = 0; v < vb.length; v += 3) {
+      var x = vb[v];
+      var y = vb[v + 1];
+      var z = vb[v + 2];
+
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+      if (z < minZ) minZ = z;
+      if (z > maxZ) maxZ = z;
+    }
+
+    var dimX = maxX - minX;
+    var dimY = maxY - minY;
+    var dimZ = maxZ - minZ;
+
+    if (typeof window !== 'undefined') {
+      window.hb3dVolumeCm3 = volumeCm3;
+      window.hb3dDimX = dimX;
+      window.hb3dDimY = dimY;
+      window.hb3dDimZ = dimZ;
+    }
+
+    if (typeof mettreAJourPrixDepuisVolume === 'function') {
+      mettreAJourPrixDepuisVolume(volumeCm3, dureeHeuresEstimee);
+    }
+
+
+    // --- fin ajout calcul volume pour STL ---
+
     if(!mesh.isTrivial()) {
         // Some tools (Blender etc.) export STLs with empty face normals (all equal to 0). In this case we ...
         // ... simply set the face normal buffer to null so that they will be calculated in mesh's init stage. 
@@ -5562,6 +5628,7 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
         scene.addChild(mesh);
     }
 };
+
 
 JSC3D.StlLoader.prototype.onload = null;
 JSC3D.StlLoader.prototype.onerror = null;

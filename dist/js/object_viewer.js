@@ -22,6 +22,69 @@ $(document).ready(function() {
     var ctx = canvas.getContext('2d');
     ctx.font = '12px Courier New';
     ctx.fillStyle = '#FF0000';
+    
+    // >>> ICI : écouteur sur la quantité, à l'intérieur du même ready <<<
+    $('#quantite').on('change keyup', function () {
+        if (typeof hb3dVolumeCm3 !== 'undefined') {
+            var dureeHeuresEstimee = 2;
+            mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
+        }
+    });
+
+    // techno + matériau
+    $('#techno, #materiau').on('change', function () {
+        if (typeof hb3dVolumeCm3 !== 'undefined') {
+            var dureeHeuresEstimee = 2;
+            mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
+        }
+    });
+
+    $('#test-couleur-gris').on('click', function () {
+         if (pieceMesh && pieceMesh.material) {
+             pieceMesh.material.color.set('#808080'); // gris
+        }
+    });
+
+    $('#test-couleur-bleu').on('click', function () {
+         if (pieceMesh && pieceMesh.material) {
+             pieceMesh.material.color.set('#0066ff'); // bleu
+        }
+});
+
+
+    function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
+  const densitePLA = 1.24;
+  const poidsGrammes = volumeCm3 * densitePLA;
+
+  const inputQte = document.getElementById('quantite');
+  const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
+
+  const prixUnitaire = calculerPrixHT(poidsGrammes, dureeHeures);
+  const prixTotal = prixUnitaire * qte;
+
+  const prixFormate = prixTotal.toFixed(2).replace('.', ',') + ' €';
+
+  const spanPrix = document.getElementById('prix-panier');
+  if (spanPrix) spanPrix.textContent = prixFormate;
+
+  const spanQte = document.getElementById('qte-panier');
+  if (spanQte) spanQte.textContent = qte;
+
+  // mettre à jour techno + matériau dans le panier
+  const selectTechno = document.getElementById('techno');
+  const selectMateriau = document.getElementById('materiau');
+
+  const technoPanier = document.getElementById('techno-panier');
+  const materiauPanier = document.getElementById('materiau-panier');
+
+  if (technoPanier && selectTechno) {
+    technoPanier.textContent = selectTechno.value;
+  }
+  if (materiauPanier && selectMateriau) {
+    materiauPanier.textContent = selectMateriau.value;
+  }
+}
+
 
     // Boutons de mode de rendu
     const modeButtons = document.querySelectorAll('#viewer-modes button');
@@ -56,15 +119,64 @@ modeButtons.forEach(btn => {
 
     // Handlers
     //=====================================================================
-    viewer.afterupdate = function () {
-//        var scene = viewer.getScene();
-//        if (scene !== null && scene.getChildren().length > 0) {
-//            //DEMO values !
-//            ctx.fillText('Box (mm): 80 x 200 x 100', 10, 20);
-//            ctx.fillText('Volume (cc): 10', 10, 35);
-//            //
-//        }
+        function majInfosViewerHTML() {
+        var infoDiv = document.getElementById('viewer-info');
+        if (!infoDiv || typeof hb3dVolumeCm3 === 'undefined') return;
+
+        var dimXmm = (typeof hb3dDimX !== 'undefined') ? hb3dDimX : 0;
+        var dimYmm = (typeof hb3dDimY !== 'undefined') ? hb3dDimY : 0;
+        var dimZmm = (typeof hb3dDimZ !== 'undefined') ? hb3dDimZ : 0;
+
+        // poids estimé à partir du volume (même densité que pour le prix)
+        var densitePLA = 1.24;
+        var poidsGrammes = hb3dVolumeCm3 * densitePLA;
+
+        infoDiv.textContent =
+          'Dimensions (mm) : ' +
+          dimXmm.toFixed(1) + ' x ' +
+          dimYmm.toFixed(1) + ' x ' +
+          dimZmm.toFixed(1) +
+          ' — Volume : ' +
+          hb3dVolumeCm3.toFixed(1) + ' cm³' +
+          ' — Poids estimé : ' +
+          poidsGrammes.toFixed(1) + ' g';
+    }
+        
+    
+           viewer.afterupdate = function () {
+        if (typeof hb3dVolumeCm3 === 'undefined') {
+            return;
+        }
+
+        var canvas = document.getElementById('cv');
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.clearRect(10, 10, 320, 50);
+                ctx.font = '12px Courier New';
+                ctx.fillStyle = '#FF0000';
+
+                var dimXmm = (typeof hb3dDimX !== 'undefined') ? hb3dDimX : 0;
+                var dimYmm = (typeof hb3dDimY !== 'undefined') ? hb3dDimY : 0;
+                var dimZmm = (typeof hb3dDimZ !== 'undefined') ? hb3dDimZ : 0;
+
+                var ligne1 = 'Box (mm): ' +
+                  dimXmm.toFixed(1) + ' x ' +
+                  dimYmm.toFixed(1) + ' x ' +
+                  dimZmm.toFixed(1);
+
+                var ligne2 = 'Volume (cm3): ' + hb3dVolumeCm3.toFixed(1);
+
+                ctx.fillText(ligne1, 10, 20);
+                ctx.fillText(ligne2, 10, 35);
+            }
+        }
+
+        majInfosViewerHTML();
     };
+
+
+
     //END Handlers
     //====================================================================
 
@@ -91,10 +203,17 @@ modeButtons.forEach(btn => {
     });
     */
 
-    // File loader
+        // File loader
     $("#file").change(function(evt) {
-        loadModelByPath(evt.target.files[0]);
+        const file = evt.target.files[0];
+        loadModelByPath(file);
+
+        // mise à jour du nom dans le panier
+        if (typeof majNomFichierPanier === 'function' && file) {
+            majNomFichierPanier(file.name);
+        }
     });
+
     //
 
 });
