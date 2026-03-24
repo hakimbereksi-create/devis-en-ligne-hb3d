@@ -52,3 +52,72 @@ footer {
   text-transform: uppercase;
 }
 
+.couleurs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.chip-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+.chip-color input[type="radio"] {
+  display: none;
+}
+
+.chip-color .swatch {
+  width: 20px;
+  height: 15px;
+  border-radius: 4px; /* rond -> 999px si tu veux de vraies gommettes */
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.chip-color .swatch-label {
+  font-size: 0.75rem;
+}
+
+.chip-color input[type="radio"]:checked + .swatch {
+  outline: 2px solid #f97316; /* accent HB3D autour de la couleur active */
+  outline-offset: 1px;
+}
+
+.swatch-panier {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px; /* 999px si tu veux rond */
+  border: 1px solid rgba(0,0,0,0.15);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.swatch-panier-label {
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+
+.swatch-panier {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.15);
+  margin-right: 4px;
+  background-color: #e5e7eb; /* défaut */
+  vertical-align: middle;
+}
+
+.swatch-panier-label {
+  font-size: 0.75rem;
+  vertical-align: middle;
+}

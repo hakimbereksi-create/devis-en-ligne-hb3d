@@ -5629,6 +5629,12 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
     }
 };
 
+setTimeout(function () {
+  viewer.setParameter('ModelColor', '#ff0000');
+  viewer.update();
+}, 300);
+
+
 
 JSC3D.StlLoader.prototype.onload = null;
 JSC3D.StlLoader.prototype.onerror = null;

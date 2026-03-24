@@ -24,35 +24,31 @@ $(document).ready(function() {
     ctx.fillStyle = '#FF0000';
     
     // >>> ICI : écouteur sur la quantité, à l'intérieur du même ready <<<
-    $('#quantite').on('change keyup', function () {
-        if (typeof hb3dVolumeCm3 !== 'undefined') {
-            var dureeHeuresEstimee = 2;
-            mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
-        }
-    });
-
-    // techno + matériau
-    $('#techno, #materiau').on('change', function () {
-        if (typeof hb3dVolumeCm3 !== 'undefined') {
-            var dureeHeuresEstimee = 2;
-            mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
-        }
-    });
-
-    $('#test-couleur-gris').on('click', function () {
-         if (pieceMesh && pieceMesh.material) {
-             pieceMesh.material.color.set('#808080'); // gris
-        }
-    });
-
-    $('#test-couleur-bleu').on('click', function () {
-         if (pieceMesh && pieceMesh.material) {
-             pieceMesh.material.color.set('#0066ff'); // bleu
-        }
+    // quantité
+$('#quantite').on('change keyup', function () {
+  if (typeof hb3dVolumeCm3 !== 'undefined') {
+    var dureeHeuresEstimee = 2;
+    mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
+  }
 });
 
+// techno + matériau
+$('#techno, #materiau').on('change', function () {
+  if (typeof hb3dVolumeCm3 !== 'undefined') {
+    var dureeHeuresEstimee = 2;
+    mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
+  }
+});
 
-    function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
+// couleur
+$('input[name="couleur"]').on('change', function () {
+  if (typeof hb3dVolumeCm3 !== 'undefined' && typeof mettreAJourPrixDepuisVolume === 'function') {
+    var dureeHeuresEstimee = 2;
+    mettreAJourPrixDepuisVolume(hb3dVolumeCm3, dureeHeuresEstimee);
+  }
+});
+
+function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
   const densitePLA = 1.24;
   const poidsGrammes = volumeCm3 * densitePLA;
 
@@ -70,21 +66,27 @@ $(document).ready(function() {
   const spanQte = document.getElementById('qte-panier');
   if (spanQte) spanQte.textContent = qte;
 
-  // mettre à jour techno + matériau dans le panier
-  const selectTechno = document.getElementById('techno');
-  const selectMateriau = document.getElementById('materiau');
+  // === mise à jour techno / matériau / couleur ===
+const selectTechno   = document.getElementById('techno');
+const selectMateriau = document.getElementById('materiau');
+const radioCouleur   = document.querySelector('input[name="couleur"]:checked');
 
-  const technoPanier = document.getElementById('techno-panier');
-  const materiauPanier = document.getElementById('materiau-panier');
+const technoPanier   = document.getElementById('techno-panier');
+const materiauPanier = document.getElementById('materiau-panier');
+const couleurPanier  = document.getElementById('couleur-panier');
 
-  if (technoPanier && selectTechno) {
-    technoPanier.textContent = selectTechno.value;
-  }
-  if (materiauPanier && selectMateriau) {
-    materiauPanier.textContent = selectMateriau.value;
-  }
+if (technoPanier && selectTechno) {
+  technoPanier.textContent = selectTechno.value;
+}
+if (materiauPanier && selectMateriau) {
+  materiauPanier.textContent = selectMateriau.value;
+}
+if (couleurPanier && radioCouleur) {
+  const labelCouleur = radioCouleur.parentElement.textContent.trim();
+  couleurPanier.textContent = labelCouleur;
 }
 
+}
 
     // Boutons de mode de rendu
     const modeButtons = document.querySelectorAll('#viewer-modes button');

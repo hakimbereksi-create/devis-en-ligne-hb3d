@@ -690,17 +690,63 @@ footer {
         </select>
 
         <label>Couleur</label>
-        <div class="couleurs">
-        <label><input type="radio" name="couleur" value="pla_blanc" checked> Blanc</label>
-        <label><input type="radio" name="couleur" value="pla_noir"> Noir</label>
-        <label><input type="radio" name="couleur" value="pla_gris"> Gris</label>
-        <label><input type="radio" name="couleur" value="pla_rouge"> Rouge</label>
-        <label><input type="radio" name="couleur" value="pla_vert"> Vert</label>
-        <label><input type="radio" name="couleur" value="pla_bleu"> Bleu</label>
-        <label><input type="radio" name="couleur" value="pla_orange"> Orange</label>
-        <label><input type="radio" name="couleur" value="pla_jaune"> Jaune</label>
-        <label><input type="radio" name="couleur" value="pla_purple"> Purple</label>
-      </div>
+<div class="couleurs">
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_blanc" checked>
+    <span class="swatch" style="background-color:#F5F5F5;"></span>
+    <span class="swatch-label">Blanc</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_noir">
+    <span class="swatch" style="background-color:#222222;"></span>
+    <span class="swatch-label">Noir</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_gris">
+    <span class="swatch" style="background-color:#9F9F9F;"></span>
+    <span class="swatch-label">Gris</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_rouge">
+    <span class="swatch" style="background-color:#FF3333;"></span>
+    <span class="swatch-label">Rouge</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_vert">
+    <span class="swatch" style="background-color:#00B050;"></span>
+    <span class="swatch-label">Vert</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_bleu">
+    <span class="swatch" style="background-color:#3366FF;"></span>
+    <span class="swatch-label">Bleu</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_orange">
+    <span class="swatch" style="background-color:#ffa602;"></span>
+    <span class="swatch-label">orange</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_jaune">
+    <span class="swatch" style="background-color:#fae206;"></span>
+    <span class="swatch-label">jaune</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="pla_purple">
+    <span class="swatch" style="background-color:#ad06fac9;"></span>
+    <span class="swatch-label">purple</span>
+  </label>
+  <!-- tu peux continuer pour orange, jaune, purple... -->
+</div>
+
 
 
         <label for="quantite">Quantité</label>
@@ -719,23 +765,26 @@ footer {
   <h3>Votre panier   <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
   <table height="72">
     <thead>
-      <tr>
-        <th height="24"><div align="center">Fichier</div></th>
-        <th><div align="center">Techno</div></th>
-        <th><div align="center">Matériau</div></th>
-        <th><div align="center">Qté</div></th>
-        <th><div align="center">Prix</div></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td height="40"><div align="center"><span id="nom-fichier-panier">piece_v1.stl</span></div></td>
-        <td><div align="center"><span id="techno-panier">FDM</span></div></td>
-        <td><div align="center"><span id="materiau-panier">PLA</span></div></td>
-        <td><div align="center"><span id="qte-panier">1</span></div></td>
-        <td><div align="center"><span id="prix-panier">12,00 €</span></div></td>
-      </tr>
-    </tbody>
+  <tr>
+    <th><div align="center">Fichier</div></th>
+    <th><div align="center">Techno</div></th>
+    <th><div align="center">Matériau</div></th>
+    <th><div align="center">Couleur</div></th>
+    <th><div align="center">Qté</div></th>
+    <th><div align="center">Prix</div></th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><div align="center"><span id="nom-fichier-panier">piece_v1.stl</span></div></td>
+    <td><div align="center"><span id="techno-panier">FDM</span></div></td>
+    <td><div align="center"><span id="materiau-panier">PLA</span></div></td>
+    <td><div align="center"><span class="swatch-panier"></span><span id="couleur-panier">Blanc</span></div></td>
+    <td><div align="center"><span id="qte-panier">1</span></div></td>
+    <td><div align="center"><span id="prix-panier">12,00 €</span></div></td>
+  </tr>
+</tbody>
+
   </table>
 
         <h3>Détails personnels</h3>
@@ -829,11 +878,13 @@ $(document).ready(function () {
     });
   });
 
+  // couleur initiale (juste pour le viewer)
   const radioActif = document.querySelector('input[name="couleur"]:checked');
   if (radioActif) {
     appliquerCouleurViewer(radioActif.value);
   }
 });
+
 </script>
 
 <script>
@@ -850,26 +901,45 @@ $(document).ready(function () {
   }
 
   function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
-    const densitePLA = 1.24;
-    const poidsGrammes = volumeCm3 * densitePLA;
+  const densitePLA = 1.24;
+  const poidsGrammes = volumeCm3 * densitePLA;
 
-    // lire quantité saisie dans le volet 2
-    const inputQte = document.getElementById('quantite');
-    const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
+  const inputQte = document.getElementById('quantite');
+  const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
 
-    // prix unitaire
-    const prixUnitaire = calculerPrixHT(poidsGrammes, dureeHeures);
-    const prixTotal = prixUnitaire * qte;
+  const prixUnitaire = calculerPrixHT(poidsGrammes, dureeHeures);
+  const prixTotal = prixUnitaire * qte;
 
-    const prixFormate = prixTotal.toFixed(2).replace('.', ',') + ' €';
+  const prixFormate = prixTotal.toFixed(2).replace('.', ',') + ' €';
 
-    const spanPrix = document.getElementById('prix-panier');
-    if (spanPrix) spanPrix.textContent = prixFormate;
+  const spanPrix = document.getElementById('prix-panier');
+  if (spanPrix) spanPrix.textContent = prixFormate;
 
-    // mettre à jour la quantité affichée dans le panier
-    const spanQte = document.getElementById('qte-panier');
-    if (spanQte) spanQte.textContent = qte;
+  const spanQte = document.getElementById('qte-panier');
+  if (spanQte) spanQte.textContent = qte;
+
+     // mettre à jour techno / matériau / couleur dans le panier
+  const selectTechno   = document.getElementById('techno');
+  const selectMateriau = document.getElementById('materiau');
+  const radioCouleur   = document.querySelector('input[name="couleur"]:checked');
+
+  const technoPanier   = document.getElementById('techno-panier');
+  const materiauPanier = document.getElementById('materiau-panier');
+  const couleurPanier  = document.getElementById('couleur-panier');
+
+  if (technoPanier && selectTechno) {
+    technoPanier.textContent = selectTechno.value;
   }
+  if (materiauPanier && selectMateriau) {
+    materiauPanier.textContent = selectMateriau.value;
+  }
+  if (couleurPanier && radioCouleur) {
+    const labelCouleur = radioCouleur.parentElement.textContent.trim();
+    couleurPanier.textContent = labelCouleur;
+  }
+
+}
+
 </script>
 
 
