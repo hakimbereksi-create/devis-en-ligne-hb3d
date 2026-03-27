@@ -2,7 +2,6 @@
 // ----------------------
 // CORS pour GitHub Pages
 // ----------------------
-
 $allowedOrigin = 'https://hakimbereksi-create.github.io';
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
@@ -19,25 +18,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// ----------------------
-// Ton code submit.php actuel
-// ----------------------
-
-// ... ici ton code de calcul / Stripe ...
-
-$result = json_encode($_POST);
-
-//Create 3D Print Order Info JSON file
-$content = $result;
-$uploaddir = '../uploads/';
-
-foreach($_POST['filenames'] as $file)
-{
-    $fp = fopen($uploaddir . "/" . basename($file) . ".json", "wb");
-    fwrite($fp, $content);
-    fclose($fp);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'Méthode non autorisée']);
+    exit;
 }
 
-echo $result;
+// ----------------------
+// Lecture des données POST
+// ----------------------
 
-?>
+// Champs natifs du <form> (via serialize())
+$email       = isset($_POST['email']) ? trim($_POST['email']) : '';
+$quantite    = isset($_POST['quantite']) ? intval($_POST['quantite']) : 1;
+
+// Champs ajoutés manuellement
+$commentaire = isset($_POST['commentaire']) ? trim($_POST['commentaire']) : '';
+$prixAffiche = isset($_POST['prix_affiche']) ? trim($_POST['prix_affiche']) : '';
+
+// Fichiers (tableau de noms)
+$filenames = isset($_POST['filenames']) ? $_POST['filenames'] : [];
+if (!is_array($filenames)) {
+    $filenames = [$filenames];
+}
+
+// ----------------------
+// Logging simple du devis
+// ----------------------
+$logEntry = [
+    'date'        => date('c'),
+    'email'       => $email,
+    'quantite'    => $quantite,
+    'commentaire' => $commentaire,
+    'prix_affiche'=> $prixAffiche,
+    'filenames'   => $filenames,
+    'ip'          => $_SERVER['REMOTE_ADDR'] ?? '',
+    'user_agent'  => $_SERVER['HTTP_USER_AGENT'] ?? '',
+];
+
+// Fichier de log dans le même dossier
+$logFile = __DIR__ . '/devis_log.txt';
+file_put_contents($logFile, json_encode($logEntry, JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND);
+
+// ----------------------
+// Réponse JSON au frontend
+// ----------------------
+header('Content-Type: application/json; charset=utf-8');
+
+echo json_encode([
+    'success'      => true,
+    'message'      => 'Devis HB3D reçu et enregistré',
+    'email'        => $email,
+    'quantite'     => $quantite,
+    'commentaire'  => $commentaire,
+    'prix_affiche' => $prixAffiche,
+    'filenames'    => $filenames,
+]);
