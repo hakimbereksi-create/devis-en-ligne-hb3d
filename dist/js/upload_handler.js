@@ -1,116 +1,197 @@
-$(document).ready(function(){
-    // Variable to store your files
-    var files;
+$(document).ready(function() {
 
-    // Add events
-    $('input[type=file]').on('change', prepareUpload);
+  // -------------------------
+  // Fonctions d'affichage
+  // -------------------------
 
+  function setUploadProgress(percent) {
+    percent = Math.max(0, Math.min(100, percent));
+    console.log('setUploadProgress called with', percent);
+    // chiffre au centre du disque
+    $('#hb3d-upload-percent').text(percent + '%');
 
-    $("#loading").hide();
+    // remplissage du disque
+    document.querySelector('.circular-upload').style.setProperty('--progress', percent);
+  }
 
-    // Grab the files and set them to our variable
-    function prepareUpload(event)
-    {
-        files = event.target.files;
-        console.log("FILE added to upload queue.");
+  function setUploadStatus(text) {
+    $('#hb3d-upload-text').html(text);
+  }
+
+  // -------------------------
+  // Gestion des fichiers
+  // -------------------------
+
+  var files;
+
+  $('input[type=file]').on('change', prepareUpload);
+
+  $("#loading").hide();
+  setUploadProgress(0);
+  setUploadStatus('En attente de fichier<br>Fichier 0 / 0');
+
+  function prepareUpload(event) {
+    files = event.target.files;
+    console.log("FILE added to upload queue.");
+
+    if (files && files.length > 0) {
+      setUploadProgress(0);
+      setUploadStatus('Fichier prêt à être envoyé<br>' + files[0].name);
+    } else {
+      setUploadProgress(0);
+      setUploadStatus('En attente de fichier<br>Fichier 0 / 0');
+    }
+  }
+
+  // Bouton d'upload (adapter l'ID si besoin)
+  $('#btn-upload').on('click', uploadFiles);
+
+  // -------------------------
+  // Upload des fichiers
+  // -------------------------
+
+  function uploadFiles(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (!files || !files.length) {
+      setUploadStatus('Aucun fichier sélectionné<br>Veuillez choisir un fichier');
+      return;
     }
 
-    $('#submit').on('click', uploadFiles);
+    $("#loading").show();
 
-    // Catch the form submit and upload the files
-    function uploadFiles(event)
-    {
-        event.stopPropagation(); // Stop stuff happening
-        event.preventDefault(); // Totally stop stuff happening
+    var data = new FormData();
+    $.each(files, function(key, value) {
+      data.append(key, value);
+      console.log(value);
+    });
 
-        // START A LOADING SPINNER HERE
-        $("#loading").show();
+    $.ajax({
+      xhr: function() {
+        var xhr = new window.XMLHttpRequest();
 
-        // Create a formdata object and add the files
-        var data = new FormData();
-        $.each(files, function(key, value)
-               {
-            data.append(key, value);
-            console.log(value);
-        });
+        xhr.upload.addEventListener("progress", function(evt) {
+          if (evt.lengthComputable) {
+            var realPercent = parseInt((evt.loaded / evt.total) * 100, 10);
 
-        $.ajax({
-            url: './php/upload.php?files',
-            type: 'POST',
-            data: data,
-            cache: false,
-            dataType: 'json',
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            success: function(data, textStatus, jqXHR)
-            {
-                if(typeof data.error === 'undefined')
-                {
-                    // Success so call function to process the form
-                    submitForm(event, data);
-                }
-                else
-                {
-                    // Handle errors here
-                    console.log('1.ERRORS: ' + data.error);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                // Handle errors here
-                console.log('2.ERRORS: ' + errorThrown);
-                // STOP LOADING SPINNER
-                $("#loading").hide();
+            var displayed = realPercent;
+
+            // on plafonne l'affichage à 90 % pendant l'upload
+            if (realPercent >= 100) {
+              displayed = 90;
+            } else if (realPercent > 90) {
+              displayed = 90;
             }
-        });
-    }
 
-    function submitForm(event, data)
-    {
-        // Create a jQuery object from the form
-        $form = $("#form");
+            setUploadProgress(displayed);
+            setUploadStatus('Upload en cours<br>' + displayed + ' %');
+          }
+        }, false);
 
-        // Serialize the form data
-        var formData = $form.serialize();
+        return xhr;
+      },
 
-        // You should sterilise the file names
-        $.each(data.files, function(key, value)
-               {
-            formData = formData + '&filenames[]=' + value;
-        });
+      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/upload.php?files',
+      type: 'POST',
+      data: data,
+      cache: false,
+      dataType: 'json',
+      processData: false,
+      contentType: false,
 
-        $.ajax({
-            url: './php/submit.php',
-            type: 'POST',
-            data: formData,
-            cache: false,
-            dataType: 'json',
-            success: function(data, textStatus, jqXHR)
-            {
-                if(typeof data.error === 'undefined')
-                {
-                    // Success so call function to process the form
+      success: function(data, textStatus, jqXHR) {
+        if (typeof data.error === 'undefined') {
 
-                    console.log('SUCCESS: ' + data.success);
-                }
-                else
-                {
-                    // Handle errors here
-                    console.log('1.ERRORS: ' + data.error);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown)
-            {
-                // Handle errors here
-                console.log('2.ERRORS: ' + errorThrown);
-            },
-            complete: function()
-            {
-                // STOP LOADING SPINNER
-                $("#loading").hide();
-                alert("Your 3D printing order is now in our queue :) \n Thank you.");
+          // animation de 90 à 100 %
+          var current = 90;
+          var interval = setInterval(function() {
+            current += 2;
+
+            if (current >= 100) {
+              current = 100;
+              clearInterval(interval);
+
+              setUploadProgress(current);
+              setUploadStatus('Upload terminé<br>Traitement de la commande...');
+
+              submitForm(event, data);
+            } else {
+              setUploadProgress(current);
+              setUploadStatus('Upload en cours<br>' + current + ' %');
             }
-        });
-    }
+          }, 120);
+
+        } else {
+          console.log('1.ERRORS: ' + data.error);
+          setUploadStatus('Erreur lors de l\'upload<br>' + data.error);
+          $("#loading").hide();
+        }
+      },
+
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('2.ERRORS: ' + errorThrown);
+        $("#loading").hide();
+        setUploadStatus('Erreur réseau pendant l\'upload<br>Veuillez réessayer');
+      }
+    });
+  }
+
+  // -------------------------
+  // Submit du formulaire
+  // -------------------------
+
+  function submitForm(event, data) {
+    var $form = $("#form");
+    var formData = $form.serialize();
+
+    $.each(data.files || [], function(key, value) {
+      formData = formData + '&filenames[]=' + value;
+    });
+
+    $.ajax({
+      url: './php/submit.php',
+      type: 'POST',
+      data: formData,
+      cache: false,
+      dataType: 'json',
+      success: function(data, textStatus, jqXHR) {
+        if (typeof data.error === 'undefined') {
+          console.log('SUCCESS: ' + data.success);
+        } else {
+          console.log('1.ERRORS: ' + data.error);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log('2.ERRORS: ' + errorThrown);
+      },
+      complete: function() {
+        setTimeout(function() {
+          $("#loading").hide();
+          setUploadProgress(100);
+          setUploadStatus('Commande envoyée<br>Merci !');
+          
+           // Modal HB3D
+           var modal = document.createElement('div');
+           modal.className = 'hb3d-modal';
+           modal.innerHTML = '\
+       <div class="hb3d-modal-box">\
+       <div class="hb3d-modal-title">HB3D</div>\
+       <p class="hb3d-modal-text">\
+          Votre demande d\'impression 3D<br>\
+          a bien été envoyée !<br><br>\
+          Nous revenons vers vous rapidement.\
+        </p>\
+        <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
+       </div>';
+       document.body.appendChild(modal);
+        }, 700);
+      }
+    });
+  }
 
 });
+
+
+
+
