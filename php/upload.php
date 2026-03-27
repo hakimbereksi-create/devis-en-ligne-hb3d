@@ -1,4 +1,31 @@
 <?php
+
+// ----------------------
+// CORS pour GitHub Pages
+// ----------------------
+
+// Domaine de ton front (GitHub Pages)
+$allowedOrigin = 'https://hakimbereksi-create.github.io';
+
+// Origin envoyé par le navigateur (preflight et requêtes réelles)
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+
+// Si l'origine correspond à ton site GitHub, on autorise
+if ($origin === $allowedOrigin) {
+    header("Access-Control-Allow-Origin: $allowedOrigin");
+    header("Vary: Origin");
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Allow-Methods: POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+}
+
+// Gestion de la requête preflight OPTIONS
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // On peut éventuellement ajouter un max-age si tu veux
+    // header("Access-Control-Max-Age: 86400");
+    http_response_code(200);
+    exit;
+}
 error_reporting(E_ERROR | E_PARSE);
 
 $data = array();
