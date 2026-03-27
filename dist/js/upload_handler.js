@@ -150,7 +150,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-      url: './php/submit.php',
+      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
       type: 'POST',
       data: formData,
       cache: false,
