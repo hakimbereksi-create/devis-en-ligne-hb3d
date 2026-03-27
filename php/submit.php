@@ -75,3 +75,25 @@ echo json_encode([
     'prix_affiche' => $prixAffiche,
     'filenames'    => $filenames,
 ]);
+// --- LOG LISIBLES DANS devis_log.txt ---
+
+// 1) Version JSON jolie sur plusieurs lignes
+$entryJson = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+// 2) Version résumé sur une seule ligne
+$lineSummary = sprintf(
+    "[%s] email=%s | quantite=%s | prix=%s | fichiers=%s | ip=%s",
+    $data['date'] ?? date('c'),
+    $data['email'] ?? '',
+    $data['quantite'] ?? '',
+    $data['prix_affiche'] ?? '',
+    isset($data['filenames']) && is_array($data['filenames']) ? implode(',', $data['filenames']) : '',
+    $data['ip'] ?? ''
+);
+
+// 3) Écriture dans le log
+$finalLogBlock  = $lineSummary . PHP_EOL;
+$finalLogBlock .= $entryJson . PHP_EOL;
+$finalLogBlock .= "------------------------" . PHP_EOL;
+
+file_put_contents('devis_log.txt', $finalLogBlock, FILE_APPEND);
