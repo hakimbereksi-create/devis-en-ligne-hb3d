@@ -143,11 +143,18 @@ $(document).ready(function() {
 
   function submitForm(event, data) {
     var $form = $("#form");
-    var formData = $form.serialize();
 
-    $.each(data.files || [], function(key, value) {
-      formData = formData + '&filenames[]=' + value;
-    });
+    // --- HB3D: synchroniser les champs cachés avec le panier ---
+    var qteText   = $('#qte-panier').text().trim();
+    var prixText  = $('#prix-panier').text().trim();
+
+    if (qteText !== '') {
+        $('#quantite').val(qteText);
+    }
+    if (prixText !== '') {
+        $('#prix_affiche').val(prixText);
+    }
+    // ------------------------------------------------------------
 
     $.ajax({
       url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
