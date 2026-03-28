@@ -137,7 +137,7 @@ $(document).ready(function() {
     });
   }
 
- // -------------------------
+ // ------------------------- 
 // Submit du formulaire
 // -------------------------
 function submitForm(event, data) {
