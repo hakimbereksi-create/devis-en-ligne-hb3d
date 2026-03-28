@@ -137,69 +137,98 @@ $(document).ready(function() {
     });
   }
 
-  // -------------------------
-  // Submit du formulaire
-  // -------------------------
+ // -------------------------
+// Submit du formulaire
+// -------------------------
+function submitForm(event, data) {
+  console.log('submitForm called', data);
 
-  function submitForm(event, data) {
-    var $form = $("#form");
+  var $form = $("#form");
 
-    // --- HB3D: synchroniser les champs cachés avec le panier ---
-    var qteText   = $('#qte-panier').text().trim();
-    var prixText  = $('#prix-panier').text().trim();
+  // --- HB3D: synchroniser les champs cachés avec le panier ---
+  var qteText  = $('#qte-panier').text().trim();
+  var prixText = $('#prix-panier').text().trim();
 
-    if (qteText !== '') {
-        $('#quantite').val(qteText);
-    }
-    if (prixText !== '') {
-        $('#prix_affiche').val(prixText);
-    }
-    // ------------------------------------------------------------
-
-    $.ajax({
-      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
-      type: 'POST',
-      data: formData,
-      cache: false,
-      dataType: 'json',
-      success: function(data, textStatus, jqXHR) {
-        if (typeof data.error === 'undefined') {
-          console.log('SUCCESS: ' + data.success);
-        } else {
-          console.log('1.ERRORS: ' + data.error);
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log('2.ERRORS: ' + errorThrown);
-      },
-      complete: function() {
-        setTimeout(function() {
-          $("#loading").hide();
-          setUploadProgress(100);
-          setUploadStatus('Commande envoyée<br>Merci !');
-          
-           // Modal HB3D
-           var modal = document.createElement('div');
-           modal.className = 'hb3d-modal';
-           modal.innerHTML = '\
-       <div class="hb3d-modal-box">\
-       <div class="hb3d-modal-title">HB3D</div>\
-       <p class="hb3d-modal-text">\
-          Votre demande d\'impression 3D<br>\
-          a bien été envoyée !<br><br>\
-          Nous revenons vers vous rapidement.\
-        </p>\
-        <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
-       </div>';
-       document.body.appendChild(modal);
-        }, 700);
-        
-      }
-    });
+  if (qteText !== '') {
+    $('#quantite').val(qteText);
   }
+  if (prixText !== '') {
+    $('#prix_affiche').val(prixText);
+  }
+  // ------------------------------------------------------------
 
-}); 
+  // On sérialise le formulaire APRES màj des champs
+  var formData = $form.serialize();
 
+  // On ajoute les noms de fichiers renvoyés par upload.php
+  $.each(data.files || [], function(key, value) {
+    formData = formData + '&filenames[]=' + value;
+    if (key === 0) {
+      $('#fichier').val(value);
+    }
+  });
+
+  $.ajax({
+    url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
+    type: 'POST',
+    data: formData,
+    cache: false,
+    dataType: 'json',
+    success: function(data, textStatus, jqXHR) {
+      if (typeof data.error === 'undefined') {
+        console.log('SUCCESS: ' + data.success);
+
+        // --- HB3D: EmailJS après succès submit.php ---
+        try {
+          console.log('EmailJS: préparation des champs cachés');
+          var now = new Date();
+          $('#time').val(now.toLocaleString());
+          $('#message').val('Nouveau devis HB3D depuis le formulaire web.');
+
+          console.log('EmailJS: envoi sendForm');
+          emailjs.sendForm('service_np51rgo', 'template_7mjwzt9', '#form')
+          .then(function(response) {
+          console.log('EmailJS OK', response.status, response.text);
+          }, function(error) {
+         console.error('EmailJS ERROR', error);
+    });
+        } catch (e) {
+          console.error('EmailJS EXCEPTION', e);
+        }
+        // --- fin HB3D ---
+
+      } else {
+        console.log('1.ERRORS: ' + data.error);
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.log('2.ERRORS: ' + errorThrown);
+    },
+    complete: function() {
+      setTimeout(function() {
+        $("#loading").hide();
+        setUploadProgress(100);
+        setUploadStatus('Commande envoyée<br>Merci !');
+
+                // Modal HB3D
+        var modal = document.createElement('div');
+        modal.className = 'hb3d-modal';
+        modal.innerHTML = '\
+        <div class="hb3d-modal-box">\
+          <div class="hb3d-modal-title">HB3D</div>\
+          <p class="hb3d-modal-text">\
+            Votre demande d\'impression 3D<br>\
+            a bien été envoyée !<br><br>\
+            Nous revenons vers vous rapidement.\
+          </p>\
+          <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
+        </div>';
+        document.body.appendChild(modal);
+      }, 700);
+    }
+  });
+}
+});
 
 
 

@@ -230,24 +230,28 @@
 <form id="form">
 
   <label for="nom">Nom / Prénom</label>
-  <input id="nom" name="nom" type="text" />
+  <input id="nom" name="HB3D" type="text" />        <!-- pour {{HB3D}} ou client -->
 
   <label for="email">Email</label>
-  <input id="email" name="email" type="email" />
+  <input id="email" name="client_email" type="email" />
 
   <label for="tel">Téléphone</label>
-  <input id="tel" name="tel" type="text" />
+  <input id="tel" name="client_id" type="text" />   <!-- ex: identifiant / tel -->
 
   <label for="societe">Société (optionnel)</label>
-  <input id="societe" name="societe" type="text" />
+  <input id="societe" name="Bienvenue" type="text" />
 
-  <!-- Champs cachés synchronisés avec le panier -->
   <input type="hidden" id="quantite" name="quantite" value="1" />
-  <input type="hidden" id="prix_affiche" name="prix_affiche" value="22,71 €" />
+  <input type="hidden" id="prix_affiche" name="prix" value="22,71 €" />
+  <input type="hidden" id="fichier" name="fichier" value="" />
+  <input type="hidden" id="time" name="time" value="" />
+  <input type="hidden" id="message" name="message" value="" />
+  <input type="hidden" id="stripe_link" name="stripe_link" value="" />
 
   <button class="btn secondary" id="btn-etape-suivante">Étape suivante</button>
 
 </form>
+
 </div>
 <!-- VOLET 4 -->
 <div class="panel">
