@@ -138,61 +138,76 @@ $(document).ready(function() {
   }
 
   // -------------------------
-  // Submit du formulaire
-  // -------------------------
+// Submit du formulaire
+// -------------------------
 
-  function submitForm(event, data) {
-    var $form = $("#form");
-    var formData = $form.serialize();
+function submitForm(event, data) {
+  var $form    = $("#form");
+  var formData = $form.serialize(); // contient déjà email, etc.
 
-    $.each(data.files || [], function(key, value) {
-      formData = formData + '&filenames[]=' + value;
-    });
-
-    $.ajax({
-      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
-      type: 'POST',
-      data: formData,
-      cache: false,
-      dataType: 'json',
-      success: function(data, textStatus, jqXHR) {
-        if (typeof data.error === 'undefined') {
-          console.log('SUCCESS: ' + data.success);
-        } else {
-          console.log('1.ERRORS: ' + data.error);
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log('2.ERRORS: ' + errorThrown);
-      },
-      complete: function() {
-        setTimeout(function() {
-          $("#loading").hide();
-          setUploadProgress(100);
-          setUploadStatus('Commande envoyée<br>Merci !');
-          
-           // Modal HB3D
-           var modal = document.createElement('div');
-           modal.className = 'hb3d-modal';
-           modal.innerHTML = '\
-       <div class="hb3d-modal-box">\
-       <div class="hb3d-modal-title">HB3D</div>\
-       <p class="hb3d-modal-text">\
-          Votre demande d\'impression 3D<br>\
-          a bien été envoyée !<br><br>\
-          Nous revenons vers vous rapidement.\
-        </p>\
-        <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
-       </div>';
-       document.body.appendChild(modal);
-        }, 700);
-        
-      }
-    });
-  }
-
+  // Ajouter prix_affiche (par exemple pris dans un span ou input caché)
+formData.push({
+  name: 'prix_affiche',
+  value: $('#prix-panier').text()  // ou .val() si c'est un input
 });
 
+// Ajouter les noms de fichiers
+formData.push({
+  name: 'filenames[]',
+  value: currentUploadedFilename // ou la variable qui contient ton nom de STL
+});
 
+  // Ajout des noms de fichiers
+  $.each(data.files || [], function (key, value) {
+    formData = formData + '&filenames[]=' + encodeURIComponent(value);
+  });
 
+  // Ajout des champs personnalisés
+  var commentaire = $('#notes').val() || '';
+  var quantite    = $('#quantite').val() || 1;
+  var prixAffiche = $('#prix-panier').text().trim();
 
+  formData += '&commentaire=' + encodeURIComponent(commentaire);
+  formData += '&quantite='    + encodeURIComponent(quantite);
+  formData += '&prix_affiche=' + encodeURIComponent(prixAffiche);
+
+  $.ajax({
+    url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
+    type: 'POST',
+    data: formData,
+    cache: false,
+    dataType: 'json',
+    success: function (data, textStatus, jqXHR) {
+      if (typeof data.error === 'undefined') {
+        console.log('SUCCESS: ' + data.success);
+      } else {
+        console.log('1.ERRORS: ' + data.error);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log('2.ERRORS: ' + errorThrown);
+    },
+    complete: function () {
+      setTimeout(function () {
+        $("#loading").hide();
+        setUploadProgress(100);
+        setUploadStatus('Commande envoyée<br>Merci !');
+
+        // Modal HB3D
+        var modal = document.createElement('div');
+        modal.className = 'hb3d-modal';
+        modal.innerHTML = '\
+          <div class="hb3d-modal-box">\
+            <div class="hb3d-modal-title">HB3D</div>\
+            <p class="hb3d-modal-text">\
+              Votre demande d\'impression 3D<br>\
+              a bien été envoyée !<br><br>\
+              Nous revenons vers vous rapidement.\
+            </p>\
+            <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
+          </div>';
+        document.body.appendChild(modal);
+      }, 700);
+    }
+  });
+}
