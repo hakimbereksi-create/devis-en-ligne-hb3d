@@ -35,13 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 
 
-// require __DIR__ . '/vendor/autoload.php'; // adapte le chemin si besoin
-
-$stripeSecretKey = getenv('STRIPE_SECRET_KEY'); // à configurer côté serveur
-if ($stripeSecretKey) {
-    \Stripe\Stripe::setApiKey($stripeSecretKey);
-}
-
 
 // ----------------------
 // Lecture des données POST (form serialize())

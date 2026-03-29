@@ -378,7 +378,7 @@ th {
   align-self: center;       /* centre horizontalement dans le panel */
   margin-top: auto;         /* pousse le bouton vers le bas du panel */
   margin-bottom: 0;         /* ajuste si besoin */
-  width: 80%;               /* pour rester cohérent avec les autres .btn */
+  width: 80%;               /* pour rester cohérent avec les autres .btn */ 
 }
 
 /* ---------- Responsive ---------- */

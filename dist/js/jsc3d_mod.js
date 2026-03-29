@@ -5643,3 +5643,5 @@ JSC3D.StlLoader.prototype.onresource = null;
 JSC3D.StlLoader.prototype.decimalPrecision = 3;
 
 JSC3D.LoaderSelector.registerLoader('stl', JSC3D.StlLoader);
+
+
