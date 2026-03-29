@@ -33,8 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+
+
 // require __DIR__ . '/vendor/autoload.php'; // adapte le chemin si besoin
-// \Stripe\Stripe::setApiKey('sk_live_FQCK71JWEoi6AfKsoQ62dpZq'); // ta clé SECRÈTE
+
+$stripeSecretKey = getenv('STRIPE_SECRET_KEY'); // à configurer côté serveur
+if ($stripeSecretKey) {
+    \Stripe\Stripe::setApiKey($stripeSecretKey);
+}
 
 
 // ----------------------
