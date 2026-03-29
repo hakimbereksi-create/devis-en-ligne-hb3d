@@ -146,19 +146,28 @@ function submitForm(event, data) {
   var $form = $("#form");
 
   // --- HB3D: synchroniser les champs cachés avec le panier ---
-  var qteText  = $('#qte-panier').text().trim();
-  var prixText = $('#prix-panier').text().trim();
+var qteText  = $('#qte-panier').text().trim();
+var prixText = $('#prix-panier').text().trim();
 
-  if (qteText !== '') {
-    $('#quantite').val(qteText);
-  }
-  if (prixText !== '') {
-    $('#prix_affiche').val(prixText);
-  }
+console.log('qte-panier =', qteText, 'prix-panier =', prixText);
+
+if (qteText !== '') {
+  $('#quantite').val(qteText);
+}
+if (prixText !== '') {
+  $('#prix_affiche').val(prixText);
+}
   // ------------------------------------------------------------
-
+ 
   // On sérialise le formulaire APRES màj des champs
   var formData = $form.serialize();
+
+   
+  // Ajouter les notes (volet 2, hors form)
+  var notes = $('#notes').val() || '';
+  formData = formData + '&notes=' + encodeURIComponent(notes);
+  // >>> FIN AJOUT <<<
+  $('#message').val(notes);
 
   // On ajoute les noms de fichiers renvoyés par upload.php
   $.each(data.files || [], function(key, value) {
@@ -175,15 +184,30 @@ function submitForm(event, data) {
     cache: false,
     dataType: 'json',
     success: function(data, textStatus, jqXHR) {
+      console.log('submit.php response', data);  // <-- AJOUT ICI
+
       if (typeof data.error === 'undefined') {
         console.log('SUCCESS: ' + data.success);
 
+        if (data && data.stripe_link) {
+        $('#stripe_link').val(data.stripe_link);
+      } else {
+        $('#stripe_link').val('https://hb3d.fr/paiement'); // lien de test
+      }
+
         // --- HB3D: EmailJS après succès submit.php ---
+        
         try {
           console.log('EmailJS: préparation des champs cachés');
           var now = new Date();
           $('#time').val(now.toLocaleString());
-          $('#message').val('Nouveau devis HB3D depuis le formulaire web.');
+
+          // AVANT : ça écrasait le message client
+          // $('#message').val('Nouveau devis HB3D depuis le formulaire web.');
+
+          // MAINTENANT : on garde ce que le client a tapé
+          var notes = $('#notes').val() || '';
+  $('#message').val(notes);
 
           console.log('EmailJS: envoi sendForm');
           emailjs.sendForm('service_np51rgo', 'template_7mjwzt9', '#form')

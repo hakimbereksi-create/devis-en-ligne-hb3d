@@ -1,57 +1,220 @@
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+body {
+  background: #f4f5fb;
+  color: #111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ---------- Header + steps ---------- */
+header {
+  background: #ffffff;
+  color: #111827;
+  padding: 10px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1rem;
+}
+
+header .header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.logo {
+  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.16em;
+  color: #f70438;
+}
+
+.steps-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 0;
+  column-gap: 20px;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0e0d0d;
+}
+
+.step-item { text-align: center; }
+
+.step-item .step-number {
+  display: block;
+  font-weight: 600;
+  color: #fd053b;
+  margin-bottom: 2px;
+  font-size: 16px;
+  height: 30px;
+}
+
+.step-item .step-label {
+  display: block;
+  font-size: 0.9rem;
+}
+
+/* ---------- Layout principal ---------- */
+main {
+  padding: 16px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.top-columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+/* ---------- Panels (volets) ---------- */
+.panel {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 8px 10px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
 .top-columns .panel {
   display: flex;
   flex-direction: column;
 }
 
 .top-columns .panel > *:last-child {
-  margin-top: auto;   /* réaligne les boutons en bas */
+  margin-top: auto;
 }
+
+.panel h2 {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 14px;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+  color: #111827;
+}
+
+.panel h3 {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 14px;
+  margin: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4b5563;
+}
+
+/* ---------- Boutons ---------- */
 .btn {
-  display: block;
-  background: #f70303c4;
+  display: inline-block;
+  background: #fa0339;
   color: #fff;
   border: none;
   padding: 10px 0;
-  width: 100%;
-  border-radius: 0;
+  width: 80%;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   margin-top: 16px;
   font-family: 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
 }
-header {
-  background: #ffffff;
-  color: #111827;
-  padding: 10px 24px;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 2.2rem;
-}
 
-.logo {
-  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  font-size: 2.6rem;
-}
-
-.steps-bar {
-  font-size: 1.2rem;
-}
-
+/* ---------- Footer ---------- */
 footer {
   background: #ffffff;
-  color: #020305;
+  color: #111827;
   padding: 8px 24px;
-  border-top: 1px solid #aaaaaa;
+  border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-size: 1.8rem;
-  margin-top: 140px; /* pour le remonter un peu */
+  font-size: 1.5rem;
+  margin-top: 1px;   /* au lieu de 24px ou plus */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
+/* ---------- Formulaires & tableaux ---------- */
+label {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #4b5563;
+  font-family: Orbitron, system-ui, sans-serif;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 6px 8px;
+  margin-top: 3px;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+  font-size: 0.87rem;
+  background: #ffffff;
+  color: #111827;
+}
+
+/* Zone "Notes / Message client" plus lisible */
+textarea#notes,
+textarea[name="notes"] {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #000000;
+}
+#notes {
+  min-height: 100px;  /* ou 120 si tu veux un peu plus haut */
+}
+.panel #quantite {
+  font-size: 12px;
+  font-family: Orbitron, system-ui, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+th, td {
+  border: 1px solid #e5e7eb;
+  padding: 5px 6px;
+  text-align: left;
+}
+
+th {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+/* ---------- Couleurs / chips ---------- */
 .couleurs {
   display: flex;
   flex-wrap: wrap;
@@ -65,21 +228,31 @@ footer {
   gap: 4px;
   cursor: pointer;
   border: 1px solid #d1d5db;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 3px 8px;
   font-size: 0.75rem;
   user-select: none;
 }
 
-.chip-color input[type="radio"] {
-  display: none;
+.chip-color input[type="radio"] { display: none; }
+
+.chip-color {
+  display: inline-flex;
+  flex-direction: column;   /* swatch au-dessus, texte en dessous */
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  border: none;             /* plus de trait autour de l'ensemble */
+  padding: 0;               /* plus de padding de la puce */
+  font-size: 0.75rem;
+  user-select: none;
 }
 
 .chip-color .swatch {
-  width: 20px;
-  height: 15px;
-  border-radius: 4px; /* rond -> 999px si tu veux de vraies gommettes */
-  border: 1px solid rgba(0,0,0,0.15);
+  width: 23px;
+  height: 23px;
+  border-radius: 2px;       /* petit arrondi, ou 999px pour rond */
+  border: 1px solid rgba(0,0,0,0.15);  /* tu peux mettre 'none' pour aucun trait */
 }
 
 .chip-color .swatch-label {
@@ -87,17 +260,19 @@ footer {
 }
 
 .chip-color input[type="radio"]:checked + .swatch {
-  outline: 2px solid #f97316; /* accent HB3D autour de la couleur active */
+  outline: 2px solid #f97316;
   outline-offset: 1px;
 }
 
+/* Swatch panier */
 .swatch-panier {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 3px; /* 999px si tu veux rond */
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
   border: 1px solid rgba(0,0,0,0.15);
   margin-right: 4px;
+  background-color: #e5e7eb;
   vertical-align: middle;
 }
 
@@ -106,558 +281,124 @@ footer {
   vertical-align: middle;
 }
 
-.swatch-panier {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  border: 1px solid rgba(0,0,0,0.15);
-  margin-right: 4px;
-  background-color: #e5e7eb; /* défaut */
-  vertical-align: middle;
+/* ---------- Upload zone / viewer ---------- */
+.upload-zone {
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 22px;
+  text-align: center;
+  margin-bottom: 16px;
+  background: #f9fafb;
+  font-size: 0.9rem;
+  color: #4b5563;
 }
 
-.swatch-panier-label {
-  font-size: 0.75rem;
-  vertical-align: middle;
+.upload-zone strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #111827;
 }
 
-.top-columns .panel {
+.viewer {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  background: #f9fafb;
+}
+
+/* ---------- Disque upload (repris sans toucher à la logique JS) ---------- */
+.status-panel {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-.top-columns .panel > *:last-child {
-  margin-top: auto;  /* pousse le bouton vers le bas du volet */
+.hb3d-mark {
+  text-align: center;
+  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
 }
-.btn {
-  display: inline-block;
-  background: #fa0339;          /* rouge HB3D */
-  color: #fff;
-  border: none;
-  padding: 10px 0;
-  width: 80%;                  /* même largeur dans chaque volet */
-  border-radius: 4px;             /* tuiles rectangulaires */
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 16px;
-  font-family: 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.08em;
+
+.hb3d-mark .name {
+  font-size: 1.3rem;
+  letter-spacing: 0.18em;
+  color: #fc0439;
+}
+
+.hb3d-mark .subtitle {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.circular-upload {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(225, 29, 72, 0.35);
+  background: conic-gradient(#e11d48 calc(var(--progress, 0) * 1%), #e5e7eb 0);
+  transition: background 0.4s ease-out;
+}
+
+.circular-upload::before {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.circular-upload span {
+  position: relative;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.upload-text {
+  font-size: 0.82rem;
+  color: #4b5563;
   text-align: center;
 }
 
-
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #f4f5fb;
-      color: #111827;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    header {
-      background: #ffffff;
-      color: #111827;
-      padding: 18px 24px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      background: #ffffff;
-      color: #111827;
-      padding: 8px 24px;
-      border-top: 1px solid #e5e7eb;
-      text-align: center;
-      font-size: 1.5rem;
-      margin-top: 24px;
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    header .header-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .logo {
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 0.16em;
-      color: #f70438;
-    
-    }
-
-    .steps-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      max-width: 1400px;
-      margin: 0 auto;
-      margin-top: 4px;
-      column-gap: 20px;
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #0e0d0d;
-      
-    }
-
-    .step-item {
-      text-align: center;
-    }
-
-    .step-item span.step-number {
-      display: block;
-      font-weight: 600;
-      color: #fd053b;
-      margin-bottom: 2px;
-    }
-
-    .step-item span.step-label {
-      display: block;
-      font-size: 0.9rem;
-    }
-
-    main {
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .top-columns {
-      margin-bottom: 8px;   /* au lieu de 20px */
-    }
-
-    .panel {
-      margin-bottom: 8px;
-    }
-
-    .top-columns {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 8px;
-      margin-bottom: 20px;
-    }
-
-    .panel {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 5px 10px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-    }
-
-    .panel h2 {
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 6px;
-      color: #111827;
-    }
-
-    .panel h3 {
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 0.8rem;
-      margin: 6px 0 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #4b5563;
-    }
-
-    .upload-zone {
-      border: 1px dashed #cbd5e1;
-      border-radius: 8px;
-      padding: 22px;
-      text-align: center;
-      margin-bottom: 16px;
-      background: #f9fafb;
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
-
-    .upload-zone strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #111827;
-    }
-
-    .viewer {
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      color: #6b7280;
-      background: #f9fafb;
-    }
-
-    label {
-      display: block;
-      margin-top: 8px;
-      font-size: 0.82rem;
-      color: #4b5563;
-    }
-
-    select, input[type="number"], input[type="text"], input[type="email"], textarea {
-      width: 100%;
-      padding: 6px 8px;
-      margin-top: 3px;
-      border-radius: 5px;
-      border: 1px solid #d1d5db;
-      font-size: 0.87rem;
-      background: #ffffff;
-      color: #111827;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 6px;
-      margin-bottom: 10px;
-    }
-
-    th, td {
-      border: 1px solid #e5e7eb;
-      padding: 5px 6px;
-      text-align: left;
-    }
-
-    th {
-      background: #f3f4f6;
-      color: #374151;
-    }
-
-    .status-panel {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .hb3d-mark {
-      text-align: center;
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-    }
-
-    .hb3d-mark .name {
-      font-size: 1.3rem;
-      letter-spacing: 0.18em;
-      color: #fc0439;
-    }
-
-    .hb3d-mark .subtitle {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-top: 4px;
-    }
-
-    .circular-upload {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(225, 29, 72, 0.35);
-      background: conic-gradient(#e11d48 calc(var(--progress, 0) * 1%), #e5e7eb 0);
-      transition: background 0.4s ease-out;
-    }
-
-    .circular-upload::before {
-      content: "";
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #ffffff;
-    }
-
-    .circular-upload span {
-      position: relative;
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 1rem;
-      color: #111827;
-    }
-
-    .upload-text {
-      font-size: 0.82rem;
-      color: #4b5563;
-      text-align: center;
-    }
-
-    @media (max-width: 1100px) {
-      .top-columns {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .steps-bar {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 6px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .top-columns {
-        grid-template-columns: 1fr;
-      }
-      .steps-bar {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    html,
-body {
-  min-height: 0 !important;
-  height: auto !important;
+/* Bouton Upload : centré et aligné en bas du volet 4 */
+#btn-upload {
+  align-self: center;       /* centre horizontalement dans le panel */
+  margin-top: auto;         /* pousse le bouton vers le bas du panel */
+  margin-bottom: 0;         /* ajuste si besoin */
+  width: 80%;               /* pour rester cohérent avec les autres .btn */
 }
 
-.panel,
-.top-columns,
-main {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
+/* ---------- Responsive ---------- */
+@media (max-width: 767px) {
+  .top-columns {
+    grid-template-columns: 1fr;
+  }
+  .steps-bar {
+    grid-template-columns: 1fr;
+  }
 }
 
-footer {
-  margin-top: 0 !important;
-  position: static !important;
+@media (min-width: 768px) and (max-width: 1199px) {
+  .top-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .steps-bar {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 6px;
+  }
 }
 
-  #btn-devis {
-	margin-bottom: 50px;
-}
-  #btn-etape-suivante {
-	margin-bottom: 60px;
-}
-  #btn-etape-suivante {
-	margin-bottom: 50px;
-}
-  #btn-upload {
-	margin-bottom: 50px;
-}
-  .header-inner .steps-bar .step-item .step-number {
-	font-size: 14px;
-}
-  .step-number {
-	font-size: 14px;
-}
-  .step-number {
-	font-size: 16px;
-	height: 30px;
-}
-  #footer color {
-	background-color: #CCC;
-}
-  .top-columns .panel h2 {
-	font-size: 14px;
-}
-  .top-columns .panel h3 {
-	font-size: 14px;
-	color: #F00;
-}
-  .subtitle p {
-	font-size: 16px;
-}
-  .hb3d-mark .name p {
-	font-size: 16px;
-}
-  .panel1 {      margin-bottom: 8px;
-}
-.panel1 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel1 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.top-columns1 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel2 {      margin-bottom: 8px;
-}
-.panel2 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel2 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel11 {margin-bottom: 8px;
-}
-.panel11 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel11 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel3 {      margin-bottom: 8px;
-}
-.panel3 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel3 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel4 {      margin-bottom: 8px;
-}
-.panel4 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel4 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel111 {margin-bottom: 8px;
-}
-.panel111 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel111 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel21 {margin-bottom: 8px;
-}
-.panel21 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel21 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel5 {      margin-bottom: 8px;
-}
-.panel5 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel5 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel31 {margin-bottom: 8px;
-}
-.panel31 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel31 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel6 {      margin-bottom: 8px;
-}
-.panel6 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel6 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel311 {margin-bottom: 8px;
-}
-.panel311 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel311 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel51 {margin-bottom: 8px;
-}
-.panel51 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel51 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .subtitle p {
-	font-size: 14px;
-	color: #333;
-}
-  .top-columns .panel table thead tr th {
-	font-size: 12px;
-}
-  .top-columns .panel table tbody tr td {
-	font-size: 12px;
-}
-  #footer color footer #footer {
-	font-size: 14px;
-	color: #999;
-	background-color: #666;
-}
-  #footer color {
-	background-color: #CCC;
-	font-size: 14px;
-}
-  #footer txt copyright {
-	font-size: 8px;
-}
-  #footer color footer #footer em {
-	font-size: 8px;
-}
-  #viewer-modes button {
-	font-family: Orbitron;
-	font-size: 12px;
-}
-  .top-columns .panel label {
-	font-size: 10px;
-}
-  .top-columns .panel label {
-	font-size: 10px;
-	font-family: Orbitron;
-}
-  .panel #quantite {
-	font-size: 12px;
-	font-family: Orbitron;
-}
-  
+/* Desktop 4 colonnes déjà couvert par la règle de base .top-columns */

@@ -13,29 +13,96 @@
   <!-- <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css"> -->
   <link rel="stylesheet" href="dist/css/style.css">
   <link rel="stylesheet" href="dist/css/hb3d-upload.css">
+<style type="text/css">
+#notes {
+	margin-bottom: 100px;
+	height: 100px;
+}
+#view3d {
+}
+#view3d #viewer-modes {
+	color: #F00;
+	background-color: #FFF;
+}
+.panel #view3d #viewer-modes button {
+	background-color: #F00;
+	color: #FFF;
+	font-weight: normal;
+	border-top-color: #FFF;
+	border-right-color: #FFF;
+	border-bottom-color: #FFF;
+	border-left-color: #FFF;
+	font-size: 10px;
+	font-family: Orbitron;
+}
+.subtitle p {
+	font-size: 16px;
+	color: #333;
+	margin-top: 50px;
+}
+.hb3d-mark .name p {
+	margin-top: 35px;
+	font-size: 16px;
+	font-weight: normal;
+	font-family: "space Age";
+	color: #F00;
+}
+#btn-upload div {
+	font-size: 16px;
+	float: none;
+	font-family: "space Age";
+	font-weight: bold;
+	color: #FFF;
+}
+.hb3d-mark .name p strong {
+	font-size: 11px;
+}
+.top-columns .panel h3 {
+	font-family: Orbitron;
+}
+.panel #form {
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.panel table tr td div {
+	font-family: Orbitron;
+}
+</style>
 </head>
 
 <body>
   <header>
     <div class="header-inner">
       <div class="header-top">
-        <div class="logo">HB3D</div>
+        <div class="logo">
+          <div align="center">HB3D</div>
+        </div>
       </div>
       <div class="steps-bar">
         <div class="step-item">
-          <span class="step-number">Étape 1</span>
-          <span class="step-label">Téléversez</span>
+          <div align="center"><span class="step-number">Étape 1</span>
+            <span class="step-label">Téléversez</span>
+          </div>
         </div>
         <div class="step-item">
-          <span class="step-number">Étape 2</span>
-          <span class="step-label">Configuration</span>
+          <div align="center"><span class="step-number">Étape 2</span>
+            <span class="step-label">Configuration</span>
+          </div>
         </div>
         <div class="step-item">
-          <span class="step-number">Étape 3</span>
-          <span class="step-label">Panier & détails</span>
+          <div align="center"><span class="step-number">Étape 3</span>
+            <span class="step-label">Panier & détails</span>
+          </div>
         </div>
-        <div class="step-item"><span class="step-number">Étape 4</span>
-          <span class="step-label">Upload & envoi</span>
+        <div class="step-item">
+          <div align="center"><span class="step-number">Étape 4</span>
+            <span class="step-label">Upload & envoi</span></div>
         </div>
       </div>
     </div>
@@ -45,7 +112,7 @@
     <section class="top-columns">
 <!-- VOLET 1 -->
 <div class="panel">
-  <h2>1. Téléversez votre fichier 3D</h2>
+  <h2 align="center">1. Téléversez votre fichier 3D</h2>
 
   <div class="upload-zone">
     <strong>Zone de dépôt</strong><br>
@@ -65,12 +132,10 @@
 </div>
 
     <div id="viewer-modes" class="viewer-modes">
-  <button id="test-couleur-gris">Gris</button>
-  <button id="test-couleur-bleu">Bleu</button>
   <button data-mode="flat">Plein</button>
   <button data-mode="wireframe">Wireframe</button>
   <button data-mode="point">Points</button>
-</div>
+    </div>
     <div class="panel panel-info" id="tip">
       <table class="table">
         <tr>
@@ -84,7 +149,7 @@
         <tr>
           <td>Pan</td>
           <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd></td>
-        </tr>
+        
       </table>
     </div>
 
@@ -95,14 +160,23 @@
 
       <!-- VOLET 2 -->
       <div class="panel">
-        <h2>2. Configuration impression & devis</h2>
+        <h2 align="center">2. Configuration impression & devis</h2>
 
         <label for="techno">Technologie :</label>
         <table width="50" border="1">
           <tr>
-            <td width="33%"><img src="images/Anycubic max.png" width="42" height="54" align="texttop" longdesc="images/Anycubic max.png"></td>
-            <td width="33%"><img src="images/SLA.png" width="38" height="50" align="absmiddle" longdesc="images/SLA.png"></td>
-            <td width="34%"><img src="images/ProJet1000.png" width="54" height="55" longdesc="images/ProJet1000.png"></td>
+            <td width="33%"><div align="center">
+              <p><img src="images/Anycubic max.png" width="42" height="54" align="middle" longdesc="images/Anycubic max.png"></p>
+              <p>FDM</p>
+            </div></td>
+            <td width="33%"><div align="center">
+              <p><img src="images/SLA.png" width="38" height="50" align="absmiddle" longdesc="images/SLA.png"></p>
+              <p>SLA</p>
+            </div></td>
+            <td width="34%"><div align="center">
+              <p><img src="images/ProJet1000.png" width="54" height="55" longdesc="images/ProJet1000.png"></p>
+              <p>SLA</p>
+            </div></td>
           </tr>
         </table>
         <select id="techno">
@@ -185,20 +259,19 @@
   <!-- tu peux continuer pour orange, jaune, purple... -->
 </div>
 
-
-
         <label for="quantite">Quantité</label>
         <input id="quantite" type="number" min="1" value="1" />
 
         <label for="notes">Précisez votre demande</label>
-        <textarea id="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+        
 
-        <button class="btn" id="btn-devis">Obtenir un devis</button>
+        <!--<button class="btn" id="btn-devis">Obtenir un devis</button>-->
       </div>
 
       <!-- VOLET 3 -->
 <div class="panel">
-  <h2>3. Panier & détails personnels</h2>
+  <h2 align="center">3. Panier & détails personnels</h2>
 
   <h3>Votre panier   <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
   <table height="72">
@@ -228,42 +301,38 @@
 <h3>Détails personnels</h3>
 
 <form id="form">
-
   <label for="nom">Nom / Prénom</label>
-  <input id="nom" name="HB3D" type="text" />        <!-- pour {{HB3D}} ou client -->
+  <input id="nom" name="HB3D" type="text" />
+
+  <label for="societe">Société (optionnel)</label>
+  <input id="societe" name="Bienvenue" type="text" />
 
   <label for="email">Email</label>
   <input id="email" name="client_email" type="email" />
 
   <label for="tel">Téléphone</label>
-  <input id="tel" name="client_id" type="text" />   <!-- ex: identifiant / tel -->
+  <input id="tel" name="client_id" type="text" />
 
-  <label for="societe">Société (optionnel)</label>
-  <input id="societe" name="Bienvenue" type="text" />
-
-  <input type="hidden" id="quantite" name="quantite" value="1" />
-  <input type="hidden" id="prix_affiche" name="prix" value="22,71 €" />
-  <input type="hidden" id="fichier" name="fichier" value="" />
-  <input type="hidden" id="time" name="time" value="" />
-  <input type="hidden" id="message" name="message" value="" />
+  <!-- cachés -->
+  <input type="hidden" id="quantite"    name="quantite" value="1" />
+  <input type="hidden" id="prix_affiche" name="prix"    value="" />
+  <input type="hidden" id="fichier"     name="fichier"  value="" />
+  <input type="hidden" id="time"        name="time"     value="" />
+  <input type="hidden" id="message"     name="message"  value="" />    
   <input type="hidden" id="stripe_link" name="stripe_link" value="" />
-
-  <button class="btn secondary" id="btn-etape-suivante">Étape suivante</button>
-
 </form>
 
 </div>
 <!-- VOLET 4 -->
 <div class="panel">
-  <h2>4. Upload & logo HB3D</h2>
+  <h2 align="center">4. Upload & logo HB3D</h2>
 
   <div class="status-panel">
     <div class="hb3d-mark">
       <div class="name">
-        <p>HB3D</p>
+        <p><strong>HB3D</strong>        </p>
         <p>
-          <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="92" height="72">
-        </p>
+          <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="92" height="72">        </p>
       </div>
       <div class="subtitle">
         <p>Calculateur de volume en ligne</p>
@@ -279,9 +348,7 @@
     </div>
   </div>
 
-  <button class="btn secondary" id="btn-upload">
-  <div align="center">Upload files</div>
-  </button>
+  <button class="btn secondary" id="btn-upload">Upload files</button>
 </div>
     </section>
   </main>
