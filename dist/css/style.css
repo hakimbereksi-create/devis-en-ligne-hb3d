@@ -94,6 +94,19 @@ main {
   border: 1px solid #e5e7eb;
 }
 
+.panel table .cell-filename {
+  max-width: 140px;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.panel table .cell-filename span {
+  font-size: 0.75rem;
+}
+.panel table .cell-filename span {
+  font-weight: 600;  /* ou 700 si tu veux encore plus gras */
+}
+
 .top-columns .panel {
   display: flex;
   flex-direction: column;
@@ -142,18 +155,39 @@ main {
 }
 
 /* ---------- Footer ---------- */
-footer {
+
+.hb3d-footer {
   background: #ffffff;
   color: #111827;
   padding: 8px 24px;
   border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-size: 1.5rem;
-  margin-top: 1px;   /* au lieu de 24px ou plus */
   font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  font-size: 1.5rem;
+  margin-top: -45px; /* ta valeur actuelle, à ajuster si besoin */
 }
+
+.hb3d-footer-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hb3d-footer-main {
+  display: inline-block;
+}
+
+.footer-copy {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: #999999;
+}
+
 
 /* ---------- Formulaires & tableaux ---------- */
 label {
@@ -380,6 +414,9 @@ th {
   margin-bottom: 0;         /* ajuste si besoin */
   width: 80%;               /* pour rester cohérent avec les autres .btn */ 
 }
+
+
+
 
 /* ---------- Responsive ---------- */
 @media (max-width: 767px) {

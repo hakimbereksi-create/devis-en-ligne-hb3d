@@ -73,6 +73,29 @@
 .panel table tr td div {
 	font-family: Orbitron;
 }
+#viewer-modes {
+	font-family: Orbitron;
+}
+.top-columns .panel {
+}
+.top-columns .panel #viewer-modes button {
+	font-family: Orbitron;
+	color: #FFF;
+	background-color: #F00;
+	border-top-color: #FFF;
+	border-right-color: #FFF;
+	border-bottom-color: #FFF;
+	border-left-color: #FFF;
+	font-size: 12px;
+	font-weight: bolder;
+}
+.hb3d-mark .name p strong {
+}
+#viewer-modes button {
+	font-family: Orbitron;
+	font-size: 9px;
+	font-weight: normal;
+}
 </style>
 </head>
 
@@ -124,18 +147,22 @@
   </div>
 
   <!-- VUE 3D : viewer JSC3D -->
-  <div id="view3d">
+    <div id="view3d">
     <canvas id="cv" width="400" height="400"></canvas>
+    <!--
     <div id="viewer-info"
      style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
-  Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g
+      Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g
+      -->
 </div>
+
+
 
     <div id="viewer-modes" class="viewer-modes">
   <button data-mode="flat">Plein</button>
   <button data-mode="wireframe">Wireframe</button>
   <button data-mode="point">Points</button>
-    </div>
+   </div>
     <div class="panel panel-info" id="tip">
       <table class="table">
         <tr>
@@ -149,7 +176,7 @@
         <tr>
           <td>Pan</td>
           <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd></td>
-        
+        </tr>
       </table>
     </div>
 
@@ -284,10 +311,13 @@
     <th><div align="center">Qté</div></th>
     <th><div align="center">Prix</div></th>
   </tr>
-</thead>
 <tbody>
   <tr>
-    <td><div align="center"><span id="nom-fichier-panier">piece_v1.stl</span></div></td>
+    <td class="cell-filename">
+      <div align="center">
+        <span id="nom-fichier-panier">piece_v1.stl</span>
+      </div>
+    </td>
     <td><div align="center"><span id="techno-panier">FDM</span></div></td>
     <td><div align="center"><span id="materiau-panier">PLA</span></div></td>
     <td><div align="center"><span class="swatch-panier"></span><span id="couleur-panier">Blanc</span></div></td>
@@ -353,12 +383,13 @@
     </section>
   </main>
   <div id="footer color">
-    <footer>
-      <div id="footer"> <img src="images/Logo HBD.jpg" width="32" height="25" longdesc="images/Logo HBD.jpg"> HB3D / Calculateur de volume en ligne
-        <div id="copyright footer"></div>
-      </div>
-    </footer>
+   <footer class="hb3d-footer">
+  <div class="hb3d-footer-inner">
+    <img src="images/Logo HBD.jpg" width="32" height="25" alt="HB3D">
+    <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
   </div>
+  <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
+</footer>
 
   <!-- scripts JSC3D -->
 <script src="dist/js/jquery-1.11.1.min.js"></script>
@@ -556,6 +587,5 @@ $(document).ready(function () {
 </body>
 </html>
 
-</body>
-</html>
+
 

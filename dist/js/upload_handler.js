@@ -50,6 +50,20 @@ $(document).ready(function() {
   // Upload des fichiers
   // -------------------------
 
+  // couleur (pour la synchro panier)
+$('input[name="couleur"]').on('change', function () {
+  const $chip   = $(this).closest('.chip-color');
+  const label   = $chip.find('.swatch-label').text().trim();
+  const color   = $chip.find('.swatch').css('background-color'); // ou data-color
+
+  // MAJ texte dans le panier
+  $('#couleur-panier').text(label);
+
+  // MAJ pastille dans le panier
+  $('.swatch-panier').css('background-color', color);
+});
+
+
   function uploadFiles(event) {
     event.stopPropagation();
     event.preventDefault();

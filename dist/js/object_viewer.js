@@ -152,6 +152,15 @@ $(document).ready(function() {
   });
   */
 
+  // Affichage temporaire de l'aide de navigation "Interact"
+$('#info').on('mouseenter', function () {
+  $('#tip').stop(true, true).fadeIn(100);
+});
+
+$('.viewer-wrapper').on('mouseleave', function () {
+  $('#tip').fadeOut(100);
+});
+
   // File loader
   $("#file").change(function(evt) {
     const file = evt.target.files[0];
@@ -166,6 +175,7 @@ $(document).ready(function() {
 
 
 // 2) mapping valeur métier -> couleur hex (en dehors de ready, global)
+
 var hb3dColorMap = {
   pla_blanc:  '#F5F5F5',
   pla_noir:   '#222222',
