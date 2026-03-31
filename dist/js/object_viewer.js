@@ -6,7 +6,7 @@ $(document).ready(function() {
   var canvas = document.getElementById('cv');
   viewer = new JSC3D.Viewer(canvas);
 
-  viewer.setParameter('SceneUrl', 'dist/models/40mmcube.stl');
+  //viewer.setParameter('SceneUrl', 'dist/models/40mmcube.stl');
   viewer.setParameter('InitRotationX', 20);
   viewer.setParameter('InitRotationY', 20);
   viewer.setParameter('InitRotationZ', 0);
