@@ -1,7 +1,12 @@
 /* ---------- Base ---------- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html, body {
+html,
+body {
   min-height: 0 !important;
   height: auto !important;
 }
@@ -15,46 +20,42 @@ body {
 /* ---------- Header + steps ---------- */
 header {
   background: #ffffff;
-  color: #111827;
-  padding: 10px 24px;
+  height: 30px;
   border-bottom: 1px solid #e5e7eb;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
 }
 
-header .header-inner {
+.header-inner {
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .header-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
+  justify-content: center;
+  height: 100%;
+  margin-bottom: 0;
 }
 
 .logo {
-  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-  font-size: 1.8rem;
+  font-family: "Space Age", Orbitron, system-ui, sans-serif;
+  font-size: 2.2rem;
   letter-spacing: 0.16em;
   color: #f70438;
+  text-align: center;
 }
 
 .steps-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 1400px;
-  margin: 0 auto;
-  margin-top: 0;
-  column-gap: 20px;
-  font-family: 'Orbitron', system-ui, sans-serif;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #0e0d0d;
+  display: none;
 }
 
-.step-item { text-align: center; }
+.step-item {
+  text-align: center;
+}
 
 .step-item .step-number {
   display: block;
@@ -94,19 +95,6 @@ main {
   border: 1px solid #e5e7eb;
 }
 
-.panel table .cell-filename {
-  max-width: 140px;
-  word-break: break-word;
-  white-space: normal;
-}
-
-.panel table .cell-filename span {
-  font-size: 0.75rem;
-}
-.panel table .cell-filename span {
-  font-weight: 600;  /* ou 700 si tu veux encore plus gras */
-}
-
 .top-columns .panel {
   display: flex;
   flex-direction: column;
@@ -117,7 +105,7 @@ main {
 }
 
 .panel h2 {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: "Orbitron", system-ui, sans-serif;
   font-size: 14px;
   margin-bottom: 2px;
   text-transform: uppercase;
@@ -128,45 +116,59 @@ main {
 }
 
 .panel h3 {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: "Orbitron", system-ui, sans-serif;
   font-size: 14px;
   margin: 6px 0;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #4b5563;
+  color: #2c323b;
+  text-align: center;
 }
 
 /* ---------- Boutons ---------- */
 .btn {
   display: inline-block;
+  width: 80%;
+  padding: 10px 0;
+  margin-top: 16px;
+  border: none;
+  border-radius: 4px;
   background: #fa0339;
   color: #fff;
-  border: none;
-  padding: 10px 0;
-  width: 80%;
-  border-radius: 4px;
   cursor: pointer;
+  text-align: center;
   font-size: 0.9rem;
-  margin-top: 16px;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: "Orbitron", system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+#btn-devis {
+  display: block;
+  width: 80%;
+  margin: 18px auto 0;
   text-align: center;
 }
 
-/* ---------- Footer ---------- */
+#btn-upload {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 0;
+  width: 80%;
+}
 
+/* ---------- Footer ---------- */
 .hb3d-footer {
   background: #ffffff;
   color: #111827;
   padding: 8px 24px;
   border-top: 1px solid #e5e7eb;
   text-align: center;
-  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+  font-family: "Space Age", "Orbitron", system-ui, sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 1.5rem;
-  margin-top: -45px; /* ta valeur actuelle, à ajuster si besoin */
+  margin-top: -45px;
 }
 
 .hb3d-footer-inner {
@@ -187,7 +189,6 @@ main {
   text-transform: none;
   color: #999999;
 }
-
 
 /* ---------- Formulaires & tableaux ---------- */
 label {
@@ -213,17 +214,18 @@ textarea {
   color: #111827;
 }
 
-/* Zone "Notes / Message client" plus lisible */
 textarea#notes,
 textarea[name="notes"] {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: "Orbitron", system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   color: #000000;
 }
+
 #notes {
-  min-height: 100px;  /* ou 120 si tu veux un peu plus haut */
+  min-height: 100px;
 }
+
 .panel #quantite {
   font-size: 12px;
   font-family: Orbitron, system-ui, sans-serif;
@@ -237,7 +239,8 @@ table {
   margin-bottom: 10px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #e5e7eb;
   padding: 5px 6px;
   text-align: left;
@@ -246,6 +249,17 @@ th, td {
 th {
   background: #f3f4f6;
   color: #374151;
+}
+
+.panel table .cell-filename {
+  max-width: 140px;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.panel table .cell-filename span {
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 /* ---------- Couleurs / chips ---------- */
@@ -258,35 +272,25 @@ th {
 
 .chip-color {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   cursor: pointer;
-  border: 1px solid #d1d5db;
-  border-radius: 2px;
-  padding: 3px 8px;
+  border: none;
+  padding: 0;
   font-size: 0.75rem;
   user-select: none;
 }
 
-.chip-color input[type="radio"] { display: none; }
-
-.chip-color {
-  display: inline-flex;
-  flex-direction: column;   /* swatch au-dessus, texte en dessous */
-  align-items: center;
-  gap: 2px;
-  cursor: pointer;
-  border: none;             /* plus de trait autour de l'ensemble */
-  padding: 0;               /* plus de padding de la puce */
-  font-size: 0.75rem;
-  user-select: none;
+.chip-color input[type="radio"] {
+  display: none;
 }
 
 .chip-color .swatch {
   width: 23px;
   height: 23px;
-  border-radius: 2px;       /* petit arrondi, ou 999px pour rond */
-  border: 1px solid rgba(0,0,0,0.15);  /* tu peux mettre 'none' pour aucun trait */
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .chip-color .swatch-label {
@@ -298,13 +302,12 @@ th {
   outline-offset: 1px;
 }
 
-/* Swatch panier */
 .swatch-panier {
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,0.15);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   margin-right: 4px;
   background-color: #e5e7eb;
   vertical-align: middle;
@@ -345,31 +348,53 @@ th {
   background: #f9fafb;
 }
 
-/* ---------- Disque upload (repris sans toucher à la logique JS) ---------- */
+/* ---------- Bloc upload / logo HB3D ---------- */
 .status-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   gap: 16px;
+  text-align: center;
 }
 
 .hb3d-mark {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
+  font-family: "Space Age", "Orbitron", system-ui, sans-serif;
 }
 
 .hb3d-mark .name {
+  width: 100%;
   font-size: 1.3rem;
   letter-spacing: 0.18em;
   color: #fc0439;
+  text-align: center;
 }
 
 .hb3d-mark .subtitle {
+  width: 100%;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #6b7280;
   margin-top: 4px;
+  text-align: center;
+}
+
+.hb3d-mark .name p,
+.hb3d-mark .subtitle p {
+  margin: 0;
+  text-align: center;
+}
+
+.hb3d-mark img {
+  display: block;
+  margin: 12px auto;
 }
 
 .circular-upload {
@@ -396,33 +421,75 @@ th {
 
 .circular-upload span {
   position: relative;
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: "Orbitron", system-ui, sans-serif;
   font-size: 1rem;
   color: #111827;
 }
 
+#hb3d-upload-text,
 .upload-text {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
   font-size: 0.82rem;
   color: #4b5563;
-  text-align: center;
 }
 
-/* Bouton Upload : centré et aligné en bas du volet 4 */
-#btn-upload {
-  align-self: center;       /* centre horizontalement dans le panel */
-  margin-top: auto;         /* pousse le bouton vers le bas du panel */
-  margin-bottom: 0;         /* ajuste si besoin */
-  width: 80%;               /* pour rester cohérent avec les autres .btn */ 
+/* ---------- Panier ---------- */
+.panier-stack {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 18px;
 }
 
+.panier-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  column-gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
 
+.panier-label {
+  margin: 0;
+  font-family: Orbitron, system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #4b5563;
+}
 
+.panier-value {
+  font-family: Orbitron, system-ui, sans-serif;
+  font-size: 1rem;
+  color: #111827;
+  text-align: left;
+  word-break: break-word;
+}
+
+.panier-couleur {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.panier-row-total .panier-label,
+.panier-row-total .panier-value {
+  font-weight: 700;
+}
+
+.panier-row-total .panier-value {
+  font-size: 1.1rem;
+  color: #fa0339;
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 767px) {
   .top-columns {
     grid-template-columns: 1fr;
   }
+
   .steps-bar {
     grid-template-columns: 1fr;
   }
@@ -432,6 +499,7 @@ th {
   .top-columns {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .steps-bar {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 6px;
@@ -439,3 +507,229 @@ th {
 }
 
 /* Desktop 4 colonnes déjà couvert par la règle de base .top-columns */
+
+
+/* === TEST VISUEL 1 : panier + respiration générale === */
+
+/* Un peu plus d'air dans les volets */
+.panel {
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+/* Titres de volets légèrement plus lisibles */
+.panel h2 {
+  margin-bottom: 6px;
+  padding-bottom: 8px;
+  line-height: 1.35;
+}
+
+/* Panier plus propre */
+.panier-stack {
+  margin-top: 12px;
+  margin-bottom: 22px;
+}
+
+.panier-row {
+  grid-template-columns: 120px 1fr;
+  column-gap: 14px;
+  padding: 11px 0;
+}
+
+/* Valeurs un peu plus nettes */
+.panier-value {
+  font-size: 1.02rem;
+  line-height: 1.35;
+}
+
+/* Le total doit ressortir franchement */
+.panier-row-total {
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 2px solid #f3d3db;
+  border-bottom: none;
+}
+
+.panier-row-total .panier-label {
+  font-size: 0.82rem;
+  color: #374151;
+}
+
+.panier-row-total .panier-value {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: #fa0339;
+  letter-spacing: 0.02em;
+}
+
+/* Boutons un peu plus premium visuellement */
+.btn {
+  border-radius: 6px;
+}
+
+/* === TEST VISUEL 2 : lisibilité libellés + centrage images machines === */
+
+/* Libellés plus lisibles dans le panier / récap */
+.panier-label,
+.panier-row .panier-label,
+.panier-row-total .panier-label {
+  font-weight: 700;
+}
+
+/* Si les champs du récap "Nom du fichier / Couleur / etc." utilisent cette classe */
+.panier-row .panier-value {
+  font-weight: 600;
+}
+
+/* Variante utile si tes libellés de formulaire ou de résumé sont de vrais labels */
+label,
+.form-label,
+.resume-label,
+.devis-label {
+  font-weight: 700;
+}
+
+/* Centrage des visuels machines dans le volet 2 */
+.machine-card,
+.machine-box,
+.tech-card,
+.tech-box,
+.machine-image,
+.tech-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Image elle-même centrée proprement */
+.machine-card img,
+.machine-box img,
+.tech-card img,
+.tech-box img,
+.machine-image img,
+.tech-image img {
+  display: block;
+  margin: 0 auto;
+  object-position: center;
+}
+
+/* Si les cartes FDM / SLA sont en colonne, garde un alignement net */
+.machine-card,
+.machine-box,
+.tech-card,
+.tech-box {
+  flex-direction: column;
+}
+
+.panier-label {
+  font-weight: 800;
+  color: #374151;
+}
+
+.panier-value {
+  font-weight: 600;
+}
+
+/* === TEST VISUEL 2 BIS : lisibilité + centrage volet 2 === */
+
+/* Libellés plus lisibles */
+.panier-label {
+  font-weight: 800;
+  color: #374151;
+}
+
+.panier-value {
+  font-weight: 600;
+}
+
+/* Volet 2 : tableau technologies */
+.panel table {
+  margin: 10px auto 0;
+  border-collapse: collapse;
+}
+
+.panel table td {
+  text-align: center;
+  vertical-align: top;
+  padding: 6px 10px;
+}
+
+.panel table td img {
+  display: block;
+  margin: 0 auto 6px auto;
+}
+
+.panel table td p {
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* === TEST VISUEL 3 : volet 3 plus lisible === */
+
+.panier-label {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #374151;
+}
+
+.panier-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+footer,
+footer p,
+.footer-copyright,
+.copyright {
+  color: #000000;
+}
+
+footer p,
+footer span,
+footer small,
+footer div {
+  color: #000000 !important;
+}
+/* Boutons plus lisibles */
+.btn,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="file"]::file-selector-button {
+  font-size: 1.02rem;
+  font-weight: 800;
+}
+
+/* === Finition HB3D === */
+
+/* Libellés formulaires plus présents */
+label {
+  font-weight: 700;
+  color: #374151;
+}
+
+/* Bloc TOTAL encore plus premium */
+.panier-row-total {
+  background: #fff7f9;
+  border-radius: 0px;
+  padding-bottom: 14px;
+}
+
+.panier-row-total .panier-value {
+  font-size: 1.35rem;
+}
+
+/* Option 1 : si le disque est dans un conteneur dédié */
+.circular-upload,
+.upload-text {
+  position: relative;
+  top: 25px;
+}
+.upload-text {
+  font-size: 0,98rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #252627;
+}

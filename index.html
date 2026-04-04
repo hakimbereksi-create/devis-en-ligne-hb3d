@@ -101,35 +101,14 @@
 
 <body>
   <header>
-    <div class="header-inner">
-      <div class="header-top">
-        <div class="logo">
-          <div align="center">HB3D</div>
-        </div>
-      </div>
-      <div class="steps-bar">
-        <div class="step-item">
-          <div align="center"><span class="step-number">Étape 1</span>
-            <span class="step-label">Téléversez</span>
-          </div>
-        </div>
-        <div class="step-item">
-          <div align="center"><span class="step-number">Étape 2</span>
-            <span class="step-label">Configuration</span>
-          </div>
-        </div>
-        <div class="step-item">
-          <div align="center"><span class="step-number">Étape 3</span>
-            <span class="step-label">Panier & détails</span>
-          </div>
-        </div>
-        <div class="step-item">
-          <div align="center"><span class="step-number">Étape 4</span>
-            <span class="step-label">Upload & envoi</span></div>
-        </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo">
+        <div align="center">HB3D</div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <main>
     <section class="top-columns">
@@ -148,41 +127,24 @@
 
   <!-- VUE 3D : viewer JSC3D -->
     <div id="view3d">
-    <canvas id="cv" width="400" height="400"></canvas>
-    <!--
-    <div id="viewer-info"
-     style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
-      Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g
+    <canvas id="cv" width="350" height="450"></canvas>
+   
+   <!-- 
+  <div id="viewer-info"></div>
+     <style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
+      <Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g>
       -->
 </div>
-
 
 
     <div id="viewer-modes" class="viewer-modes">
   <button data-mode="flat">Plein</button>
   <button data-mode="wireframe">Wireframe</button>
   <button data-mode="point">Points</button>
-   </div>
-    <div class="panel panel-info" id="tip">
-      <table class="table">
-        <tr>
-          <td>Zoom</td>
-          <td><kbd>Wheel</kbd></td>
-        </tr>
-        <tr>
-          <td>Rotate</td>
-          <td><kbd>Drag</kbd></td>
-        </tr>
-        <tr>
-          <td>Pan</td>
-          <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd></td>
-        </tr>
-      </table>
-    </div>
+   
+</div>
 
-    <div id="loading">
-      <img src="css/images/loading.gif" alt="Turning the crank ..."></div>
-  </div>
+    
 </div>
 
       <!-- VOLET 2 -->
@@ -228,62 +190,81 @@
           <option>Résine Flexible</option>
         </select>
 
-        <label>Couleur</label>
-<div class="couleurs">
+  <label>Couleur</label>  
+<div id="couleurs-fdm" class="couleurs">
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_blanc" checked>
-    <span class="swatch" style="background-color:#F5F5F5;"></span>
+    <input type="radio" name="couleur" value="plablanc" checked>
+    <span class="swatch" style="background-color:#F5F5F5"></span>
     <span class="swatch-label">Blanc</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_noir">
-    <span class="swatch" style="background-color:#222222;"></span>
+    <input type="radio" name="couleur" value="planoir">
+    <span class="swatch" style="background-color:#222222"></span>
     <span class="swatch-label">Noir</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_gris">
-    <span class="swatch" style="background-color:#9F9F9F;"></span>
+    <input type="radio" name="couleur" value="plagris">
+    <span class="swatch" style="background-color:#9F9F9F"></span>
     <span class="swatch-label">Gris</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_rouge">
-    <span class="swatch" style="background-color:#FF3333;"></span>
+    <input type="radio" name="couleur" value="plarouge">
+    <span class="swatch" style="background-color:#FF3333"></span>
     <span class="swatch-label">Rouge</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_vert">
-    <span class="swatch" style="background-color:#00B050;"></span>
+    <input type="radio" name="couleur" value="plavert">
+    <span class="swatch" style="background-color:#00B050"></span>
     <span class="swatch-label">Vert</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_bleu">
-    <span class="swatch" style="background-color:#3366FF;"></span>
+    <input type="radio" name="couleur" value="plableu">
+    <span class="swatch" style="background-color:#3366FF"></span>
     <span class="swatch-label">Bleu</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_orange">
-    <span class="swatch" style="background-color:#ffa602;"></span>
-    <span class="swatch-label">orange</span>
+    <input type="radio" name="couleur" value="plaorange">
+    <span class="swatch" style="background-color:#ffa602"></span>
+    <span class="swatch-label">Orange</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_jaune">
-    <span class="swatch" style="background-color:#fae206;"></span>
-    <span class="swatch-label">jaune</span>
+    <input type="radio" name="couleur" value="plajaune">
+    <span class="swatch" style="background-color:#fae206"></span>
+    <span class="swatch-label">Jaune</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_purple">
-    <span class="swatch" style="background-color:#ad06fac9;"></span>
-    <span class="swatch-label">purple</span>
+    <input type="radio" name="couleur" value="plapurple">
+    <span class="swatch" style="background-color:#800080"></span>
+    <span class="swatch-label">Purple</span>
   </label>
-  <!-- tu peux continuer pour orange, jaune, purple... -->
+</div>
+
+<div id="couleurs-sla" class="couleurs" style="display:none;">
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slablanc">
+    <span class="swatch" style="background-color:#F5F5F5"></span>
+    <span class="swatch-label">Blanc</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slanoir">
+    <span class="swatch" style="background-color:#222222"></span>
+    <span class="swatch-label">Noir</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slagris">
+    <span class="swatch" style="background-color:#9F9F9F"></span>
+    <span class="swatch-label">Gris</span>
+  </label>
 </div>
 
         <label for="quantite">Quantité</label>
@@ -293,41 +274,61 @@
         <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…"></textarea>
         
 
-        <!--<button class="btn" id="btn-devis">Obtenir un devis</button>-->
+        <button class="btn" id="btn-devis">Obtenir une estimation</button>
       </div>
 
       <!-- VOLET 3 -->
 <div class="panel">
   <h2 align="center">3. Panier & détails personnels</h2>
 
-  <h3>Votre panier   <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
-  <table height="72">
-    <thead>
-  <tr>
-    <th><div align="center">Fichier</div></th>
-    <th><div align="center">Techno</div></th>
-    <th><div align="center">Matériau</div></th>
-    <th><div align="center">Couleur</div></th>
-    <th><div align="center">Qté</div></th>
-    <th><div align="center">Prix</div></th>
-  </tr>
-<tbody>
-  <tr>
-    <td class="cell-filename">
-      <div align="center">
-        <span id="nom-fichier-panier">piece_v1.stl</span>
-      </div>
-    </td>
-    <td><div align="center"><span id="techno-panier">FDM</span></div></td>
-    <td><div align="center"><span id="materiau-panier">PLA</span></div></td>
-    <td><div align="center"><span class="swatch-panier"></span><span id="couleur-panier">Blanc</span></div></td>
-    <td><div align="center"><span id="qte-panier">1</span></div></td>
-    <td><div align="center"><span id="prix-panier">12,00 €</span></div></td>
-  </tr>
-</tbody>
+  <h3>Votre panier <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
 
- </table>
+  <div class="panier-stack">
+  <div class="panier-row">
+    <div class="panier-label">Nom du fichier</div>
+    <div class="panier-value">
+      <span id="nom-fichier-panier">piecev1.stl</span>
+    </div>
+  </div>
 
+  <div class="panier-row">
+    <div class="panier-label">Techno</div>
+    <div class="panier-value">
+      <span id="techno-panier">FDM</span>
+    </div>
+  </div>
+
+  <div class="panier-row">
+    <div class="panier-label">Matériau</div>
+    <div class="panier-value">
+      <span id="materiau-panier">PLA</span>
+    </div>
+  </div>
+
+  <div class="panier-row">
+    <div class="panier-label">Couleur</div>
+    <div class="panier-value panier-couleur">
+      <span class="swatch-panier" id="swatch-panier"></span>
+      <span id="couleur-panier">Blanc</span>
+    </div>
+  </div>
+
+  <div class="panier-row">
+    <div class="panier-label">Quantité</div>
+    <div class="panier-value">
+      <span id="qte-panier">1</span>
+    </div>
+  </div>
+
+  <div class="panier-row panier-row-total">
+    <div class="panier-label">Total</div>
+    <div class="panier-value">
+      <span id="prix-panier">En attente</span>
+    </div>
+  </div>
+</div>
+
+ 
 <h3>Détails personnels</h3>
 
 <form id="form">
@@ -344,7 +345,7 @@
   <input id="tel" name="client_id" type="text" />
 
   <!-- cachés -->
-  <input type="hidden" id="quantite"    name="quantite" value="1" />
+  <input type="hidden" id="quantite-hidden" name="quantite" value="1">
   <input type="hidden" id="prix_affiche" name="prix"    value="" />
   <input type="hidden" id="fichier"     name="fichier"  value="" />
   <input type="hidden" id="time"        name="time"     value="" />
@@ -400,27 +401,78 @@
   <script src="dist/js/upload_handler.js"></script>
   
  <script>
+// =========================
+// Couleurs & viewer
+// =========================
 const MATERIAUX = {
-  pla_blanc:  { label: 'PLA Blanc',   color: '#F5F5F5' },
-  pla_noir:   { label: 'PLA Noir',    color: '#222222' },
-  pla_gris:   { label: 'PLA Gris',    color: '#9F9F9F' },
-  pla_rouge:  { label: 'PLA Rouge',   color: '#FF3333' },
-  pla_vert:   { label: 'PLA Vert',    color: '#00B050' },
-  pla_bleu:   { label: 'PLA Bleu',    color: '#3366FF' },
-  pla_orange: { label: 'PLA Orange',  color: '#FF8800' },
-  pla_jaune:  { label: 'PLA Jaune',   color: '#FFD800' },
-  pla_purple: { label: 'PLA Purple',  color: '#800080' }
+  pla_blanc:  { label: 'PLA Blanc',  color: '#F5F5F5' },
+  pla_noir:   { label: 'PLA Noir',   color: '#222222' },
+  pla_gris:   { label: 'PLA Gris',   color: '#9F9F9F' },
+  pla_rouge:  { label: 'PLA Rouge',  color: '#FF3333' },
+  pla_vert:   { label: 'PLA Vert',   color: '#00B050' },
+  pla_bleu:   { label: 'PLA Bleu',   color: '#3366FF' },
+  pla_orange: { label: 'PLA Orange', color: '#FF8800' },
+  pla_jaune:  { label: 'PLA Jaune',  color: '#FFD800' },
+  pla_purple: { label: 'PLA Purple', color: '#800080' }
 };
 
 function appliquerCouleurViewer(codeMateriau) {
   const mat = MATERIAUX[codeMateriau];
   if (!mat || !window.viewer) return;
-
   viewer.setParameter('ModelColor', mat.color);
   viewer.update();
 }
 
-$(document).ready(function () {
+function majCouleursSelonTechno() {
+  const technoVal = $('#techno').val();
+  const isSLA = (technoVal === 'SLA');
+  const couleursAutoriseesSLA = ['plablanc', 'planoir', 'plagris'];
+
+  $('input[name="couleur"]').each(function () {
+    const $radio = $(this);
+    const value  = $radio.val();
+    const $chip  = $radio.closest('.chip-color');
+
+    if (isSLA) {
+      const autorisee = couleursAutoriseesSLA.includes(value);
+      if (!autorisee) {
+        $radio.prop('disabled', true).prop('checked', false);
+        $chip.css({
+          opacity: 0.12,
+          cursor: 'not-allowed',
+          filter: 'grayscale(100%)'
+        });
+      } else {
+        $radio.prop('disabled', false);
+        $chip.css({
+          opacity: 1,
+          cursor: 'pointer',
+          filter: 'none'
+        });
+      }
+    } else {
+      $radio.prop('disabled', false);
+      $chip.css({
+        opacity: 1,
+        cursor: 'pointer',
+        filter: 'none'
+      });
+    }
+  });
+
+  if (isSLA && !$('input[name="couleur"]:checked').length) {
+    const $defaut = $('input[name="couleur"][value="plablanc"]:enabled').first();
+    if ($defaut.length) {
+      $defaut.prop('checked', true).trigger('change');
+    }
+  }
+
+  if (typeof updateEstimationButtonState === 'function') {
+    updateEstimationButtonState();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
   const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
 
   radiosCouleur.forEach(function (radio) {
@@ -430,47 +482,80 @@ $(document).ready(function () {
     });
   });
 
-  // couleur initiale (juste pour le viewer)
   const radioActif = document.querySelector('input[name="couleur"]:checked');
   if (radioActif) {
     appliquerCouleurViewer(radioActif.value);
   }
+
+  // couleurs dispo selon techno
+  majCouleursSelonTechno();
+  $('#techno').on('change', majCouleursSelonTechno);
 });
 
-</script>
+// =========================
+// Matériaux par techno
+// =========================
+const MATERIAUX_PAR_TECHNO = {
+  FDM: [
+    'PLA','ABS','PET','PETG','ASA','TPU','PA-CF','HIPS'
+  ],
+  SLA: [
+    'Résine Standard','Résine Tough','Résine Calcinable','Résine Flexible'
+  ],
+  SLS: []
+};
 
-<script>
-  function calculerPrixHT(poidsGrammes, dureeHeures) {
-    const coutMatiereKg = 20;
-    const coutHoraire = 10;
-    const marge = 0.10;
+function remplirMateriauxPourTechno(techno) {
+  const selectMateriau = document.getElementById('materiau');
+  if (!selectMateriau) return;
 
-    const poidsKg = poidsGrammes / 1000;
-    const coutBrut = poidsKg * coutMatiereKg + dureeHeures * coutHoraire;
-    const prixHT = coutBrut * (1 + marge);
+  const liste = MATERIAUX_PAR_TECHNO[techno] || [];
+  selectMateriau.innerHTML = '';
 
-    return prixHT;
+  if (liste.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = '—';
+    opt.value = '';
+    selectMateriau.appendChild(opt);
+    return;
   }
 
-  function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
-  const densitePLA = 1.24;
-  const poidsGrammes = volumeCm3 * densitePLA;
+  liste.forEach((nom) => {
+    const opt = document.createElement('option');
+    opt.textContent = nom;
+    opt.value = nom;
+    selectMateriau.appendChild(opt);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const selectTechno = document.getElementById('techno');
+  if (!selectTechno) return;
+
+  remplirMateriauxPourTechno(selectTechno.value);
+  selectTechno.addEventListener('change', function () {
+    remplirMateriauxPourTechno(this.value);
+  });
+});
+
+// =========================
+// Volume / panier (pas de prix ici)
+// =========================
+window.currentVolumeMm3 = 0;
+
+function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
+  const vol = Number(volumeCm3);
+  window.currentVolumeMm3 = (!vol || !isFinite(vol) || vol <= 0) ? 0 : (vol * 1000);
 
   const inputQte = document.getElementById('quantite');
   const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
 
-  const prixUnitaire = calculerPrixHT(poidsGrammes, dureeHeures);
-  const prixTotal = prixUnitaire * qte;
-
-  const prixFormate = prixTotal.toFixed(2).replace('.', ',') + ' €';
-
   const spanPrix = document.getElementById('prix-panier');
-  if (spanPrix) spanPrix.textContent = prixFormate;
+  const spanQte  = document.getElementById('qte-panier');
 
-  const spanQte = document.getElementById('qte-panier');
   if (spanQte) spanQte.textContent = qte;
+  if (spanPrix) spanPrix.textContent = 'en attente';
 
-     // mettre à jour techno / matériau / couleur dans le panier
   const selectTechno   = document.getElementById('techno');
   const selectMateriau = document.getElementById('materiau');
   const radioCouleur   = document.querySelector('input[name="couleur"]:checked');
@@ -479,109 +564,194 @@ $(document).ready(function () {
   const materiauPanier = document.getElementById('materiau-panier');
   const couleurPanier  = document.getElementById('couleur-panier');
 
-  if (technoPanier && selectTechno) {
-    technoPanier.textContent = selectTechno.value;
-  }
-  if (materiauPanier && selectMateriau) {
-    materiauPanier.textContent = selectMateriau.value;
-  }
+  if (technoPanier && selectTechno)   technoPanier.textContent   = selectTechno.value;
+  if (materiauPanier && selectMateriau) materiauPanier.textContent = selectMateriau.value;
   if (couleurPanier && radioCouleur) {
     const labelCouleur = radioCouleur.parentElement.textContent.trim();
     couleurPanier.textContent = labelCouleur;
   }
 
+  console.log('HB3D volume chargé', {
+    volumeCm3: vol,
+    volumeMm3: window.currentVolumeMm3
+  });
 }
 
-</script>
+function majNomFichierPanier(nomFichier) {
+  const span = document.getElementById('nom-fichier-panier');
+  if (span) span.textContent = nomFichier;
+}
 
+document.addEventListener('DOMContentLoaded', function () {
+  const spanPrix = document.getElementById('prix-panier');
+  const spanQte  = document.getElementById('qte-panier');
+  if (spanPrix) spanPrix.textContent = 'en attente';
+  if (spanQte)  spanQte.textContent  = '1';
+});
 
-<script>
-  function majNomFichierPanier(nomFichier) {
-    const cellNom = document.getElementById('nom-fichier-panier');
-    if (cellNom) cellNom.textContent = nomFichier;
+// =========================
+// Bouton estimation (ancienne logique volumique)
+// =========================
+console.log('[HB3D] init bouton estimation');
+
+$(document).ready(function () {
+  const $techno    = $('#techno');
+  const $materiau  = $('#materiau');
+  const $quantite  = $('#quantite');
+  const $btnEstime = $('#btn-devis');
+
+  const $prixPanier     = $('#prix-panier');
+  const $qtePanier      = $('#qte-panier');
+  const $technoPanier   = $('#techno-panier');
+  const $materiauPanier = $('#materiau-panier');
+  const $couleurPanier  = $('#couleur-panier');
+
+  function isConfigComplete() {
+    const technoVal    = $techno.val();
+    const materiauVal  = $materiau.val();
+    const qte          = parseInt($quantite.val(), 10);
+    const couleurVal   = $('input[name="couleur"]:checked').val();
+
+    if (!technoVal || !materiauVal || !couleurVal) return false;
+    if (Number.isNaN(qte) || qte < 1) return false;
+    return true;
   }
-</script>
 
-<script>
-  function majNomFichierPanier(nomFichier) {
-    const span = document.getElementById('nom-fichier-panier');
-    if (span) {
-      span.textContent = nomFichier;
+  window.updateEstimationButtonState = function () {
+    if (isConfigComplete()) {
+      $btnEstime.prop('disabled', false).css('opacity', 1);
+    } else {
+      $btnEstime.prop('disabled', true).css('opacity', 0.5);
     }
-  }
-</script>
-
-<script>
-  const MATERIAUX_PAR_TECHNO = {
-    FDM: [
-      'PLA',
-      'ABS',
-      'PET',
-      'PETG',
-      'ASA',
-      'TPU',
-      'PA-CF',
-      'HIPS'
-    ],
-    SLA: [
-      'Résine Standard',
-      'Résine Tough',
-      'Résine Calcinable',
-      'Résine Flexible'
-    ],
-    SLS: [
-      // tu complèteras plus tard si besoin
-    ]
   };
 
-  function remplirMateriauxPourTechno(techno) {
-    const selectMateriau = document.getElementById('materiau');
-    if (!selectMateriau) return;
+const TARIFS = {
+  FDM: {
+    PLA:        { A: 12.99, B: 0.224 },
+    PETG:       { A: 14.50, B: 0.245 },
+    ABS:        { A: 15.50, B: 0.255 },
+    ASA:        { A: 16.50, B: 0.270 },
+    TPU:        { A: 18.50, B: 0.295 },
+    'PA-CF':    { A: 23.00, B: 0.345 },
+    HIPS:       { A: 14.20, B: 0.238 },
+    PET:        { A: 14.00, B: 0.235 }
+  },
 
-    const liste = MATERIAUX_PAR_TECHNO[techno] || [];
+  SLA: {
+    'Résine Standard':   { A: 19.44, B: 0.467 },
+    'Résine Tough':      { A: 24.00, B: 0.560 },
+    'Résine Flexible':   { A: 26.00, B: 0.620 },
+    'Résine Calcinable': { A: 29.00, B: 0.700 }
+  },
 
-    // vider la liste actuelle
-    selectMateriau.innerHTML = '';
+  SLS: {
+    'Nylon PA12':        { A: 30.00, B: 0.800 }
+  }
+};
 
-    // si pas de matériaux définis, on met une option neutre
-    if (liste.length === 0) {
-      const opt = document.createElement('option');
-      opt.textContent = '—';
-      opt.value = '';
-      selectMateriau.appendChild(opt);
+ function calculerEstimation() {
+  const volumeMm3   = window.currentVolumeMm3 || 0;
+  const technoVal   = $techno.val();
+  const materiauVal = $materiau.val();
+  const qte         = parseInt($quantite.val(), 10) || 1;
+
+  const volumeEnMm3 = volumeMm3;
+  const volumeEnCm3 = volumeEnMm3 / 1000;
+
+  let prixUnitaire = 0;
+
+  const technoTarifs = TARIFS[technoVal];
+  const materiauTarif = technoTarifs ? technoTarifs[materiauVal] : null;
+
+  if (materiauTarif) {
+    prixUnitaire = materiauTarif.A + (materiauTarif.B * volumeEnCm3);
+  }
+
+  let prix = prixUnitaire * qte;
+  if (!Number.isFinite(prix) || prix < 0) prix = 0;
+
+  const prixFormatte = prix.toLocaleString('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + ' €';
+
+  $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mm³');
+  $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cm³');
+
+  return prixFormatte;
+}
+
+  function syncQuantiteEtPanier() {
+    let qte = parseInt($quantite.val(), 10) || 1;
+    if (qte < 1) qte = 1;
+    $quantite.val(qte);
+    $('#quantite-hidden').val(qte);
+    if ($qtePanier.length) $qtePanier.text(qte);
+  }
+
+  console.log('[HB3D click btn-devis]');
+
+  function recalculerPanierAutomatiquement() {
+    if (!isConfigComplete()) return;
+
+    const prixEstime = calculerEstimation();
+
+    const couleurLabel = $('input[name="couleur"]:checked')
+      .closest('.chip-color')
+      .find('.swatch-label')
+      .text()
+      .trim();
+
+    if ($technoPanier.length)   $technoPanier.text($techno.val());
+    if ($materiauPanier.length) $materiauPanier.text($materiau.val());
+    if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
+    if ($qtePanier.length)      $qtePanier.text($quantite.val());
+    if ($prixPanier.length)     $prixPanier.text(prixEstime);
+  }
+
+  let estimationActive = false;
+
+  $techno.on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $materiau.on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $quantite.on('input change', function () {
+    syncQuantiteEtPanier();
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $('input[name="couleur"]').on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  syncQuantiteEtPanier();
+  updateEstimationButtonState();
+
+  $btnEstime.on('click', function (e) {
+    e.preventDefault();
+
+    if (!isConfigComplete()) {
+      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation.');
       return;
     }
 
-    // recréer les options
-    liste.forEach((nom) => {
-      const opt = document.createElement('option');
-      opt.textContent = nom;
-      opt.value = nom;
-      selectMateriau.appendChild(opt);
-    });
-  }
+    if (!window.currentVolumeMm3 || window.currentVolumeMm3 <= 0) {
+      alert('Merci de charger un fichier 3D avant de demander une estimation.');
+      return;
+    }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const selectTechno = document.getElementById('techno');
-    if (!selectTechno) return;
-
-    // initialiser une première fois selon la valeur par défaut (FDM)
-    remplirMateriauxPourTechno(selectTechno.value);
-
-    // écouter les changements de techno
-    selectTechno.addEventListener('change', function () {
-      remplirMateriauxPourTechno(this.value);
-    });
+    estimationActive = true;
+    recalculerPanierAutomatiquement();
   });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-(function() {
-  emailjs.init({
-    publicKey: 'yMCFNhgV27X8SzqIp',
-  });
-})();
+});
 </script>
 
 </body>

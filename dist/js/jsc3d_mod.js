@@ -5553,29 +5553,31 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
 
     // --- début ajout calcul volume pour STL ---
     var volumeMm3 = 0;
-    var vb = mesh.vertexBuffer;
-    var ib = mesh.indexBuffer;
+var vb = mesh.vertexBuffer;
+var ib = mesh.indexBuffer;
 
-    function signedTetraVolume(ax, ay, az, bx, by, bz, cx, cy, cz) {
-      return (ax * (by * cz - bz * cy) -
-              ay * (bx * cz - bz * cy) +
-              az * (bx * cy - by * cx)) / 6.0;
-    }
+for (var i = 0; i < ib.length; ) {
+  var i0 = ib[i++], i1 = ib[i++], i2 = ib[i++];
 
-    for (var i = 0; i < ib.length; ) {
-      var i0 = ib[i++], i1 = ib[i++], i2 = ib[i++];
-      if (ib[i] === -1) { i++; }
+  if (ib[i] === -1) { i++; } // séparateur, OK
 
-      var ax = vb[3 * i0], ay = vb[3 * i0 + 1], az = vb[3 * i0 + 2];
-      var bx = vb[3 * i1], by = vb[3 * i1 + 1], bz = vb[3 * i1 + 2];
-      var cx = vb[3 * i2], cy = vb[3 * i2 + 1], cz = vb[3 * i2 + 2];
+  var ax = vb[3 * i0], ay = vb[3 * i0 + 1], az = vb[3 * i0 + 2];
+  var bx = vb[3 * i1], by = vb[3 * i1 + 1], bz = vb[3 * i1 + 2];
+  var cx = vb[3 * i2], cy = vb[3 * i2 + 1], cz = vb[3 * i2 + 2];
 
-      volumeMm3 += signedTetraVolume(ax, ay, az, bx, by, bz, cx, cy, cz);
-    }
+  // vecteurs b et c (a considéré comme à l’origine du tétraèdre)
+  var v321 = cx * by * az;
+  var v231 = bx * cy * az;
+  var v312 = cx * ay * bz;
+  var v132 = ax * cy * bz;
+  var v213 = bx * ay * cz;
+  var v123 = ax * by * cz;
 
-           volumeMm3 = Math.abs(volumeMm3);
+  volumeMm3 += (-v321 + v231 + v312 - v132 - v213 + v123) / 6.0;
+}
 
-    var volumeCm3 = volumeMm3 / 10000000.0;
+volumeMm3 = Math.abs(volumeMm3);          // mm³
+var volumeCm3 = volumeMm3 / 1000.0;       // cm³
     var densitePLA = 1.24;
     var poidsGrammes = volumeCm3 * densitePLA;
     var dureeHeuresEstimee = 2;
@@ -5603,11 +5605,12 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
     var dimZ = maxZ - minZ;
 
     if (typeof window !== 'undefined') {
-      window.hb3dVolumeCm3 = volumeCm3;
-      window.hb3dDimX = dimX;
-      window.hb3dDimY = dimY;
-      window.hb3dDimZ = dimZ;
-    }
+  window.hb3dVolumeMm3 = volumeMm3;
+  window.hb3dVolumeCm3 = volumeCm3;
+  window.hb3dDimX = dimX;
+  window.hb3dDimY = dimY;
+  window.hb3dDimZ = dimZ;
+}
 
     if (typeof mettreAJourPrixDepuisVolume === 'function') {
       mettreAJourPrixDepuisVolume(volumeCm3, dureeHeuresEstimee);
