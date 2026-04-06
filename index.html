@@ -754,6 +754,23 @@ const TARIFS = {
 });
 </script>
 
+<script src="https://cdn.emailjs.com/sdk/3.11.0/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init('yMCFNhgV27X8SzqIp'); // ex: 'vRANDOM123abc'
+  })();
+
+  function envoyerDevisEmailJS(formData) {
+    // Si tu préfères, on peut aussi utiliser sendForm directement sur un <form>
+    emailjs.send('service_np51rgo', 'template_7mjwzt9', formData)
+      .then(function(response) {
+        console.log('EmailJS OK', response.status, response.text);
+      }, function(error) {
+        console.error('EmailJS ERREUR', error);
+      });
+  }
+</script>
+
 </body>
 </html>
 
