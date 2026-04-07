@@ -58,6 +58,7 @@
   color: #4b5563;
   text-align: center;
 }
+
 .hb3d-modal {
   position: fixed;
   top: 0;
@@ -73,7 +74,7 @@
 
 .hb3d-modal-box {
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 12px;
   padding: 40px 32px;
   max-width: 420px;
   width: 90%;
@@ -95,12 +96,13 @@
   margin-bottom: 20px;
 }
 
-.hb3d-modal-text {
+.hb3d-modal .hb3d-modal-text {
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #111827;
   line-height: 1.8;
   margin-bottom: 28px;
+  text-align: center;
 }
 
 .hb3d-modal-btn {
