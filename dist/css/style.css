@@ -733,3 +733,34 @@ label {
   line-height: 1.35;
   color: #252627;
 }
+.hb3d-instructions {
+  margin: 20px auto 18px;
+  padding: 16px 18px;
+  max-width: 520px;
+  background: #fff7f8;
+  border: 1px solid #f3c7d1;
+  border-radius: 10px;
+  color: #374151;
+  text-align: left;
+}
+
+.hb3d-instructions {
+  margin: 50px auto 18px;
+  padding: 16px 18px;
+  max-width: 520px;
+  background: #fff7f8;
+  border: 1px solid #f3c7d1;
+  border-radius: 10px;
+  color: #374151;
+  text-align: left;
+}
+
+.hb3d-instructions p {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.hb3d-instructions p:last-child {
+  margin-bottom: 0;
+}
