@@ -64,7 +64,7 @@ $('input[name="couleur"]').on('change', function () {
 });
 
 
-  function uploadFiles(event) {
+  function uploadFiles(event) { 
     event.stopPropagation();
     event.preventDefault();
 
@@ -160,18 +160,30 @@ function submitForm(event, data) {
   var $form = $("#form");
 
   // --- HB3D: synchroniser les champs cachés avec le panier ---
-var qteText  = $('#qte-panier').text().trim();
-var prixText = $('#prix-panier').text().trim();
+  var qteText  = $('#qte-panier').text().trim();
+  var prixText = $('#prix-panier').text().trim();
 
-console.log('qte-panier =', qteText, 'prix-panier =', prixText);
+  console.log('qte-panier =', qteText, 'prix-panier =', prixText);
 
-if (qteText !== '') {
-  $('#quantite').val(qteText);
-}
-if (prixText !== '') {
-  $('#prix_affiche').val(prixText);
-}
+  if (qteText !== '') {
+    $('#quantite').val(qteText);
+  }
+  if (prixText !== '') {
+    $('#prix_affiche').val(prixText);
+  }
   // ------------------------------------------------------------
+
+  // --- HB3D: synchroniser techno / matériau / couleur ---
+  var techValue     = $('#techno').val() || '';
+  var materialValue = $('#materiau').val() || '';
+  var colorValue    = $('input[name="couleur"]:checked').val() || '';
+
+  $('#tech_hidden').val(techValue);
+  $('#material_hidden').val(materialValue);
+  $('#color_hidden').val(colorValue);
+
+  console.log('tech =', techValue, 'material =', materialValue, 'color =', colorValue);
+  // ------------------------------------------------------
  
   // On sérialise le formulaire APRES màj des champs
   var formData = $form.serialize();

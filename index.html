@@ -326,7 +326,17 @@
       <span id="prix-panier">En attente</span>
     </div>
   </div>
+
+<div class="devis-row">
+  <span>Remise</span>
+  <span id="remise-info"></span>
 </div>
+
+<div id="remise-message" class="panier-remise-message"></div>
+
+</div>
+
+
 
  
 <h3>Détails personnels</h3>
@@ -351,6 +361,9 @@
   <input type="hidden" id="time"        name="time"     value="" />
   <input type="hidden" id="message"     name="message"  value="" />    
   <input type="hidden" id="stripe_link" name="stripe_link" value="" />
+  <input type="hidden" id="tech_hidden" name="tech" value="" />
+  <input type="hidden" id="material_hidden" name="material" value="" />
+  <input type="hidden" id="color_hidden" name="color" value="" />
 </form>
 
 </div>
@@ -381,6 +394,7 @@
 
   <div class="hb3d-instructions">
   <h3>Avant l’envoi</h3>
+  <p>Sur mobile, votre fichier doit être stocké localement.</p>
   <p>Choisissez la technologie, le matériau, la couleur et la quantité.</p>
   <p>Formats acceptés : STL, OBJ. Taille max : 50 Mo.</p>
   <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
@@ -656,7 +670,19 @@ const TARIFS = {
   }
 };
 
- function calculerEstimation() {
+function getDiscountRate(qty) {
+  if (qty >= 500) return 0.40;   // 40 %
+  if (qty >= 400) return 0.35;
+  if (qty >= 300) return 0.30;
+  if (qty >= 200) return 0.25;
+  if (qty >= 100) return 0.20;
+  if (qty >= 50)  return 0.15;
+  if (qty >= 20)  return 0.10;
+  if (qty >= 10)  return 0.05;
+  return 0;
+}
+
+function calculerEstimation() {
   const volumeMm3   = window.currentVolumeMm3 || 0;
   const technoVal   = $techno.val();
   const materiauVal = $materiau.val();
@@ -667,25 +693,34 @@ const TARIFS = {
 
   let prixUnitaire = 0;
 
-  const technoTarifs = TARIFS[technoVal];
+  const technoTarifs  = TARIFS[technoVal];
   const materiauTarif = technoTarifs ? technoTarifs[materiauVal] : null;
 
   if (materiauTarif) {
     prixUnitaire = materiauTarif.A + (materiauTarif.B * volumeEnCm3);
   }
 
-  let prix = prixUnitaire * qte;
-  if (!Number.isFinite(prix) || prix < 0) prix = 0;
+  // --- TOTAL BRUT (sans remise)
+  let prixBrut = prixUnitaire * qte;
+  if (!Number.isFinite(prixBrut) || prixBrut < 0) prixBrut = 0;
 
-  const prixFormatte = prix.toLocaleString('fr-FR', {
+  // --- REMISE SUR LE TOTAL
+  const rate   = getDiscountRate(qte);   // ex: 0.15
+  const remise = prixBrut * rate;
+  const prixNet = prixBrut - remise;
+
+  // --- FORMATAGE
+  const prixFormatte = prixNet.toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   }) + ' €';
 
+  // Affichage volumes (inchangé)
   $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mm³');
   $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cm³');
 
-  return prixFormatte;
+  // On renvoie prix + taux de remise
+  return { prixFormatte, rate };
 }
 
   function syncQuantiteEtPanier() {
@@ -699,22 +734,49 @@ const TARIFS = {
   console.log('[HB3D click btn-devis]');
 
   function recalculerPanierAutomatiquement() {
-    if (!isConfigComplete()) return;
+  if (!isConfigComplete()) return;
 
-    const prixEstime = calculerEstimation();
+  const result = calculerEstimation();
+  const prixEstime = result.prixFormatte;
+  const rate = result.rate;
 
-    const couleurLabel = $('input[name="couleur"]:checked')
-      .closest('.chip-color')
-      .find('.swatch-label')
-      .text()
-      .trim();
+  const couleurLabel = $('input[name="couleur"]:checked')
+    .closest('.chip-color')
+    .find('.swatch-label')
+    .text()
+    .trim();
 
-    if ($technoPanier.length)   $technoPanier.text($techno.val());
-    if ($materiauPanier.length) $materiauPanier.text($materiau.val());
-    if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
-    if ($qtePanier.length)      $qtePanier.text($quantite.val());
-    if ($prixPanier.length)     $prixPanier.text(prixEstime);
+  if ($technoPanier.length)   $technoPanier.text($techno.val());
+  if ($materiauPanier.length) $materiauPanier.text($materiau.val());
+  if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
+  if ($qtePanier.length)      $qtePanier.text($quantite.val());
+  if ($prixPanier.length)     $prixPanier.text(prixEstime);
+
+  // Affichage de l’info remise
+  const $remiseInfo = $('#remise-info');
+  if ($remiseInfo.length) {
+    if (rate > 0) {
+      $remiseInfo.text('-' + Math.round(rate * 100) + '%');
+    } else {
+      $remiseInfo.text('');
+    }
   }
+  
+
+  // Message spécial gros volumes
+  const $remiseMessage = $('#remise-message');
+  if ($remiseMessage.length) {
+    const qte = parseInt($quantite.val(), 10) || 1;
+
+    if (qte >= 1000) {
+      $remiseMessage.text('Volume exceptionnel : devis ajusté sur demande.');
+    } else if (qte >= 500) {
+      $remiseMessage.text('Remise maximale appliquée.');
+    } else {
+      $remiseMessage.text('');
+    }
+  }
+}
 
   let estimationActive = false;
 
