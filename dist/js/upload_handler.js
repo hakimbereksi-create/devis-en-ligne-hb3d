@@ -258,7 +258,7 @@ function submitForm(event, data) {
       setTimeout(function() {
         $("#loading").hide();
         setUploadProgress(100);
-        setUploadStatus('Commande envoyée<br>Merci !');
+        setUploadStatus('Devis envoyé<br>Merci !');
 
                 // Modal HB3D
         var modal = document.createElement('div');
@@ -267,9 +267,10 @@ function submitForm(event, data) {
         <div class="hb3d-modal-box">\
           <div class="hb3d-modal-title">HB3D</div>\
           <p class="hb3d-modal-text">\
-            Votre demande d\'impression 3D<br>\
-            a bien été envoyée !<br><br>\
-            Nous revenons vers vous rapidement.\
+            Votre devis a bien été transmis.<br><br>\
+            Nous revenons vers vous rapidement\
+            pour la suite de votre demande.\
+            En l’absence de message dans votre boîte de réception, nous vous invitons à consulter vos courriers indésirables.\
           </p>\
           <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
         </div>';
@@ -279,6 +280,7 @@ function submitForm(event, data) {
   });
 }
 });
+
 
 
 
