@@ -171,7 +171,7 @@
         <select id="techno">
           <option>FDM</option>
           <option>SLA</option>
-          <option>SLS ..>> Prochainement.. </option>
+          <option>SLS ..>>>..Prochainenemt</option>
         </select>
 
         <label for="materiau">Matériau</label>
@@ -364,6 +364,8 @@
   <input type="hidden" id="tech_hidden" name="tech" value="" />
   <input type="hidden" id="material_hidden" name="material" value="" />
   <input type="hidden" id="color_hidden" name="color" value="" />
+  <input type="hidden" id="devis_id" name="devis_id" value="">
+  <input type="hidden" id="quote_number" name="quote_number" value="">
 </form>
 
 </div>
@@ -410,7 +412,7 @@
     <img src="images/Logo HBD.jpg" width="32" height="25" alt="HB3D">
     <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
   </div>
-  <span class="footer-copy">Copyright © 2026 HB3D</span>
+  <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
 </footer>
 
   <!-- scripts JSC3D -->
@@ -493,6 +495,7 @@ function majCouleursSelonTechno() {
   }
 }
 
+
 document.addEventListener('DOMContentLoaded', function () {
   const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
 
@@ -552,6 +555,7 @@ function remplirMateriauxPourTechno(techno) {
 document.addEventListener('DOMContentLoaded', function () {
   const selectTechno = document.getElementById('techno');
   if (!selectTechno) return;
+  
 
   remplirMateriauxPourTechno(selectTechno.value);
   selectTechno.addEventListener('change', function () {
@@ -626,6 +630,7 @@ $(document).ready(function () {
   const $technoPanier   = $('#techno-panier');
   const $materiauPanier = $('#materiau-panier');
   const $couleurPanier  = $('#couleur-panier');
+
 
   function isConfigComplete() {
     const technoVal    = $techno.val();
@@ -808,7 +813,7 @@ function calculerEstimation() {
     e.preventDefault();
 
     if (!isConfigComplete()) {
-      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement');
+      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement.');
       return;
     }
 
