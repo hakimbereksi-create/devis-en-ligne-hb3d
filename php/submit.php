@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -33,7 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-
+// require __DIR__ . '/vendor/autoload.php'; // adapte le chemin si besoin
+// \Stripe\Stripe::setApiKey('sk_live_FQCK71JWEoi6AfKsoQ62dpZq'); // ta clé SECRÈTE
 
 
 // ----------------------
@@ -75,21 +75,24 @@ $date      = date('c');
 // ID devis lisible : HB3D-YYYYMMDD-HHMMSS
 $devisId = 'HB3D-' . date('Ymd-His');
 
+$quoteNumber = 'DC-TEST-12345';
+
 // Tableau propre pour le JSON joli
 $cleanData = [
-    'date'        => $date,
-    'devis_id'    => $devisId,
-    'email'       => $email,
-    'nom'         => $nom,
-    'tel'         => $tel,
-    'societe'     => $societe,
-    'quantite'    => $quantite,
-    'commentaire' => $commentaire,
-    'prix_affiche'=> $prixAffiche,
-    'notes'       => $notes,
-    'filenames'   => $filenames,
-    'ip'          => $ip,
-    'user_agent'  => $userAgent,
+'date' => $date,
+'devis_id' => $devisId,
+'quote_number' => $quoteNumber,
+'email' => $email,
+'nom' => $nom,
+'tel' => $tel,
+'societe' => $societe,
+'quantite' => $quantite,
+'commentaire' => $commentaire,
+'prix_affiche'=> $prixAffiche,
+'notes' => $notes,
+'filenames' => $filenames,
+'ip' => $ip,
+'user_agent' => $userAgent,
 ];
 
 // ----------------------
@@ -210,18 +213,19 @@ $stripe_link = null;
 // Réponse JSON au frontend
 // ----------------------
 echo json_encode([
-    'success'      => true,
-    'message'      => 'Devis HB3D reçu et enregistré',
-    'devis_id'     => $devisId,
-    'email'        => $email,
-    'nom'          => $nom,
-    'tel'          => $tel,
-    'societe'      => $societe,
-    'quantite'     => $quantite,
-    'commentaire'  => $commentaire,
-    'prix_affiche' => $prixAffiche,
-    'notes'        => $notes,
-    'filenames'    => $filenames,
-    'stripe_link'  => $stripe_link,
+'success' => true,
+'message' => 'Devis HB3D reçu et enregistré',
+'devis_id' => $devisId,
+'quote_number' => $quoteNumber,
+'email' => $email,
+'nom' => $nom,
+'tel' => $tel,
+'societe' => $societe,
+'quantite' => $quantite,
+'commentaire' => $commentaire,
+'prix_affiche' => $prixAffiche,
+'notes' => $notes,
+'filenames' => $filenames,
+'stripe_link' => $stripe_link,
 ]);
 
