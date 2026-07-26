@@ -212,6 +212,10 @@ function submitForm(event, data) {
     success: function(data, textStatus, jqXHR) {
       console.log('submit.php response', data);  // <-- AJOUT ICI
 
+// Numéro de devis technique + numéro affiché
+        $('#devis_id').val(data.devis_id || '');
+        $('#quote_number').val(data.quote_number || data.devis_id || '');
+
       if (typeof data.error === 'undefined') {
         console.log('SUCCESS: ' + data.success);
 
@@ -236,7 +240,7 @@ function submitForm(event, data) {
   $('#message').val(notes);
 
           console.log('EmailJS: envoi sendForm');
-          emailjs.sendForm('service_np51rgo', 'template_7mjwzt9', '#form')
+          emailjs.sendForm('service_np51rgo', 'template_9s5e5co', '#form')
           .then(function(response) {
           console.log('EmailJS OK', response.status, response.text);
           }, function(error) {
@@ -280,7 +284,6 @@ function submitForm(event, data) {
   });
 }
 });
-
 
 
 
