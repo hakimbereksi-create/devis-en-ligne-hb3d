@@ -225,6 +225,7 @@ function submitForm(event, data) {
         $('#stripe_link').val('https://hb3d.fr/paiement'); // lien de test
       }
 
+
         // --- HB3D: EmailJS après succès submit.php ---
         
         try {
@@ -235,22 +236,21 @@ function submitForm(event, data) {
           // AVANT : ça écrasait le message client
           // $('#message').val('Nouveau devis HB3D depuis le formulaire web.');
 
-  // MAINTENANT : on garde ce que le client a tapé
-var notes = $('#notes').val() || '';
-$('#message').val(notes);
+          // MAINTENANT : on garde ce que le client a tapé
+          var notes = $('#notes').val() || '';
+  $('#message').val(notes);
 
-console.log('quote_number hidden =', $('#quote_number').val());
-console.log('devis_id hidden =', $('#devis_id').val());
-console.log('time hidden =', $('#time').val());
-console.log('message hidden =', $('#message').val());
-
-console.log('EmailJS: envoi sendForm');
-emailjs.sendForm('service_np51rgo', 'template_9s5e5co', '#form')
-.then(function(response) {
-  console.log('EmailJS OK', response.status, response.text);
-}, function(error) {
-  console.error('EmailJS ERROR', error);
-});
+          console.log('EmailJS: envoi sendForm');
+          emailjs.sendForm('service_np51rgo', 'template_9s5e5co', '#form')
+          .then(function(response) {
+          console.log('EmailJS OK', response.status, response.text);
+          }, function(error) {
+         console.error('EmailJS ERROR', error);
+    });
+        } catch (e) {
+          console.error('EmailJS EXCEPTION', e);
+        }
+        // --- fin HB3D ---
 
       } else {
         console.log('1.ERRORS: ' + data.error);
