@@ -75,7 +75,7 @@ $date      = date('c');
 // ID devis lisible : HB3D-YYYYMMDD-HHMMSS
 $devisId = 'HB3D-' . date('Ymd-His');
 
-$quoteNumber = 'DC-TEST-12345';
+$quoteNumber = 'DC-2026-0727-1348';
 
 // Tableau propre pour le JSON joli
 $cleanData = [
