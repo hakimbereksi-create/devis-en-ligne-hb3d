@@ -72,10 +72,34 @@ if (!is_array($filenames)) {
 $ip        = $_SERVER['REMOTE_ADDR']     ?? '';
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $date      = date('c');
+
 // ID devis lisible : HB3D-YYYYMMDD-HHMMSS
 $devisId = 'HB3D-' . date('Ymd-His');
 
-$quoteNumber = 'DC-2026-0727-1348';
+// Compteur automatique des devis
+$counterFile = __DIR__ . '/quote_counter.txt';
+$fp = fopen($counterFile, 'c+');
+
+if (!$fp) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Impossible d’ouvrir le compteur de devis']);
+    exit;
+}
+
+flock($fp, LOCK_EX);
+
+$counterValue = trim(stream_get_contents($fp));
+$lastNumber = is_numeric($counterValue) ? (int)$counterValue : 1348; // base actuelle
+$nextQuoteSeq = $lastNumber + 1;
+
+rewind($fp);
+ftruncate($fp, 0);
+fwrite($fp, (string)$nextQuoteSeq);
+fflush($fp);
+flock($fp, LOCK_UN);
+fclose($fp);
+
+$quoteNumber = 'DC-' . date('Y') . '-' . date('md') . '-' . $nextQuoteSeq;
 
 // Tableau propre pour le JSON joli
 $cleanData = [
