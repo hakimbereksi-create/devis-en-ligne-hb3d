@@ -27,3 +27,5 @@ vendor/
 cache/
 tmp/
 sessions/
+# Métadonnées d’images
+images/_notes/

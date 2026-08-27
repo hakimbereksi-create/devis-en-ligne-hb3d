@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -147,6 +147,8 @@
 .hb3d-modal-btn:hover {
   background: #cc0000;
 }
+
+	
 </style>
 </head>
 
@@ -165,12 +167,12 @@
     <section class="top-columns">
 <!-- VOLET 1 -->
 <div class="panel">
-  <h2 align="center">1. Téléversez votre fichier 3D</h2>
+  <h2 align="center">1. TÃ©lÃ©versez votre fichier 3D</h2>
 
   <div class="upload-zone">
-    <strong>Zone de dépôt</strong><br>
-    Glissez-déposez vos fichiers ici<br>
-    ou cliquez pour sélectionner (STL, OBJ)
+    <strong>Zone de dÃ©pÃ´t</strong><br>
+    Glissez-dÃ©posez vos fichiers ici<br>
+    ou cliquez pour sÃ©lectionner (STL, OBJ)
     <br><br>
     <label for="file"><b>Votre fichier STL :</b></label>
     <input type="file" name="file" id="file">
@@ -183,7 +185,7 @@
    <!-- 
   <div id="viewer-info"></div>
      <style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
-      <Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g>
+      <Dimensions (mm) : â€“ x â€“ x â€“ â€” Volume : â€“ cmÂ³ â€” Poids estimÃ© : â€“ g>
       -->
 </div>
 
@@ -225,7 +227,7 @@
           <option>SLS ..>>>..Prochainenemt</option>
         </select>
 
-        <label for="materiau">Matériau</label>
+        <label for="materiau">MatÃ©riau</label>
         <select id="materiau">
           <option>PLA</option>
           <option>ABS</option>
@@ -235,10 +237,10 @@
           <option>TPU</option>
           <option>PA-CF</option>
           <option>HIPS</option>
-          <option>Résine Standard</option>
-          <option>Résine Tough</option>
-          <option>Résine Calcinable</option>
-          <option>Résine Flexible</option>
+          <option>RÃ©sine Standard</option>
+          <option>RÃ©sine Tough</option>
+          <option>RÃ©sine Calcinable</option>
+          <option>RÃ©sine Flexible</option>
         </select>
 
   <label>Couleur</label>  
@@ -318,11 +320,11 @@
   </label>
 </div>
 
-        <label for="quantite">Quantité</label>
+        <label for="quantite">QuantitÃ©</label>
         <input id="quantite" type="number" min="1" value="1" />
 
-        <label for="notes">Précisez votre demande</label>
-        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+        <label for="notes">PrÃ©cisez votre demande</label>
+        <textarea id="notes" name="notes" placeholder="TolÃ©rances, finitions, dÃ©laisâ€¦"></textarea>
         
 
         <button class="btn" id="btn-devis">Obtenir une estimation</button>
@@ -330,7 +332,7 @@
 
       <!-- VOLET 3 -->
 <div class="panel">
-  <h2 align="center">3. Panier & détails personnels</h2>
+  <h2 align="center">3. Panier & dÃ©tails personnels</h2>
 
   <h3>Votre panier <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
 
@@ -350,7 +352,7 @@
   </div>
 
   <div class="panier-row">
-    <div class="panier-label">Matériau</div>
+    <div class="panier-label">MatÃ©riau</div>
     <div class="panier-value">
       <span id="materiau-panier">PLA</span>
     </div>
@@ -365,7 +367,7 @@
   </div>
 
   <div class="panier-row">
-    <div class="panier-label">Quantité</div>
+    <div class="panier-label">QuantitÃ©</div>
     <div class="panier-value">
       <span id="qte-panier">1</span>
     </div>
@@ -390,22 +392,22 @@
 
 
  
-<h3>Détails personnels</h3>
+<h3>DÃ©tails personnels</h3>
 
 <form id="form">
-  <label for="nom">Nom / Prénom</label>
+  <label for="nom">Nom / PrÃ©nom</label>
   <input id="nom" name="HB3D" type="text" />
 
-  <label for="societe">Société (optionnel)</label>
+  <label for="societe">SociÃ©tÃ© (optionnel)</label>
   <input id="societe" name="Bienvenue" type="text" />
 
   <label for="email">Email</label>
   <input id="email" name="client_email" type="email" />
 
-  <label for="tel">Téléphone</label>
+  <label for="tel">TÃ©lÃ©phone</label>
   <input id="tel" name="client_id" type="text" />
 
-  <!-- cachés -->
+  <!-- cachÃ©s -->
   <input type="hidden" id="quantite-hidden" name="quantite" value="1">
   <input type="hidden" id="prix_affiche" name="prix"    value="" />
   <input type="hidden" id="fichier"     name="fichier"  value="" />
@@ -447,11 +449,11 @@
   </div>
 
   <div class="hb3d-instructions">
-  <h3>Avant l’envoi</h3>
-  <p>Sur mobile, votre fichier doit être stocké localement.</p>
-  <p>Choisissez la technologie, le matériau, la couleur et la quantité.</p>
-  <p>Formats acceptés : STL, OBJ. Taille max : 50 Mo.</p>
-  <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
+  <h3>Avant lâ€™envoi</h3>
+  <p>Sur mobile, votre fichier doit Ãªtre stockÃ© localement.</p>
+  <p>Choisissez la technologie, le matÃ©riau, la couleur et la quantitÃ©.</p>
+  <p>Formats acceptÃ©s : STL, OBJ. Taille max : 50 Mo.</p>
+  <p>Une fois le fichier envoyÃ©, HB3D reÃ§oit automatiquement votre demande.</p>
 </div>
 
   <button class="btn secondary" id="btn-upload">Upload files</button>
@@ -464,7 +466,7 @@
     <img src="images/Logo HBD.jpg" width="32" height="25" alt="HB3D">
     <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
   </div>
-  <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
+  <span class="footer-copy">Copyright Â© 2015 - 2026 HB3D</span>
 </footer>
 
   <!-- scripts JSC3D -->
@@ -569,14 +571,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // =========================
-// Matériaux par techno
+// MatÃ©riaux par techno
 // =========================
 const MATERIAUX_PAR_TECHNO = {
   FDM: [
     'PLA','ABS','PET','PETG','ASA','TPU','PA-CF','HIPS'
   ],
   SLA: [
-    'Résine Standard','Résine Tough','Résine Calcinable','Résine Flexible'
+    'RÃ©sine Standard','RÃ©sine Tough','RÃ©sine Calcinable','RÃ©sine Flexible'
   ],
   SLS: []
 };
@@ -590,7 +592,7 @@ function remplirMateriauxPourTechno(techno) {
 
   if (liste.length === 0) {
     const opt = document.createElement('option');
-    opt.textContent = '—';
+    opt.textContent = 'â€”';
     opt.value = '';
     selectMateriau.appendChild(opt);
     return;
@@ -648,7 +650,7 @@ function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
     couleurPanier.textContent = labelCouleur;
   }
 
-  console.log('HB3D volume chargé', {
+  console.log('HB3D volume chargÃ©', {
     volumeCm3: vol,
     volumeMm3: window.currentVolumeMm3
   });
@@ -716,10 +718,10 @@ const TARIFS = {
   },
 
   SLA: {
-    'Résine Standard':   { A: 19.44, B: 0.467 },
-    'Résine Tough':      { A: 24.00, B: 0.560 },
-    'Résine Flexible':   { A: 26.00, B: 0.620 },
-    'Résine Calcinable': { A: 29.00, B: 0.700 }
+    'RÃ©sine Standard':   { A: 19.44, B: 0.467 },
+    'RÃ©sine Tough':      { A: 24.00, B: 0.560 },
+    'RÃ©sine Flexible':   { A: 26.00, B: 0.620 },
+    'RÃ©sine Calcinable': { A: 29.00, B: 0.700 }
   },
 
   SLS: {
@@ -770,11 +772,11 @@ function calculerEstimation() {
   const prixFormatte = prixNet.toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }) + ' €';
+  }) + ' â‚¬';
 
-  // Affichage volumes (inchangé)
-  $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mm³');
-  $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cm³');
+  // Affichage volumes (inchangÃ©)
+  $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mmÂ³');
+  $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cmÂ³');
 
   // On renvoie prix + taux de remise
   return { prixFormatte, rate };
@@ -809,7 +811,7 @@ function calculerEstimation() {
   if ($qtePanier.length)      $qtePanier.text($quantite.val());
   if ($prixPanier.length)     $prixPanier.text(prixEstime);
 
-  // Affichage de l’info remise
+  // Affichage de lâ€™info remise
   const $remiseInfo = $('#remise-info');
   if ($remiseInfo.length) {
     if (rate > 0) {
@@ -820,15 +822,15 @@ function calculerEstimation() {
   }
   
 
-  // Message spécial gros volumes
+  // Message spÃ©cial gros volumes
   const $remiseMessage = $('#remise-message');
   if ($remiseMessage.length) {
     const qte = parseInt($quantite.val(), 10) || 1;
 
     if (qte >= 1000) {
-      $remiseMessage.text('Volume exceptionnel : devis ajusté sur demande.');
+      $remiseMessage.text('Volume exceptionnel : devis ajustÃ© sur demande.');
     } else if (qte >= 500) {
-      $remiseMessage.text('Remise maximale appliquée.');
+      $remiseMessage.text('Remise maximale appliquÃ©e.');
     } else {
       $remiseMessage.text('');
     }
@@ -865,7 +867,7 @@ function calculerEstimation() {
     e.preventDefault();
 
     if (!isConfigComplete()) {
-      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement.');
+      alert('Merci de complÃ©ter techno, matÃ©riau, couleur et quantitÃ© avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement.');
       return;
     }
 

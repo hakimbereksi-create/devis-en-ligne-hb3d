@@ -1,4 +1,4 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 
   // -------------------------
   // Fonctions d'affichage
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
     if (files && files.length > 0) {
       setUploadProgress(0);
-      setUploadStatus('Fichier prêt à être envoyé<br>' + files[0].name);
+      setUploadStatus('Fichier prÃªt Ã  Ãªtre envoyÃ©<br>' + files[0].name);
     } else {
       setUploadProgress(0);
       setUploadStatus('En attente de fichier<br>Fichier 0 / 0');
@@ -69,7 +69,7 @@ $('input[name="couleur"]').on('change', function () {
     event.preventDefault();
 
     if (!files || !files.length) {
-      setUploadStatus('Aucun fichier sélectionné<br>Veuillez choisir un fichier');
+      setUploadStatus('Aucun fichier sÃ©lectionnÃ©<br>Veuillez choisir un fichier');
       return;
     }
 
@@ -91,7 +91,7 @@ $('input[name="couleur"]').on('change', function () {
 
             var displayed = realPercent;
 
-            // on plafonne l'affichage à 90 % pendant l'upload
+            // on plafonne l'affichage Ã  90 % pendant l'upload
             if (realPercent >= 100) {
               displayed = 90;
             } else if (realPercent > 90) {
@@ -117,7 +117,7 @@ $('input[name="couleur"]').on('change', function () {
       success: function(data, textStatus, jqXHR) {
         if (typeof data.error === 'undefined') {
 
-          // animation de 90 à 100 %
+          // animation de 90 Ã  100 %
           var current = 90;
           var interval = setInterval(function() {
             current += 2;
@@ -127,7 +127,7 @@ $('input[name="couleur"]').on('change', function () {
               clearInterval(interval);
 
               setUploadProgress(current);
-              setUploadStatus('Upload terminé<br>Traitement de la commande...');
+              setUploadStatus('Upload terminÃ©<br>Traitement de la commande...');
 
               submitForm(event, data);
             } else {
@@ -146,7 +146,7 @@ $('input[name="couleur"]').on('change', function () {
       error: function(jqXHR, textStatus, errorThrown) {
         console.log('2.ERRORS: ' + errorThrown);
         $("#loading").hide();
-        setUploadStatus('Erreur réseau pendant l\'upload<br>Veuillez réessayer');
+        setUploadStatus('Erreur rÃ©seau pendant l\'upload<br>Veuillez rÃ©essayer');
       }
     });
   }
@@ -159,7 +159,7 @@ function submitForm(event, data) {
 
   var $form = $("#form");
 
-  // --- HB3D: synchroniser les champs cachés avec le panier ---
+  // --- HB3D: synchroniser les champs cachÃ©s avec le panier ---
   var qteText  = $('#qte-panier').text().trim();
   var prixText = $('#prix-panier').text().trim();
 
@@ -173,7 +173,7 @@ function submitForm(event, data) {
   }
   // ------------------------------------------------------------
 
-  // --- HB3D: synchroniser techno / matériau / couleur ---
+  // --- HB3D: synchroniser techno / matÃ©riau / couleur ---
   var techValue     = $('#techno').val() || '';
   var materialValue = $('#materiau').val() || '';
   var colorValue    = $('input[name="couleur"]:checked').val() || '';
@@ -185,7 +185,7 @@ function submitForm(event, data) {
   console.log('tech =', techValue, 'material =', materialValue, 'color =', colorValue);
   // ------------------------------------------------------
  
-  // On sérialise le formulaire APRES màj des champs
+  // On sÃ©rialise le formulaire APRES mÃ j des champs
   var formData = $form.serialize();
 
    
@@ -195,7 +195,7 @@ function submitForm(event, data) {
   // >>> FIN AJOUT <<<
   $('#message').val(notes);
 
-  // On ajoute les noms de fichiers renvoyés par upload.php
+  // On ajoute les noms de fichiers renvoyÃ©s par upload.php
   $.each(data.files || [], function(key, value) {
     formData = formData + '&filenames[]=' + value;
     if (key === 0) {
@@ -212,7 +212,7 @@ function submitForm(event, data) {
     success: function(data, textStatus, jqXHR) {
       console.log('submit.php response', data);  // <-- AJOUT ICI
 
-// Numéro de devis technique + numéro affiché
+// NumÃ©ro de devis technique + numÃ©ro affichÃ©
         $('#devis_id').val(data.devis_id || '');
         $('#quote_number').val(data.quote_number || data.devis_id || '');
 
@@ -225,17 +225,18 @@ function submitForm(event, data) {
         $('#stripe_link').val('https://hb3d.fr/paiement'); // lien de test
       }
 
-        // --- HB3D: EmailJS après succès submit.php ---
+
+        // --- HB3D: EmailJS aprÃ¨s succÃ¨s submit.php ---
         
         try {
-          console.log('EmailJS: préparation des champs cachés');
+          console.log('EmailJS: prÃ©paration des champs cachÃ©s');
           var now = new Date();
           $('#time').val(now.toLocaleString());
 
-          // AVANT : ça écrasait le message client
+          // AVANT : Ã§a Ã©crasait le message client
           // $('#message').val('Nouveau devis HB3D depuis le formulaire web.');
 
-          // MAINTENANT : on garde ce que le client a tapé
+          // MAINTENANT : on garde ce que le client a tapÃ©
           var notes = $('#notes').val() || '';
   $('#message').val(notes);
 
@@ -262,7 +263,7 @@ function submitForm(event, data) {
       setTimeout(function() {
         $("#loading").hide();
         setUploadProgress(100);
-        setUploadStatus('Devis envoyé<br>Merci !');
+        setUploadStatus('Devis envoyÃ©<br>Merci !');
 
                 // Modal HB3D
         var modal = document.createElement('div');
@@ -271,10 +272,10 @@ function submitForm(event, data) {
         <div class="hb3d-modal-box">\
           <div class="hb3d-modal-title">HB3D</div>\
           <p class="hb3d-modal-text">\
-            Votre devis a bien été transmis.<br><br>\
+            Votre devis a bien Ã©tÃ© transmis.<br><br>\
             Nous revenons vers vous rapidement\
             pour la suite de votre demande.\
-            En l’absence de message dans votre boîte de réception, nous vous invitons à consulter vos courriers indésirables.\
+            En lâ€™absence de message dans votre boÃ®te de rÃ©ception, nous vous invitons Ã  consulter vos courriers indÃ©sirables.\
           </p>\
           <button class="hb3d-modal-btn" onclick="document.querySelector(\'.hb3d-modal\').remove()">FERMER</button>\
         </div>';
