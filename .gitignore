@@ -1,0 +1,29 @@
+﻿# Windows
+desktop.ini
+Thumbs.db
+
+# Fichiers clients / uploads
+uploads/*
+!uploads/.gitkeep
+
+# Journaux et compteurs générés
+php/devis_log.txt
+php/quote_counter.txt
+
+# Fichiers temporaires
+*.log
+*.tmp
+*.bak
+
+# Secrets / configuration locale
+.env
+.env.*
+config.local.php
+config/database.local.php
+
+# Dépendances et caches
+node_modules/
+vendor/
+cache/
+tmp/
+sessions/

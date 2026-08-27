@@ -1,0 +1,648 @@
+@page {
+  size: A4;
+  margin: 14mm 16mm 14mm 16mm;
+}
+
+:root {
+  --bg: #f4f5f7;
+  --paper: #ffffff;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #d9dee7;
+  --accent: #db1919;
+  --accent-dark: #eb1b1b;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+}
+
+body {
+  margin: 0;
+  background: #f3f4f6;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+.quote-sheet,
+main,
+.quote-wrapper {
+  width: 100%;
+  max-width: 178mm;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 10mm 9mm 12mm 9mm;
+}
+
+.quote-inner {
+  padding: 0;
+}
+
+.quote-header {
+  display: grid;
+  grid-template-columns: 210px 235px;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: start;
+}
+
+.company-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.company-logo {
+  width: 82px;
+  height: 82px;
+  padding: 4px;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.company-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left top;
+}
+
+.company-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.company-identity h1,
+.company-identity .company-name {
+  font-size: 14px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.company-identity p {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #4b5563;
+}
+
+.bottom-area {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+
+.company-identity h1 {
+  margin: 0 0 8px 0;
+  font-size: 1.45rem;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.company-identity p {
+  margin: 0 0 4px 0;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+
+.quote-meta-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfc 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 16px;
+  position: relative;
+}
+
+.quote-meta-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.quote-badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.meta-grid div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 8px;
+}
+
+.meta-grid div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.meta-grid span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.meta-grid strong {
+  font-size: 0.92rem;
+  color: var(--ink);
+  text-align: right;
+}
+
+.top-infos {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.billing-card,
+.project-card,
+.technical-section,
+.notes-card,
+.totals-card,
+.vat-breakdown {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.billing-card,
+.project-card,
+.technical-section,
+.notes-card,
+.vat-breakdown {
+  padding: 16px 18px;
+}
+
+.billing-card h2,
+.project-card h2,
+.services-section h2,
+.technical-section h2,
+.notes-card h2,
+.vat-breakdown h2 {
+  margin: 0 0 12px 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+}
+
+.billing-card p,
+.project-card p,
+.notes-card p {
+  margin: 0 0 6px 0;
+  font-size: 0.93rem;
+}
+
+.services-section {
+  margin-bottom: 20px;
+}
+
+.quote-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}
+
+.quote-table thead th {
+  background: #f8fafc;
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.quote-table tbody td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #eef1f5;
+  vertical-align: top;
+  font-size: 0.92rem;
+}
+
+.quote-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.quote-table th:nth-child(n + 2),
+.quote-table td:nth-child(n + 2) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.quote-table th:first-child,
+.quote-table td:first-child {
+  text-align: left;
+  width: 48%;
+  white-space: normal;
+}
+
+.service-subline {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.technical-section {
+  margin-bottom: 20px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.tech-grid div {
+  padding: 12px 12px;
+  border: 1px solid #eceff4;
+  border-radius: var(--radius-md);
+  background: #fcfcfd;
+  min-height: 64px;
+}
+.quote-footer {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.signature-box {
+  min-height: 90px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.legal-footer {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+:root {
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+}
+.billing-card,
+.project-card,
+.notes-card,
+.totals-card,
+.technical-section,
+.services-section,
+.vat-breakdown {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.quote-table th {
+  background: #f8fafc;
+  color: #111827;
+}
+
+.quote-table td,
+.quote-table th {
+  padding: 12px 14px;
+}
+
+.tech-grid > div {
+  border-radius: 8px;
+  border: 1px solid #eceff3;
+  background: #fcfcfd;
+}
+
+
+.totals-card {
+  width: 320px;
+  margin-left: auto;
+  margin-top: -6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+}
+
+.total-row strong {
+  min-width: 110px;
+  text-align: right;
+}
+
+.grand-total strong,
+.net-pay strong {
+  text-align: right;
+}
+
+.quote-footer {
+  margin-top: 28px;
+  padding-top: 18px;
+}
+
+.signature-box {
+  min-height: 90px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.legal-footer {
+  border-top: 1px solid #c81e1e;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+}
+.technical-section h2 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.tech-grid {
+  gap: 10px;
+}
+
+.tech-grid > div {
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.tech-grid > div span {
+  display: block;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #6b7280;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tech-grid > div strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #111827;
+  font-weight: 600;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm 12mm 10mm 12mm;
+  }
+
+  html,
+  body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    font-size: 12px;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-button,
+  .screen-only {
+    display: none !important;
+  }
+
+  main,
+  .quote,
+  .quote-sheet,
+  .quote-wrapper,
+  .quote-inner {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .quote-header {
+    grid-template-columns: 190px 220px;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .company-logo {
+    width: 68px;
+    height: 68px;
+  }
+
+  .company-identity h1 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  .company-identity p,
+  .meta-grid span,
+  .meta-grid strong,
+  .billing-card p,
+  .project-card p,
+  .notes-card p,
+  .legal-footer {
+    font-size: 11px;
+    line-height: 1.25;
+  }
+
+  .quote-meta-card {
+    padding: 10px 12px 10px;
+  }
+
+  .quote-badge {
+    margin-bottom: 8px;
+    padding: 4px 10px;
+    font-size: 0.66rem;
+  }
+
+  .meta-grid {
+    gap: 5px;
+  }
+
+  .meta-grid div {
+    gap: 8px;
+    padding-bottom: 4px;
+  }
+
+  .top-infos {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .billing-card,
+  .project-card,
+  .technical-section,
+  .notes-card,
+  .vat-breakdown {
+    padding: 10px 12px;
+  }
+
+  .billing-card h2,
+  .project-card h2,
+  .services-section h2,
+  .technical-section h2,
+  .notes-card h2,
+  .vat-breakdown h2 {
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+  }
+
+  .services-section,
+  .technical-section {
+    margin-bottom: 12px;
+  }
+
+  .quote-table th,
+  .quote-table td {
+    padding: 7px 8px;
+    font-size: 11px;
+  }
+
+  .service-subline {
+    margin-top: 3px;
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  .tech-grid {
+    gap: 6px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tech-grid > div {
+    min-height: auto;
+    padding: 7px 8px;
+  }
+
+  .tech-grid > div span {
+    font-size: 9.5px;
+    margin-bottom: 2px;
+  }
+
+  .tech-grid > div strong {
+    font-size: 10.5px;
+    line-height: 1.2;
+  }
+
+  .bottom-area {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .totals-card {
+    width: 280px;
+    margin-top: 0;
+  }
+
+  .total-row {
+    padding: 7px 10px;
+    gap: 10px;
+  }
+
+  .total-row span,
+  .total-row strong {
+    font-size: 11px;
+  }
+
+  .vat-breakdown table th,
+  .vat-breakdown table td {
+    padding: 6px 8px;
+    font-size: 10.5px;
+  }
+
+  .quote-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+
+  .signature-box {
+    min-height: 48px;
+    padding: 8px;
+    margin-bottom: 6px;
+    font-size: 10.5px;
+  }
+
+  .legal-footer {
+    padding-top: 6px;
+    font-size: 10px;
+  }
+
+  .quote-header,
+  .top-infos,
+  .services-section,
+  .technical-section,
+  .bottom-area,
+  .vat-breakdown,
+  .quote-footer,
+  .totals-card,
+  .billing-card,
+  .project-card,
+  .notes-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+@media print {
+  .quote-badge {
+    font-size: 0.95rem;
+    letter-spacing: 0.16em;
+  }
+}
+

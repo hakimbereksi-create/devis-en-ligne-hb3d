@@ -9,668 +9,220 @@
   <!-- Space Age (CDNFonts) -->
   <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
 
-  <style>
-    /* Aligner les boutons en bas de chaque volet */
-.top-columns .panel {
-  display: flex;
-  flex-direction: column;
+  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css"> -->
+  <link rel="stylesheet" href="dist/css/style.css">
+  <link rel="stylesheet" href="dist/css/hb3d-upload.css">
+<style type="text/css">
+#notes {
+	margin-bottom: 100px;
+	height: 100px;
 }
-
-.top-columns .panel > *:last-child {
-  margin-top: auto;  /* pousse le bouton vers le bas du volet */
+#view3d {
 }
-.btn {
-  display: inline-block;
-  background: #fa0339;          /* rouge HB3D */
-  color: #fff;
-  border: none;
-  padding: 10px 0;
-  width: 100%;                  /* même largeur dans chaque volet */
-  border-radius: 0;             /* tuiles rectangulaires */
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-top: 16px;
-  font-family: 'Orbitron', system-ui, sans-serif;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
+#view3d #viewer-modes {
+	color: #F00;
+	background-color: #FFF;
 }
-
-
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #f4f5fb;
-      color: #111827;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    header {
-      background: #ffffff;
-      color: #111827;
-      padding: 18px 24px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      background: #ffffff;
-      color: #111827;
-      padding: 8px 24px;
-      border-top: 1px solid #e5e7eb;
-      text-align: center;
-      font-size: 2rem;
-      margin-top: 24px;
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    header .header-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .logo {
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-      font-size: 2.2rem;
-      letter-spacing: 0.16em;
-      color: #f70438;
-    
-    }
-
-    .steps-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      max-width: 1400px;
-      margin: 0 auto;
-      margin-top: 4px;
-      column-gap: 20px;
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #0e0d0d;
-      
-    }
-
-    .step-item {
-      text-align: center;
-    }
-
-    .step-item span.step-number {
-      display: block;
-      font-weight: 600;
-      color: #fd053b;
-      margin-bottom: 2px;
-    }
-
-    .step-item span.step-label {
-      display: block;
-      font-size: 0.9rem;
-    }
-
-    main {
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    .top-columns {
-      margin-bottom: 8px;   /* au lieu de 20px */
-    }
-
-    .panel {
-      margin-bottom: 8px;
-    }
-
-    .top-columns {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 8px;
-      margin-bottom: 20px;
-    }
-
-    .panel {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-    }
-
-    .panel h2 {
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 6px;
-      color: #111827;
-    }
-
-    .panel h3 {
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 0.8rem;
-      margin: 10px 0 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #4b5563;
-    }
-
-    .upload-zone {
-      border: 1px dashed #cbd5e1;
-      border-radius: 8px;
-      padding: 22px;
-      text-align: center;
-      margin-bottom: 16px;
-      background: #f9fafb;
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
-
-    .upload-zone strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #111827;
-    }
-
-    .viewer {
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      color: #6b7280;
-      background: #f9fafb;
-    }
-
-    label {
-      display: block;
-      margin-top: 8px;
-      font-size: 0.82rem;
-      color: #4b5563;
-    }
-
-    select, input[type="number"], input[type="text"], input[type="email"], textarea {
-      width: 100%;
-      padding: 6px 8px;
-      margin-top: 3px;
-      border-radius: 5px;
-      border: 1px solid #d1d5db;
-      font-size: 0.87rem;
-      background: #ffffff;
-      color: #111827;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    .btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #e11d48, #ff4040);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      margin-top: 12px;
-      font-family: 'Orbitron', system-ui, sans-serif;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
-      margin-top: 6px;
-      margin-bottom: 10px;
-    }
-
-    th, td {
-      border: 1px solid #e5e7eb;
-      padding: 5px 6px;
-      text-align: left;
-    }
-
-    th {
-      background: #f3f4f6;
-      color: #374151;
-    }
-
-    .status-panel {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .hb3d-mark {
-      text-align: center;
-      font-family: 'Space Age', 'Orbitron', system-ui, sans-serif;
-    }
-
-    .hb3d-mark .name {
-      font-size: 1.3rem;
-      letter-spacing: 0.18em;
-      color: #fc0439;
-    }
-
-    .hb3d-mark .subtitle {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-top: 4px;
-    }
-
-    .circular-upload {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background:
-        conic-gradient(#e11d48 calc(40 * 1%), #e5e7eb 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(225, 29, 72, 0.35);
-    }
-
-    .circular-upload::before {
-      content: "";
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #ffffff;
-    }
-
-    .circular-upload span {
-      position: relative;
-      font-family: 'Orbitron', system-ui, sans-serif;
-      font-size: 1rem;
-      color: #111827;
-    }
-
-    .upload-text {
-      font-size: 0.82rem;
-      color: #4b5563;
-      text-align: center;
-    }
-
-    @media (max-width: 1100px) {
-      .top-columns {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .steps-bar {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 6px;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .top-columns {
-        grid-template-columns: 1fr;
-      }
-      .steps-bar {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    html,
-body {
-  min-height: 0 !important;
-  height: auto !important;
+.panel #view3d #viewer-modes button {
+	background-color: #F00;
+	color: #FFF;
+	font-weight: normal;
+	border-top-color: #FFF;
+	border-right-color: #FFF;
+	border-bottom-color: #FFF;
+	border-left-color: #FFF;
+	font-size: 10px;
+	font-family: Orbitron;
 }
-
-.panel,
-.top-columns,
-main {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-
-footer {
-  margin-top: 0 !important;
-  position: static !important;
-}
-
-  #btn-devis {
-	margin-bottom: 50px;
-}
-  #btn-etape-suivante {
-	margin-bottom: 60px;
-}
-  #btn-etape-suivante {
-	margin-bottom: 50px;
-}
-  #btn-upload {
-	margin-bottom: 50px;
-}
-  .header-inner .steps-bar .step-item .step-number {
-	font-size: 14px;
-}
-  .step-number {
-	font-size: 14px;
-}
-  .step-number {
+.subtitle p {
 	font-size: 16px;
-	height: 30px;
+	color: #333;
+	margin-top: 50px;
 }
-  #footer color {
-	background-color: #CCC;
-}
-  .top-columns .panel h2 {
-	font-size: 14px;
-}
-  .top-columns .panel h3 {
-	font-size: 14px;
+.hb3d-mark .name p {
+	margin-top: 35px;
+	font-size: 16px;
+	font-weight: normal;
+	font-family: "space Age";
 	color: #F00;
 }
-  .subtitle p {
+#btn-upload div {
 	font-size: 16px;
+	float: none;
+	font-family: "space Age";
+	font-weight: bold;
+	color: #FFF;
 }
-  .hb3d-mark .name p {
-	font-size: 16px;
+.hb3d-mark .name p strong {
+	font-size: 11px;
 }
-  .panel1 {      margin-bottom: 8px;
-}
-.panel1 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel1 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.top-columns1 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel2 {      margin-bottom: 8px;
-}
-.panel2 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel2 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel11 {margin-bottom: 8px;
-}
-.panel11 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel11 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel3 {      margin-bottom: 8px;
-}
-.panel3 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel3 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel4 {      margin-bottom: 8px;
-}
-.panel4 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel4 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel111 {margin-bottom: 8px;
-}
-.panel111 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel111 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel21 {margin-bottom: 8px;
-}
-.panel21 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel21 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel5 {      margin-bottom: 8px;
-}
-.panel5 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel5 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel31 {margin-bottom: 8px;
-}
-.panel31 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel31 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .panel6 {      margin-bottom: 8px;
-}
-.panel6 {      background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel6 {  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel311 {margin-bottom: 8px;
-}
-.panel311 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel311 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-.panel51 {margin-bottom: 8px;
-}
-.panel51 {background: #ffffff;
-      border-radius: 10px;
-      padding: 16px 18px;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-}
-.panel51 {margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-}
-  .subtitle p {
-	font-size: 14px;
-	color: #333;
-}
-  .top-columns .panel table thead tr th {
-	font-size: 12px;
-}
-  .top-columns .panel table tbody tr td {
-	font-size: 12px;
-}
-  #footer color footer #footer {
-	font-size: 14px;
-	color: #999;
-	background-color: #666;
-}
-  #footer color {
-	background-color: #CCC;
-	font-size: 14px;
-}
-  #footer txt copyright {
-	font-size: 8px;
-}
-  #footer color footer #footer em {
-	font-size: 8px;
-}
-  #viewer-modes button {
-	font-family: Orbitron;
-	font-size: 12px;
-}
-  .top-columns .panel label {
-	font-size: 10px;
-}
-  .top-columns .panel label {
-	font-size: 10px;
+.top-columns .panel h3 {
 	font-family: Orbitron;
 }
-  .panel #quantite {
-	font-size: 12px;
+.panel #form {
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.panel table tr td div {
 	font-family: Orbitron;
 }
-  </style>
+#viewer-modes {
+	font-family: Orbitron;
+}
+.top-columns .panel {
+}
+.top-columns .panel #viewer-modes button {
+	font-family: Orbitron;
+	color: #FFF;
+	background-color: #F00;
+	border-top-color: #FFF;
+	border-right-color: #FFF;
+	border-bottom-color: #FFF;
+	border-left-color: #FFF;
+	font-size: 12px;
+	font-weight: bolder;
+}
+.hb3d-mark .name p strong {
+}
+#viewer-modes button {
+	font-family: Orbitron;
+	font-size: 9px;
+	font-weight: normal;
+}
+
+.hb3d-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.hb3d-modal-box {
+  background: #fff;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+}
+
+.hb3d-modal-title {
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #f00;
+  margin-bottom: 18px;
+}
+
+.hb3d-modal-text {
+  font-size: 20px;
+  line-height: 1.55;
+  color: #222;
+  margin-bottom: 22px;
+}
+
+.hb3d-modal-btn {
+  background: #f00;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hb3d-modal-btn:hover {
+  background: #cc0000;
+}
+</style>
 </head>
-
-<link rel="stylesheet" href="dist/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css"> -->
-<link rel="stylesheet" href="dist/css/style.css">
-
-
-
 
 <body>
   <header>
-    <div class="header-inner">
-      <div class="header-top">
-        <div class="logo">HB3D</div>
-      </div>
-      <div class="steps-bar">
-        <div class="step-item">
-          <span class="step-number">Étape 1</span>
-          <span class="step-label">Téléversez</span>
-        </div>
-        <div class="step-item">
-          <span class="step-number">Étape 2</span>
-          <span class="step-label">Configuration</span>
-        </div>
-        <div class="step-item">
-          <span class="step-number">Étape 3</span>
-          <span class="step-label">Panier & détails</span>
-        </div>
-        <div class="step-item">
-          <span class="step-number">Étape 4</span>
-          <span class="step-label">Upload & envoi</span>
-        </div>
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="logo">
+        <div align="center">HB3D</div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
   <main>
     <section class="top-columns">
 <!-- VOLET 1 -->
 <div class="panel">
-  <h2>1. Téléversez votre fichier 3D</h2>
+  <h2 align="center">1. Téléversez votre fichier 3D</h2>
 
   <div class="upload-zone">
     <strong>Zone de dépôt</strong><br>
     Glissez-déposez vos fichiers ici<br>
-    ou cliquez pour sélectionner (STL, OBJ, 3MF…)
+    ou cliquez pour sélectionner (STL, OBJ)
     <br><br>
     <label for="file"><b>Votre fichier STL :</b></label>
     <input type="file" name="file" id="file">
   </div>
 
   <!-- VUE 3D : viewer JSC3D -->
-  <div id="view3d">
-    <canvas id="cv" width="400" height="400"></canvas>
-    <div id="viewer-info"
-     style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
-  Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g
+    <div id="view3d">
+    <canvas id="cv" width="350" height="450"></canvas>
+   
+   <!-- 
+  <div id="viewer-info"></div>
+     <style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
+      <Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g>
+      -->
 </div>
 
+
     <div id="viewer-modes" class="viewer-modes">
-  <button id="test-couleur-gris">Gris</button>
-  <button id="test-couleur-bleu">Bleu</button>
   <button data-mode="flat">Plein</button>
   <button data-mode="wireframe">Wireframe</button>
   <button data-mode="point">Points</button>
+   
 </div>
-    <div class="panel panel-info" id="tip">
-      <table class="table">
-        <tr>
-          <td>Zoom</td>
-          <td><kbd>Wheel</kbd></td>
-        </tr>
-        <tr>
-          <td>Rotate</td>
-          <td><kbd>Drag</kbd></td>
-        </tr>
-        <tr>
-          <td>Pan</td>
-          <td><kbd>Ctrl</kbd> + <kbd>Drag</kbd></td>
-        </tr>
-      </table>
-    </div>
 
-    <div id="loading">
-      <img src="css/images/loading.gif" alt="Turning the crank ..."></div>
-  </div>
+    
 </div>
 
       <!-- VOLET 2 -->
       <div class="panel">
-        <h2>2. Configuration impression & devis</h2>
+        <h2 align="center">2. Configuration impression & devis</h2>
 
         <label for="techno">Technologie :</label>
         <table width="50" border="1">
           <tr>
-            <td width="33%"><img src="images/Anycubic max.png" width="42" height="54" align="texttop" longdesc="images/Anycubic max.png"></td>
-            <td width="33%"><img src="images/SLA.png" width="38" height="50" align="absmiddle" longdesc="images/SLA.png"></td>
-            <td width="34%"><img src="images/ProJet1000.png" width="54" height="55" longdesc="images/ProJet1000.png"></td>
+            <td width="33%"><div align="center">
+              <p><img src="images/Anycubic max.png" width="42" height="54" align="middle" longdesc="images/Anycubic max.png"></p>
+              <p>FDM</p>
+            </div></td>
+            <td width="33%"><div align="center">
+              <p><img src="images/SLA.png" width="38" height="50" align="absmiddle" longdesc="images/SLA.png"></p>
+              <p>SLA</p>
+            </div></td>
+            <td width="34%"><div align="center">
+              <p><img src="images/ProJet1000.png" width="54" height="55" longdesc="images/ProJet1000.png"></p>
+              <p>SLA</p>
+            </div></td>
           </tr>
         </table>
         <select id="techno">
           <option>FDM</option>
           <option>SLA</option>
-          <option>SLS</option>
+          <option>SLS ..>>>..Prochainenemt</option>
         </select>
 
         <label for="materiau">Matériau</label>
@@ -689,155 +241,231 @@ footer {
           <option>Résine Flexible</option>
         </select>
 
-        <label>Couleur</label>
-<div class="couleurs">
+  <label>Couleur</label>  
+<div id="couleurs-fdm" class="couleurs">
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_blanc" checked>
-    <span class="swatch" style="background-color:#F5F5F5;"></span>
+    <input type="radio" name="couleur" value="plablanc" checked>
+    <span class="swatch" style="background-color:#F5F5F5"></span>
     <span class="swatch-label">Blanc</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_noir">
-    <span class="swatch" style="background-color:#222222;"></span>
+    <input type="radio" name="couleur" value="planoir">
+    <span class="swatch" style="background-color:#222222"></span>
     <span class="swatch-label">Noir</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_gris">
-    <span class="swatch" style="background-color:#9F9F9F;"></span>
+    <input type="radio" name="couleur" value="plagris">
+    <span class="swatch" style="background-color:#9F9F9F"></span>
     <span class="swatch-label">Gris</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_rouge">
-    <span class="swatch" style="background-color:#FF3333;"></span>
+    <input type="radio" name="couleur" value="plarouge">
+    <span class="swatch" style="background-color:#FF3333"></span>
     <span class="swatch-label">Rouge</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_vert">
-    <span class="swatch" style="background-color:#00B050;"></span>
+    <input type="radio" name="couleur" value="plavert">
+    <span class="swatch" style="background-color:#00B050"></span>
     <span class="swatch-label">Vert</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_bleu">
-    <span class="swatch" style="background-color:#3366FF;"></span>
+    <input type="radio" name="couleur" value="plableu">
+    <span class="swatch" style="background-color:#3366FF"></span>
     <span class="swatch-label">Bleu</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_orange">
-    <span class="swatch" style="background-color:#ffa602;"></span>
-    <span class="swatch-label">orange</span>
+    <input type="radio" name="couleur" value="plaorange">
+    <span class="swatch" style="background-color:#ffa602"></span>
+    <span class="swatch-label">Orange</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_jaune">
-    <span class="swatch" style="background-color:#fae206;"></span>
-    <span class="swatch-label">jaune</span>
+    <input type="radio" name="couleur" value="plajaune">
+    <span class="swatch" style="background-color:#fae206"></span>
+    <span class="swatch-label">Jaune</span>
   </label>
 
   <label class="chip-color">
-    <input type="radio" name="couleur" value="pla_purple">
-    <span class="swatch" style="background-color:#ad06fac9;"></span>
-    <span class="swatch-label">purple</span>
+    <input type="radio" name="couleur" value="plapurple">
+    <span class="swatch" style="background-color:#800080"></span>
+    <span class="swatch-label">Purple</span>
   </label>
-  <!-- tu peux continuer pour orange, jaune, purple... -->
 </div>
 
+<div id="couleurs-sla" class="couleurs" style="display:none;">
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slablanc">
+    <span class="swatch" style="background-color:#F5F5F5"></span>
+    <span class="swatch-label">Blanc</span>
+  </label>
 
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slanoir">
+    <span class="swatch" style="background-color:#222222"></span>
+    <span class="swatch-label">Noir</span>
+  </label>
+
+  <label class="chip-color">
+    <input type="radio" name="couleur" value="slagris">
+    <span class="swatch" style="background-color:#9F9F9F"></span>
+    <span class="swatch-label">Gris</span>
+  </label>
+</div>
 
         <label for="quantite">Quantité</label>
         <input id="quantite" type="number" min="1" value="1" />
 
         <label for="notes">Précisez votre demande</label>
-        <textarea id="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…"></textarea>
+        
 
-        <button class="btn" id="btn-devis">Obtenir un devis</button>
+        <button class="btn" id="btn-devis">Obtenir une estimation</button>
       </div>
 
       <!-- VOLET 3 -->
 <div class="panel">
-  <h2>3. Panier & détails personnels</h2>
+  <h2 align="center">3. Panier & détails personnels</h2>
 
-  <h3>Votre panier   <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
-  <table height="72">
-    <thead>
-  <tr>
-    <th><div align="center">Fichier</div></th>
-    <th><div align="center">Techno</div></th>
-    <th><div align="center">Matériau</div></th>
-    <th><div align="center">Couleur</div></th>
-    <th><div align="center">Qté</div></th>
-    <th><div align="center">Prix</div></th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td><div align="center"><span id="nom-fichier-panier">piece_v1.stl</span></div></td>
-    <td><div align="center"><span id="techno-panier">FDM</span></div></td>
-    <td><div align="center"><span id="materiau-panier">PLA</span></div></td>
-    <td><div align="center"><span class="swatch-panier"></span><span id="couleur-panier">Blanc</span></div></td>
-    <td><div align="center"><span id="qte-panier">1</span></div></td>
-    <td><div align="center"><span id="prix-panier">12,00 €</span></div></td>
-  </tr>
-</tbody>
+  <h3>Votre panier <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
 
-  </table>
+  <div class="panier-stack">
+  <div class="panier-row">
+    <div class="panier-label">Nom du fichier</div>
+    <div class="panier-value">
+      <span id="nom-fichier-panier">piecev1.stl</span>
+    </div>
+  </div>
 
-        <h3>Détails personnels</h3>
-        <label for="nom">Nom / Prénom</label>
-        <input id="nom" type="text" />
+  <div class="panier-row">
+    <div class="panier-label">Techno</div>
+    <div class="panier-value">
+      <span id="techno-panier">FDM</span>
+    </div>
+  </div>
 
-        <label for="email">Email</label>
-        <input id="email" type="email" />
+  <div class="panier-row">
+    <div class="panier-label">Matériau</div>
+    <div class="panier-value">
+      <span id="materiau-panier">PLA</span>
+    </div>
+  </div>
 
-        <label for="tel">Téléphone</label>
-        <input id="tel" type="text" />
+  <div class="panier-row">
+    <div class="panier-label">Couleur</div>
+    <div class="panier-value panier-couleur">
+      <span class="swatch-panier" id="swatch-panier"></span>
+      <span id="couleur-panier">Blanc</span>
+    </div>
+  </div>
 
-        <label for="societe">Société (optionnel)</label>
-        <input id="societe" type="text" />
+  <div class="panier-row">
+    <div class="panier-label">Quantité</div>
+    <div class="panier-value">
+      <span id="qte-panier">1</span>
+    </div>
+  </div>
 
-        <button class="btn secondary" id="btn-etape-suivante">Étape suivante</button>
-      </div>
+  <div class="panier-row panier-row-total">
+    <div class="panier-label">Total</div>
+    <div class="panier-value">
+      <span id="prix-panier">En attente</span>
+    </div>
+  </div>
 
-      <!-- VOLET 4 -->
-      <div class="panel">
-        <h2>4. Upload & logo HB3D</h2>
-        <div class="status-panel">
-          <div class="hb3d-mark">
-            <div class="name">
-              <p>HB3D</p>
-              <p><img src="images/Logo HBD.jpg" alt="HB3D Logo" width="92" height="72"></p>
-            </div>
-            <div class="subtitle">
-              <p>Calculateur de volume en ligne</p>
+<div class="devis-row">
+  <span>Remise</span>
+  <span id="remise-info"></span>
 </div>
-          </div>
 
-          <div class="circular-upload">
-            <span>40%</span>
-          </div>
+<div id="remise-message" class="panier-remise-message"></div>
 
-          <div class="upload-text">
-            Upload en cours<br>
-            Fichier 1 / 1
-          </div>
-        </div>
+</div>
 
-        <button class="btn secondary" id="btn-upload">Upload files</button> 
+
+
+ 
+<h3>Détails personnels</h3>
+
+<form id="form">
+  <label for="nom">Nom / Prénom</label>
+  <input id="nom" name="HB3D" type="text" />
+
+  <label for="societe">Société (optionnel)</label>
+  <input id="societe" name="Bienvenue" type="text" />
+
+  <label for="email">Email</label>
+  <input id="email" name="client_email" type="email" />
+
+  <label for="tel">Téléphone</label>
+  <input id="tel" name="client_id" type="text" />
+
+  <!-- cachés -->
+  <input type="hidden" id="quantite-hidden" name="quantite" value="1">
+  <input type="hidden" id="prix_affiche" name="prix"    value="" />
+  <input type="hidden" id="fichier"     name="fichier"  value="" />
+  <input type="hidden" id="time"        name="time"     value="" />
+  <input type="hidden" id="quote_number" name="quote_number" value="">
+  <input type="hidden" id="message"     name="message"  value="" />    
+  <input type="hidden" id="stripe_link" name="stripe_link" value="" />
+  <input type="hidden" id="tech_hidden" name="tech" value="" />
+  <input type="hidden" id="material_hidden" name="material" value="" />
+  <input type="hidden" id="color_hidden" name="color" value="" />
+  <input type="hidden" id="devis_id" name="devis_id" value="">
+  
+</form>
+
+</div>
+<!-- VOLET 4 -->
+<div class="panel">
+  <h2 align="center">4. Upload</h2>
+
+  <div class="status-panel">
+    <div class="hb3d-mark">
+      <div class="name">
+        <p><strong>HB3D</strong>        </p>
+        <p>
+          <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="92" height="72">        </p>
       </div>
+      <div class="subtitle">
+        <p>Calculateur de volume en ligne</p>
+      </div>
+    </div>
+
+    <div class="circular-upload">
+      <span id="hb3d-upload-percent">0%</span>
+    </div>
+
+    <div id="hb3d-upload-text" class="upload-text">
+      En attente de fichier<br>Fichier 0 / 0
+    </div>
+  </div>
+
+  <div class="hb3d-instructions">
+  <h3>Avant l’envoi</h3>
+  <p>Sur mobile, votre fichier doit être stocké localement.</p>
+  <p>Choisissez la technologie, le matériau, la couleur et la quantité.</p>
+  <p>Formats acceptés : STL, OBJ. Taille max : 50 Mo.</p>
+  <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
+</div>
+
+  <button class="btn secondary" id="btn-upload">Upload files</button>
+</div>
     </section>
   </main>
   <div id="footer color">
-    <footer>
-      <div id="footer"> <img src="images/Logo HBD.jpg" width="32" height="25" longdesc="images/Logo HBD.jpg"> HB3D / Calculateur de volume en ligne
-        <div id="copyright footer"></div>
-      </div>
-    </footer>
+   <footer class="hb3d-footer">
+  <div class="hb3d-footer-inner">
+    <img src="images/Logo HBD.jpg" width="32" height="25" alt="HB3D">
+    <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
   </div>
+  <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
+</footer>
 
   <!-- scripts JSC3D -->
 <script src="dist/js/jquery-1.11.1.min.js"></script>
@@ -848,27 +476,79 @@ footer {
   <script src="dist/js/upload_handler.js"></script>
   
  <script>
+// =========================
+// Couleurs & viewer
+// =========================
 const MATERIAUX = {
-  pla_blanc:  { label: 'PLA Blanc',   color: '#F5F5F5' },
-  pla_noir:   { label: 'PLA Noir',    color: '#222222' },
-  pla_gris:   { label: 'PLA Gris',    color: '#9F9F9F' },
-  pla_rouge:  { label: 'PLA Rouge',   color: '#FF3333' },
-  pla_vert:   { label: 'PLA Vert',    color: '#00B050' },
-  pla_bleu:   { label: 'PLA Bleu',    color: '#3366FF' },
-  pla_orange: { label: 'PLA Orange',  color: '#FF8800' },
-  pla_jaune:  { label: 'PLA Jaune',   color: '#FFD800' },
-  pla_purple: { label: 'PLA Purple',  color: '#800080' }
+  pla_blanc:  { label: 'PLA Blanc',  color: '#F5F5F5' },
+  pla_noir:   { label: 'PLA Noir',   color: '#222222' },
+  pla_gris:   { label: 'PLA Gris',   color: '#9F9F9F' },
+  pla_rouge:  { label: 'PLA Rouge',  color: '#FF3333' },
+  pla_vert:   { label: 'PLA Vert',   color: '#00B050' },
+  pla_bleu:   { label: 'PLA Bleu',   color: '#3366FF' },
+  pla_orange: { label: 'PLA Orange', color: '#FF8800' },
+  pla_jaune:  { label: 'PLA Jaune',  color: '#FFD800' },
+  pla_purple: { label: 'PLA Purple', color: '#800080' }
 };
 
 function appliquerCouleurViewer(codeMateriau) {
   const mat = MATERIAUX[codeMateriau];
   if (!mat || !window.viewer) return;
-
   viewer.setParameter('ModelColor', mat.color);
   viewer.update();
 }
 
-$(document).ready(function () {
+function majCouleursSelonTechno() {
+  const technoVal = $('#techno').val();
+  const isSLA = (technoVal === 'SLA');
+  const couleursAutoriseesSLA = ['plablanc', 'planoir', 'plagris'];
+
+  $('input[name="couleur"]').each(function () {
+    const $radio = $(this);
+    const value  = $radio.val();
+    const $chip  = $radio.closest('.chip-color');
+
+    if (isSLA) {
+      const autorisee = couleursAutoriseesSLA.includes(value);
+      if (!autorisee) {
+        $radio.prop('disabled', true).prop('checked', false);
+        $chip.css({
+          opacity: 0.12,
+          cursor: 'not-allowed',
+          filter: 'grayscale(100%)'
+        });
+      } else {
+        $radio.prop('disabled', false);
+        $chip.css({
+          opacity: 1,
+          cursor: 'pointer',
+          filter: 'none'
+        });
+      }
+    } else {
+      $radio.prop('disabled', false);
+      $chip.css({
+        opacity: 1,
+        cursor: 'pointer',
+        filter: 'none'
+      });
+    }
+  });
+
+  if (isSLA && !$('input[name="couleur"]:checked').length) {
+    const $defaut = $('input[name="couleur"][value="plablanc"]:enabled').first();
+    if ($defaut.length) {
+      $defaut.prop('checked', true).trigger('change');
+    }
+  }
+
+  if (typeof updateEstimationButtonState === 'function') {
+    updateEstimationButtonState();
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
   const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
 
   radiosCouleur.forEach(function (radio) {
@@ -878,47 +558,81 @@ $(document).ready(function () {
     });
   });
 
-  // couleur initiale (juste pour le viewer)
   const radioActif = document.querySelector('input[name="couleur"]:checked');
   if (radioActif) {
     appliquerCouleurViewer(radioActif.value);
   }
+
+  // couleurs dispo selon techno
+  majCouleursSelonTechno();
+  $('#techno').on('change', majCouleursSelonTechno);
 });
 
-</script>
+// =========================
+// Matériaux par techno
+// =========================
+const MATERIAUX_PAR_TECHNO = {
+  FDM: [
+    'PLA','ABS','PET','PETG','ASA','TPU','PA-CF','HIPS'
+  ],
+  SLA: [
+    'Résine Standard','Résine Tough','Résine Calcinable','Résine Flexible'
+  ],
+  SLS: []
+};
 
-<script>
-  function calculerPrixHT(poidsGrammes, dureeHeures) {
-    const coutMatiereKg = 20;
-    const coutHoraire = 10;
-    const marge = 0.10;
+function remplirMateriauxPourTechno(techno) {
+  const selectMateriau = document.getElementById('materiau');
+  if (!selectMateriau) return;
 
-    const poidsKg = poidsGrammes / 1000;
-    const coutBrut = poidsKg * coutMatiereKg + dureeHeures * coutHoraire;
-    const prixHT = coutBrut * (1 + marge);
+  const liste = MATERIAUX_PAR_TECHNO[techno] || [];
+  selectMateriau.innerHTML = '';
 
-    return prixHT;
+  if (liste.length === 0) {
+    const opt = document.createElement('option');
+    opt.textContent = '—';
+    opt.value = '';
+    selectMateriau.appendChild(opt);
+    return;
   }
 
-  function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
-  const densitePLA = 1.24;
-  const poidsGrammes = volumeCm3 * densitePLA;
+  liste.forEach((nom) => {
+    const opt = document.createElement('option');
+    opt.textContent = nom;
+    opt.value = nom;
+    selectMateriau.appendChild(opt);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const selectTechno = document.getElementById('techno');
+  if (!selectTechno) return;
+  
+
+  remplirMateriauxPourTechno(selectTechno.value);
+  selectTechno.addEventListener('change', function () {
+    remplirMateriauxPourTechno(this.value);
+  });
+});
+
+// =========================
+// Volume / panier (pas de prix ici)
+// =========================
+window.currentVolumeMm3 = 0;
+
+function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
+  const vol = Number(volumeCm3);
+  window.currentVolumeMm3 = (!vol || !isFinite(vol) || vol <= 0) ? 0 : (vol * 1000);
 
   const inputQte = document.getElementById('quantite');
   const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
 
-  const prixUnitaire = calculerPrixHT(poidsGrammes, dureeHeures);
-  const prixTotal = prixUnitaire * qte;
-
-  const prixFormate = prixTotal.toFixed(2).replace('.', ',') + ' €';
-
   const spanPrix = document.getElementById('prix-panier');
-  if (spanPrix) spanPrix.textContent = prixFormate;
+  const spanQte  = document.getElementById('qte-panier');
 
-  const spanQte = document.getElementById('qte-panier');
   if (spanQte) spanQte.textContent = qte;
+  if (spanPrix) spanPrix.textContent = 'en attente';
 
-     // mettre à jour techno / matériau / couleur dans le panier
   const selectTechno   = document.getElementById('techno');
   const selectMateriau = document.getElementById('materiau');
   const radioCouleur   = document.querySelector('input[name="couleur"]:checked');
@@ -927,113 +641,259 @@ $(document).ready(function () {
   const materiauPanier = document.getElementById('materiau-panier');
   const couleurPanier  = document.getElementById('couleur-panier');
 
-  if (technoPanier && selectTechno) {
-    technoPanier.textContent = selectTechno.value;
-  }
-  if (materiauPanier && selectMateriau) {
-    materiauPanier.textContent = selectMateriau.value;
-  }
+  if (technoPanier && selectTechno)   technoPanier.textContent   = selectTechno.value;
+  if (materiauPanier && selectMateriau) materiauPanier.textContent = selectMateriau.value;
   if (couleurPanier && radioCouleur) {
     const labelCouleur = radioCouleur.parentElement.textContent.trim();
     couleurPanier.textContent = labelCouleur;
   }
 
+  console.log('HB3D volume chargé', {
+    volumeCm3: vol,
+    volumeMm3: window.currentVolumeMm3
+  });
 }
 
-</script>
+function majNomFichierPanier(nomFichier) {
+  const span = document.getElementById('nom-fichier-panier');
+  if (span) span.textContent = nomFichier;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const spanPrix = document.getElementById('prix-panier');
+  const spanQte  = document.getElementById('qte-panier');
+  if (spanPrix) spanPrix.textContent = 'en attente';
+  if (spanQte)  spanQte.textContent  = '1';
+});
+
+// =========================
+// Bouton estimation (ancienne logique volumique)
+// =========================
+console.log('[HB3D] init bouton estimation');
+
+$(document).ready(function () {
+  const $techno    = $('#techno');
+  const $materiau  = $('#materiau');
+  const $quantite  = $('#quantite');
+  const $btnEstime = $('#btn-devis');
+
+  const $prixPanier     = $('#prix-panier');
+  const $qtePanier      = $('#qte-panier');
+  const $technoPanier   = $('#techno-panier');
+  const $materiauPanier = $('#materiau-panier');
+  const $couleurPanier  = $('#couleur-panier');
 
 
-<script>
-  function majNomFichierPanier(nomFichier) {
-    const cellNom = document.getElementById('nom-fichier-panier');
-    if (cellNom) cellNom.textContent = nomFichier;
+  function isConfigComplete() {
+    const technoVal    = $techno.val();
+    const materiauVal  = $materiau.val();
+    const qte          = parseInt($quantite.val(), 10);
+    const couleurVal   = $('input[name="couleur"]:checked').val();
+
+    if (!technoVal || !materiauVal || !couleurVal) return false;
+    if (Number.isNaN(qte) || qte < 1) return false;
+    return true;
   }
-</script>
 
-<script>
-  function majNomFichierPanier(nomFichier) {
-    const span = document.getElementById('nom-fichier-panier');
-    if (span) {
-      span.textContent = nomFichier;
+  window.updateEstimationButtonState = function () {
+    if (isConfigComplete()) {
+      $btnEstime.prop('disabled', false).css('opacity', 1);
+    } else {
+      $btnEstime.prop('disabled', true).css('opacity', 0.5);
     }
-  }
-</script>
-
-<script>
-  const MATERIAUX_PAR_TECHNO = {
-    FDM: [
-      'PLA',
-      'ABS',
-      'PET',
-      'PETG',
-      'ASA',
-      'TPU',
-      'PA-CF',
-      'HIPS'
-    ],
-    SLA: [
-      'Résine Standard',
-      'Résine Tough',
-      'Résine Calcinable',
-      'Résine Flexible'
-    ],
-    SLS: [
-      // tu complèteras plus tard si besoin
-    ]
   };
 
-  function remplirMateriauxPourTechno(techno) {
-    const selectMateriau = document.getElementById('materiau');
-    if (!selectMateriau) return;
+const TARIFS = {
+  FDM: {
+    PLA:        { A: 12.99, B: 0.224 },
+    PETG:       { A: 14.50, B: 0.245 },
+    ABS:        { A: 15.50, B: 0.255 },
+    ASA:        { A: 16.50, B: 0.270 },
+    TPU:        { A: 18.50, B: 0.295 },
+    'PA-CF':    { A: 23.00, B: 0.345 },
+    HIPS:       { A: 14.20, B: 0.238 },
+    PET:        { A: 14.00, B: 0.235 }
+  },
 
-    const liste = MATERIAUX_PAR_TECHNO[techno] || [];
+  SLA: {
+    'Résine Standard':   { A: 19.44, B: 0.467 },
+    'Résine Tough':      { A: 24.00, B: 0.560 },
+    'Résine Flexible':   { A: 26.00, B: 0.620 },
+    'Résine Calcinable': { A: 29.00, B: 0.700 }
+  },
 
-    // vider la liste actuelle
-    selectMateriau.innerHTML = '';
+  SLS: {
+    'Nylon PA12':        { A: 30.00, B: 0.800 }
+  }
+};
 
-    // si pas de matériaux définis, on met une option neutre
-    if (liste.length === 0) {
-      const opt = document.createElement('option');
-      opt.textContent = '—';
-      opt.value = '';
-      selectMateriau.appendChild(opt);
+function getDiscountRate(qty) {
+  if (qty >= 500) return 0.40;   // 40 %
+  if (qty >= 400) return 0.35;
+  if (qty >= 300) return 0.30;
+  if (qty >= 200) return 0.25;
+  if (qty >= 100) return 0.20;
+  if (qty >= 50)  return 0.15;
+  if (qty >= 20)  return 0.10;
+  if (qty >= 10)  return 0.05;
+  return 0;
+}
+
+function calculerEstimation() {
+  const volumeMm3   = window.currentVolumeMm3 || 0;
+  const technoVal   = $techno.val();
+  const materiauVal = $materiau.val();
+  const qte         = parseInt($quantite.val(), 10) || 1;
+
+  const volumeEnMm3 = volumeMm3;
+  const volumeEnCm3 = volumeEnMm3 / 1000;
+
+  let prixUnitaire = 0;
+
+  const technoTarifs  = TARIFS[technoVal];
+  const materiauTarif = technoTarifs ? technoTarifs[materiauVal] : null;
+
+  if (materiauTarif) {
+    prixUnitaire = materiauTarif.A + (materiauTarif.B * volumeEnCm3);
+  }
+
+  // --- TOTAL BRUT (sans remise)
+  let prixBrut = prixUnitaire * qte;
+  if (!Number.isFinite(prixBrut) || prixBrut < 0) prixBrut = 0;
+
+  // --- REMISE SUR LE TOTAL
+  const rate   = getDiscountRate(qte);   // ex: 0.15
+  const remise = prixBrut * rate;
+  const prixNet = prixBrut - remise;
+
+  // --- FORMATAGE
+  const prixFormatte = prixNet.toLocaleString('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }) + ' €';
+
+  // Affichage volumes (inchangé)
+  $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mm³');
+  $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cm³');
+
+  // On renvoie prix + taux de remise
+  return { prixFormatte, rate };
+}
+
+  function syncQuantiteEtPanier() {
+    let qte = parseInt($quantite.val(), 10) || 1;
+    if (qte < 1) qte = 1;
+    $quantite.val(qte);
+    $('#quantite-hidden').val(qte);
+    if ($qtePanier.length) $qtePanier.text(qte);
+  }
+
+  console.log('[HB3D click btn-devis]');
+
+  function recalculerPanierAutomatiquement() {
+  if (!isConfigComplete()) return;
+
+  const result = calculerEstimation();
+  const prixEstime = result.prixFormatte;
+  const rate = result.rate;
+
+  const couleurLabel = $('input[name="couleur"]:checked')
+    .closest('.chip-color')
+    .find('.swatch-label')
+    .text()
+    .trim();
+
+  if ($technoPanier.length)   $technoPanier.text($techno.val());
+  if ($materiauPanier.length) $materiauPanier.text($materiau.val());
+  if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
+  if ($qtePanier.length)      $qtePanier.text($quantite.val());
+  if ($prixPanier.length)     $prixPanier.text(prixEstime);
+
+  // Affichage de l’info remise
+  const $remiseInfo = $('#remise-info');
+  if ($remiseInfo.length) {
+    if (rate > 0) {
+      $remiseInfo.text('-' + Math.round(rate * 100) + '%');
+    } else {
+      $remiseInfo.text('');
+    }
+  }
+  
+
+  // Message spécial gros volumes
+  const $remiseMessage = $('#remise-message');
+  if ($remiseMessage.length) {
+    const qte = parseInt($quantite.val(), 10) || 1;
+
+    if (qte >= 1000) {
+      $remiseMessage.text('Volume exceptionnel : devis ajusté sur demande.');
+    } else if (qte >= 500) {
+      $remiseMessage.text('Remise maximale appliquée.');
+    } else {
+      $remiseMessage.text('');
+    }
+  }
+}
+
+  let estimationActive = false;
+
+  $techno.on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $materiau.on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $quantite.on('input change', function () {
+    syncQuantiteEtPanier();
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  $('input[name="couleur"]').on('change', function () {
+    updateEstimationButtonState();
+    if (estimationActive) recalculerPanierAutomatiquement();
+  });
+
+  syncQuantiteEtPanier();
+  updateEstimationButtonState();
+
+  $btnEstime.on('click', function (e) {
+    e.preventDefault();
+
+    if (!isConfigComplete()) {
+      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement.');
       return;
     }
 
-    // recréer les options
-    liste.forEach((nom) => {
-      const opt = document.createElement('option');
-      opt.textContent = nom;
-      opt.value = nom;
-      selectMateriau.appendChild(opt);
-    });
-  }
+    if (!window.currentVolumeMm3 || window.currentVolumeMm3 <= 0) {
+      alert('Merci de charger un fichier 3D avant de demander une estimation.');
+      return;
+    }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const selectTechno = document.getElementById('techno');
-    if (!selectTechno) return;
-
-    // initialiser une première fois selon la valeur par défaut (FDM)
-    remplirMateriauxPourTechno(selectTechno.value);
-
-    // écouter les changements de techno
-    selectTechno.addEventListener('change', function () {
-      remplirMateriauxPourTechno(this.value);
-    });
+    estimationActive = true;
+    recalculerPanierAutomatiquement();
   });
+});
 </script>
 
-<script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="jquery-3.6.3.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  const SUPABASE_URL = 'https://ivclbctreuhipqviwmwr.supabase.co'; // ton ref projet
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml2Y2xiY3RyZXVoaXBxdml3bXdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NDY3NzQsImV4cCI6MjA4ODMyMjc3NH0.FLZSKjksSe7lsjpXRfZZs0Zt9ISpeWS-ko-9p-nUhsM'; // nouvelle anon
-
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  (function() {
+    emailjs.init({
+      publicKey: 'yMCFNhgV27X8SzqIp',
+    });
+  })();
 </script>
-
-
 
 
 </body>
 </html>
+
+
 

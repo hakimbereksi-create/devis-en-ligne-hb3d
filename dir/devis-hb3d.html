@@ -1,0 +1,322 @@
+<link rel="stylesheet" href="devis-hb3d.css">
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Devis HB3D</title>
+</head>
+<body>
+  <main class="quote">
+
+    <header class="quote-header">
+  <section class="company-block">
+    <div class="company-logo">
+      <img src="hb3d-logo.png" alt="Logo HB3D">
+    </div>
+
+        
+       <div class="company-identity">
+  <h1 id="company-name"></h1>
+  <p id="company-address-1"></p>
+  <p><span id="company-postal-code"></span> <span id="company-city"></span></p>
+  <p>Tél. : <span id="company-phone"></span></p>
+  <p>E-mail : <span id="company-email"></span></p>
+  <p>N.I.I. : <span id="company-nii"></span></p>
+  <p>R.C.S. : <span id="company-rcs"></span></p>
+  <p>S.I.R.E.T. : <span id="company-siret"></span></p>
+  <p>N.A.F. (A.P.E.) : <span id="company-ape"></span></p>
+</div>
+      </section>
+
+      <section class="quote-meta-card">
+        <div class="quote-badge">DEVIS</div>
+
+        <div class="meta-grid">
+  <div><span>Date</span><strong id="quote-date"></strong></div>
+  <div><span>Numéro</span><strong id="quote-number"></strong></div>
+  <div><span>Code client</span><strong id="client-code"></strong></div>
+  <div><span>Date validité</span><strong id="valid-until"></strong></div>
+  <div><span>Mode paiement</span><strong id="payment-mode"></strong></div>
+</div>
+      </section>
+    </header>
+<section class="top-infos">
+  <article class="billing-card">
+    <h2>Adresse de facturation</h2>
+    <p><strong id="client-name"></strong></p>
+    <p id="client-address-line-1"></p>
+    <p id="client-address-line-2"></p>
+    <p>
+      <span id="client-postal-code"></span>
+      <span id="client-city"></span>
+    </p>
+    <p id="client-country"></p>
+  </article>
+
+  <article class="project-card">
+    <h2>Projet</h2>
+    <p><strong>Fichier :</strong> <span id="file-name"></span></p>
+    <p><strong>Référence :</strong> <span id="project-reference"></span></p>
+    <p><strong>Livraison :</strong> <span id="delivery-mode"></span></p>
+  </article>
+</section>
+
+<section class="services-section">
+  <h2>Détail de la prestation</h2>
+
+  <table class="quote-table">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Qté</th>
+        <th>PU HT</th>
+        <th>Remise</th>
+        <th>TVA</th>
+        <th>Total HT</th>
+        <th>Total TTC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong id="service-title"></strong>
+          <div class="service-subline" id="service-subtitle"></div>
+        </td>
+        <td id="qty"></td>
+        <td id="unit-price-ht"></td>
+        <td id="line-discount"></td>
+        <td id="vat-rate"></td>
+        <td id="line-total-ht"></td>
+        <td id="line-total-ttc"></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="technical-section">
+  <h2>Détails techniques impression 3D</h2>
+
+  <div class="tech-grid">
+    <div><span>Technologie</span><strong id="technology"></strong></div>
+    <div><span>Matière</span><strong id="material"></strong></div>
+    <div><span>Couleur</span><strong id="color"></strong></div>
+    <div><span>Remplissage</span><strong id="infill"></strong></div>
+    <div><span>Résolution</span><strong id="layer-height"></strong></div>
+    <div><span>Machine</span><strong id="machine-name"></strong></div>
+    <div><span>Dimensions</span><strong id="dimensions"></strong></div>
+    <div><span>Volume</span><strong id="volume-cm3"></strong></div>
+    <div><span>Poids</span><strong id="weight-g"></strong></div>
+  </div>
+</section>
+
+<section class="bottom-area">
+  <article class="notes-card">
+    <h2>Informations complémentaires</h2>
+    <p><strong>Retrait / livraison :</strong> <span id="delivery-note"></span></p>
+    <p><strong>Observations :</strong> <span id="customer-notes"></span></p>
+    <p class="vat-note" id="vat-legal-note"></p>
+  </article>
+
+  <article class="totals-card">
+    <div class="total-row">
+      <span>Total HT</span>
+      <strong id="total-ht"></strong>
+    </div>
+    <div class="total-row">
+      <span>Total TVA</span>
+      <strong id="total-tva"></strong>
+    </div>
+    <div class="total-row grand-total">
+      <span>Total TTC</span>
+      <strong id="total-ttc"></strong>
+    </div>
+    <div class="total-row net-pay">
+      <span>Net à payer</span>
+      <strong id="net-to-pay"></strong>
+    </div>
+  </article>
+</section>
+
+<section class="vat-breakdown">
+  <h2>Récapitulatif TVA</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>% TVA</th>
+        <th>Base</th>
+        <th>Montant TVA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="vat-label"></td>
+        <td id="vat-base"></td>
+        <td id="vat-amount"></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<footer class="quote-footer">
+  <div class="signature-box" id="signature-label"></div>
+
+  <div class="legal-footer" id="legal-footer"></div>
+</footer>
+
+ 
+  <div class="screen-only print-actions">
+  <button class="print-button" onclick="window.print()">Exporter en PDF</button>
+</div>
+  
+ </main>
+
+  <script>
+const quoteData = {
+  company: {
+    name: "HB3D SAS",
+    addressLine1: "129, Rue de Dunkerque",
+    postalCode: "59155",
+    city: "Faches-Thumesnil",
+    phone: "06 84 88 25 54",
+    email: "hbereksi@hb3d.fr",
+    nii: "FR 31 813332558",
+    rcs: "Lille Metropole",
+    siret: "813332558 00010",
+    ape: "1813Z"
+  },
+  quote: {
+    date: "18/07/2026",
+    number: "DC-TEST-12345",
+    clientCode: "CL0862",
+    validUntil: "18/08/2026",
+    paymentMode: ""
+  },
+  client: {
+    name: "Straatsma",
+    addressLine1: "",
+    addressLine2: "",
+    postalCode: "",
+    city: "",
+    country: ""
+  },
+  project: {
+    reference: "",
+    deliveryMode: "Retrait Client"
+  },
+  item: {
+  serviceTitle: "Impression 3D / Technologie FFF / PLA",
+  serviceSubtitle: "Monochrome / Taux de remplissage 90 % / Couleur noir / Résolution slice 200 microns / sur Carbone XE",
+  qty: "1,00",
+  unitPriceHt: "30,36",
+  lineDiscount: "",
+  vatRate: "",
+  lineTotalHt: "30,36",
+  lineTotalTtc: "30,36",
+  customerNotes: ""
+},
+  technical: {
+  fileName: "aircraftclockstand.stl",
+  technology: "FFF",
+  material: "PLA",
+  color: "Noir",
+  infill: "90 %",
+  layerHeight: "200 microns",
+  machineName: "Carbone XE",
+  dimensions: "68 mm X 70 mm X 90.1 mm",
+  volumeCm3: "77.5 cm3",
+  weightG: "80.16 grammes"
+},
+
+  totals: {
+  totalHt: "30,36",
+  totalTva: "",
+  totalTtc: "30,36",
+  netToPay: "30,36",
+  vatLabel: "Exonéré",
+  vatBase: "30,36",
+  vatAmount: "",
+  vatLegalNote: "TVA non applicable, art.293-B du CGI"
+},
+
+footer: {
+  signatureLabel: 'Cachet et signature précédés de "BON POUR ACCORD"',
+  legalFooter: "SAS au capital de 10 000,00 euros - SIRET : 81333255800010"
+}
+};
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value ?? "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setText("company-name", quoteData.company.name);
+  setText("company-address-1", quoteData.company.addressLine1);
+  setText("company-postal-code", quoteData.company.postalCode);
+  setText("company-city", quoteData.company.city);
+  setText("company-phone", quoteData.company.phone);
+  setText("company-email", quoteData.company.email);
+  setText("company-nii", quoteData.company.nii);
+  setText("company-rcs", quoteData.company.rcs);
+  setText("company-siret", quoteData.company.siret);
+  setText("company-ape", quoteData.company.ape);
+
+  setText("quote-date", quoteData.quote.date);
+  setText("quote-number", quoteData.quote.number);
+  setText("client-code", quoteData.quote.clientCode);
+  setText("valid-until", quoteData.quote.validUntil);
+  setText("payment-mode", quoteData.quote.paymentMode);
+
+  setText("client-name", quoteData.client.name);
+  setText("client-address-line-1", quoteData.client.addressLine1);
+  setText("client-address-line-2", quoteData.client.addressLine2);
+  setText("client-postal-code", quoteData.client.postalCode);
+  setText("client-city", quoteData.client.city);
+  setText("client-country", quoteData.client.country);
+
+  setText("file-name", quoteData.technical.fileName);
+  setText("project-reference", quoteData.project.reference);
+  setText("delivery-mode", quoteData.project.deliveryMode);
+
+  setText("service-title", quoteData.item.serviceTitle);
+  setText("service-subtitle", quoteData.item.serviceSubtitle);
+  setText("qty", quoteData.item.qty);
+  setText("unit-price-ht", quoteData.item.unitPriceHt);
+  setText("line-discount", quoteData.item.lineDiscount);
+  setText("vat-rate", quoteData.item.vatRate);
+  setText("line-total-ht", quoteData.item.lineTotalHt);
+  setText("line-total-ttc", quoteData.item.lineTotalTtc);
+
+  setText("technology", quoteData.technical.technology);
+  setText("material", quoteData.technical.material);
+  setText("color", quoteData.technical.color);
+  setText("infill", quoteData.technical.infill);
+  setText("layer-height", quoteData.technical.layerHeight);
+  setText("machine-name", quoteData.technical.machineName);
+  setText("dimensions", quoteData.technical.dimensions);
+  setText("volume-cm3", quoteData.technical.volumeCm3);
+  setText("weight-g", quoteData.technical.weightG);
+
+  setText("delivery-note", quoteData.project.deliveryMode);
+  setText("customer-notes", quoteData.item.customerNotes);
+  setText("vat-legal-note", quoteData.totals.vatLegalNote);
+
+  setText("total-ht", quoteData.totals.totalHt);
+  setText("total-tva", quoteData.totals.totalTva);
+  setText("total-ttc", quoteData.totals.totalTtc);
+  setText("net-to-pay", quoteData.totals.netToPay);
+
+  setText("vat-label", quoteData.totals.vatLabel);
+  setText("vat-base", quoteData.totals.vatBase);
+  setText("vat-amount", quoteData.totals.vatAmount);
+
+  setText("signature-label", quoteData.footer.signatureLabel);
+  setText("legal-footer", quoteData.footer.legalFooter);
+});
+</script>
+
+
+
+</body>
+</html>
