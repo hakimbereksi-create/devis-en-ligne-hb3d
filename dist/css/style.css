@@ -771,3 +771,23 @@ label {
   margin-bottom: 0;
 }
 
+/* Nom de fichier : conserve la mise en page du panier avec les noms longs. */
+#nom-fichier-panier {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Bouton d'upload : le libellé long reste dans son volet. */
+#btn-upload {
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+  line-height: 1.25;
+}

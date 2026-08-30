@@ -456,7 +456,7 @@
   <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
 </div>
 
-  <button class="btn secondary" id="btn-upload">Upload files</button>
+  <button class="btn secondary" id="btn-upload">Téléchargez vos fichiers 3D pour obtenir votre devis.</button>
 </div>
     </section>
   </main>
@@ -658,7 +658,11 @@ function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
 
 function majNomFichierPanier(nomFichier) {
   const span = document.getElementById('nom-fichier-panier');
-  if (span) span.textContent = nomFichier;
+
+  if (span) {
+    span.textContent = nomFichier;
+    span.title = nomFichier;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
