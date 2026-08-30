@@ -4,15 +4,16 @@
 // CORS pour GitHub Pages
 // ----------------------
 
-// Domaine de ton front (GitHub Pages)
-$allowedOrigin = 'https://hakimbereksi-create.github.io';
+// Origines front autorisées : GitHub Pages et environnement local XAMPP.
+$allowedOrigins = [
+    'https://hakimbereksi-create.github.io',
+    'http://localhost:8080'
+];
 
-// Origin envoyé par le navigateur (preflight et requêtes réelles)
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 
-// Si l'origine correspond à ton site GitHub, on autorise
-if ($origin === $allowedOrigin) {
-    header("Access-Control-Allow-Origin: $allowedOrigin");
+if (in_array($origin, $allowedOrigins, true)) {
+    header("Access-Control-Allow-Origin: $origin");
     header("Vary: Origin");
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Methods: POST, OPTIONS");

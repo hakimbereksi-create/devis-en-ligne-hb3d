@@ -106,7 +106,7 @@ $('input[name="couleur"]').on('change', function () {
         return xhr;
       },
 
-      url: 'php/upload.php?files',
+      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/upload.php?files',
       type: 'POST',
       data: data,
       cache: false,
@@ -222,7 +222,7 @@ console.log(
   });
 
   $.ajax({
-    url: 'php/submit.php',
+    url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
     type: 'POST',
     data: formData,
     cache: false,
