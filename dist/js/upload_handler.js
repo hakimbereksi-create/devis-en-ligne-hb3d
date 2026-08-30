@@ -106,7 +106,7 @@ $('input[name="couleur"]').on('change', function () {
         return xhr;
       },
 
-      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/upload.php?files',
+      url: 'php/upload.php?files',
       type: 'POST',
       data: data,
       cache: false,
@@ -172,17 +172,35 @@ function submitForm(event, data) {
     $('#prix_affiche').val(prixText);
   }
   // ------------------------------------------------------------
+// --- HB3D: synchroniser techno / matériau / couleur ---
 
-  // --- HB3D: synchroniser techno / matériau / couleur ---
-  var techValue     = $('#techno').val() || '';
-  var materialValue = $('#materiau').val() || '';
-  var colorValue    = $('input[name="couleur"]:checked').val() || '';
+// Valeurs techniques issues des listes de choix.
+var techValue     = $('#techno').val() || '';
+var materialValue = $('#materiau').val() || '';
 
-  $('#tech_hidden').val(techValue);
-  $('#material_hidden').val(materialValue);
-  $('#color_hidden').val(colorValue);
+// Code interne de la couleur sélectionnée, par exemple : "plablanc".
+var colorValue = $('input[name="couleur"]:checked').val() || '';
 
-  console.log('tech =', techValue, 'material =', materialValue, 'color =', colorValue);
+// Libellé lisible présenté au client, par exemple : "PLA Blanc".
+// Si le libellé est introuvable, on garde le code interne comme solution de secours.
+var colorLabel = $('input[name="couleur"]:checked')
+  .closest('.chip-color')
+  .find('.swatch-label')
+  .text()
+  .trim() || colorValue;
+
+// Mise à jour des champs cachés transmis à php/submit.php.
+$('#tech_hidden').val(techValue);
+$('#material_hidden').val(materialValue);
+$('#color_hidden').val(colorLabel);
+
+// Journal de diagnostic visible dans F12 > Console.
+console.log(
+  'tech =', techValue,
+  'material =', materialValue,
+  'color code =', colorValue,
+  'color label =', colorLabel
+);
   // ------------------------------------------------------
  
   // On sérialise le formulaire APRES màj des champs
@@ -204,7 +222,7 @@ function submitForm(event, data) {
   });
 
   $.ajax({
-    url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
+    url: 'php/submit.php',
     type: 'POST',
     data: formData,
     cache: false,
