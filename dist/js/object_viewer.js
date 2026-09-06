@@ -177,27 +177,55 @@ $('.viewer-wrapper').on('mouseleave', function () {
 // 2) mapping valeur métier -> couleur hex (en dehors de ready, global)
 
 var hb3dColorMap = {
-  pla_blanc:  '#F5F5F5',
-  pla_noir:   '#222222',
-  pla_gris:   '#9F9F9F',
-  pla_rouge:  '#FF3333',
-  pla_vert:   '#00B050',
-  pla_bleu:   '#3366FF',
-  pla_orange: '#ffa602',
-  pla_jaune:  '#fae206',
-  pla_purple: '#ad06fac9'
+  plablanc:  '#F5F5F5',
+  planoir:   '#222222',
+  plagris:   '#9F9F9F',
+  plarouge:  '#FF3333',
+  plavert:   '#00B050',
+  plableu:   '#3366FF',
+  plaorange: '#FFA602',
+  plajaune:  '#FAE206',
+  plapurple: '#AD06FA'
 };
 
 // 3) fonction pour piloter la couleur du viewer (globale aussi)
 function setViewerColorFromCode(code) {
   console.log('[HB3D] setViewerColorFromCode', code, 'viewer=', viewer);
+
   if (!viewer) return;
 
   var hex = hb3dColorMap[code];
   console.log('[HB3D] hex choisi =', hex);
+
   if (!hex) return;
 
+  // Garde le paramètre pour les prochains chargements éventuels.
   viewer.setParameter('ModelColor', hex);
+
+  // Recolore le STL déjà chargé : son ou ses meshes possèdent
+  // déjà un matériau après replaceSceneFromUrl().
+  var scene = viewer.getScene();
+
+  if (!scene || !scene.children || scene.children.length === 0) {
+    console.warn('[HB3D] Scène non encore prête : la couleur sera appliquée au prochain chargement.');
+    viewer.update();
+    return;
+  }
+
+    scene.children.forEach(function (mesh, index) {
+    var rgb = parseInt(hex.slice(1), 16);
+
+    var material = new JSC3D.Material(
+      'hb3d-color-' + index,
+      0,
+      rgb,
+      0,
+      false
+    );
+
+    mesh.setMaterial(material);
+  });
+
   viewer.update();
 }
 
