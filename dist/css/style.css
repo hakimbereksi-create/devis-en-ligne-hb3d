@@ -5341,3 +5341,39 @@ textarea:focus {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* HB3D — compactage final de la page intégrée */
+@media (min-width: 1200px) {
+  main {
+    padding-top: 4px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .devis-layout {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+    gap: 10px !important;
+  }
+
+  .devis-workflow-column {
+    gap: 6px !important;
+  }
+
+  .devis-viewer-column .hb3d-upload-panel {
+    margin-top: 6px !important;
+  }
+
+  .hb3d-footer {
+    margin-top: 0 !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .hb3d-footer-inner {
+    gap: 4px !important;
+  }
+
+  .footer-copy {
+    margin-top: 1px !important;
+  }
+}
