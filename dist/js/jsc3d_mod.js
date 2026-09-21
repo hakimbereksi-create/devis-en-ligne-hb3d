@@ -1,6 +1,6 @@
 /**
  * @preserve Copyright (c) 2011~2013 Humu <humu2009@gmail.com>
- * This file is part of jsc3d project, which is freely distributable under the 
+ * This file is part of jsc3d project, which is freely distributable under the
  * terms of the MIT license.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,56 +32,56 @@ var JSC3D = JSC3D || {};
 /**
 	@class Viewer
 
-	Viewer is the main class of JSC3D. It provides presentation of and interaction with a simple static 3D scene 
-	which can either be given as the url of the scene file, or be manually constructed and passed in. It 
+	Viewer is the main class of JSC3D. It provides presentation of and interaction with a simple static 3D scene
+	which can either be given as the url of the scene file, or be manually constructed and passed in. It
 	also provides some settings to adjust the mode and quality of the rendering.<br /><br />
 
 	Viewer should be constructed with an existing canvas object where to perform the rendering.<br /><br />
 
 	Viewer provides 3 way to specify the scene:<br />
-	1. Use setParameter() method before initilization and set 'SceneUrl' parameter with a valid url  
+	1. Use setParameter() method before initilization and set 'SceneUrl' parameter with a valid url
 	   that describes where to load the scene. <br />
 	2. Use replaceSceneFromUrl() method, passing in a valid url to load/replace scene at runtime.<br />
-	3. Use replaceScene() method, passing in a manually constructed scene object to replace the current one 
+	3. Use replaceScene() method, passing in a manually constructed scene object to replace the current one
 	   at runtime.<br />
  */
 JSC3D.Viewer = function(canvas, parameters) {
     if(parameters)
         this.params = {
-            SceneUrl:			parameters.SceneUrl || '', 
-            InitRotationX:		parameters.InitRotationX || 0, 
-            InitRotationY:		parameters.InitRotationY || 0, 
-            InitRotationZ:		parameters.InitRotationZ || 0, 
-            ModelColor:			parameters.ModelColor || '#caa618', 
-            BackgroundColor1:	parameters.BackgroundColor1 || '#ffffff', 
-            BackgroundColor2:	parameters.BackgroundColor2 || '#383840', 
-            BackgroundImageUrl:	parameters.BackgroundImageUrl || '', 
-            RenderMode:			parameters.RenderMode || 'flat', 
-            Definition:			parameters.Definition || 'standard', 
-            MipMapping:			parameters.MipMapping || 'off', 
-            CreaseAngle:		parameters.parameters || -180, 
-            SphereMapUrl:		parameters.SphereMapUrl || '', 
-            ProgressBar:		parameters.ProgressBar || 'on', 
-            Renderer:			parameters.Renderer || '', 
+            SceneUrl:			parameters.SceneUrl || '',
+            InitRotationX:		parameters.InitRotationX || 0,
+            InitRotationY:		parameters.InitRotationY || 0,
+            InitRotationZ:		parameters.InitRotationZ || 0,
+            ModelColor:			parameters.ModelColor || '#caa618',
+            BackgroundColor1:	parameters.BackgroundColor1 || '#ffffff',
+            BackgroundColor2:	parameters.BackgroundColor2 || '#383840',
+            BackgroundImageUrl:	parameters.BackgroundImageUrl || '',
+            RenderMode:			parameters.RenderMode || 'flat',
+            Definition:			parameters.Definition || 'standard',
+            MipMapping:			parameters.MipMapping || 'off',
+            CreaseAngle:		parameters.parameters || -180,
+            SphereMapUrl:		parameters.SphereMapUrl || '',
+            ProgressBar:		parameters.ProgressBar || 'on',
+            Renderer:			parameters.Renderer || '',
             LocalBuffers:		parameters.LocalBuffers || 'retain'
         };
     else
         this.params = {
-            SceneUrl: '', 
-            InitRotationX: 0, 
-            InitRotationY: 0, 
-            InitRotationZ: 0, 
-            ModelColor: '#caa618', 
-            BackgroundColor1: '#ffffff', 
-            BackgroundColor2: '#383840', 
-            BackgroundImageUrl: '', 
-            RenderMode: 'flat', 
-            Definition: 'standard', 
-            MipMapping: 'off', 
-            CreaseAngle: -180, 
-            SphereMapUrl: '', 
-            ProgressBar: 'on', 
-            Renderer: '', 
+            SceneUrl: '',
+            InitRotationX: 0,
+            InitRotationY: 0,
+            InitRotationZ: 0,
+            ModelColor: '#caa618',
+            BackgroundColor1: '#ffffff',
+            BackgroundColor2: '#383840',
+            BackgroundImageUrl: '',
+            RenderMode: 'flat',
+            Definition: 'standard',
+            MipMapping: 'off',
+            CreaseAngle: -180,
+            SphereMapUrl: '',
+            ProgressBar: 'on',
+            Renderer: '',
             LocalBuffers: 'retain'
         };
 
@@ -152,7 +152,7 @@ JSC3D.Viewer = function(canvas, parameters) {
         this.canvas.addEventListener('mousedown', function(e){self.mouseDownHandler(e);}, false);
         this.canvas.addEventListener('mouseup', function(e){self.mouseUpHandler(e);}, false);
         this.canvas.addEventListener('mousemove', function(e){self.mouseMoveHandler(e);}, false);
-        this.canvas.addEventListener(JSC3D.PlatformInfo.browser == 'firefox' ? 'DOMMouseScroll' : 'mousewheel', 
+        this.canvas.addEventListener(JSC3D.PlatformInfo.browser == 'firefox' ? 'DOMMouseScroll' : 'mousewheel',
                                      function(e){self.mouseWheelHandler(e);}, false);
         document.addEventListener('keydown', function(e){self.keyDownHandler(e);}, false);
         document.addEventListener('keyup', function(e){self.keyUpHandler(e);}, false);
@@ -464,8 +464,8 @@ JSC3D.Viewer.prototype.enableDefaultInputHandler = function(enabled) {
 	Set control of mouse pointer.
 	Available options are:<br />
 	'<b>default</b>':	default mouse control will be used;<br />
-	'<b>free</b>':		this tells {JSC3D.Viewer} a user-defined mouse control will be adopted. 
-						This is often used together with viewer.enableDefaultInputHandler(false) 
+	'<b>free</b>':		this tells {JSC3D.Viewer} a user-defined mouse control will be adopted.
+						This is often used together with viewer.enableDefaultInputHandler(false)
 						and viewer.onmousedown, viewer.onmouseup and/or viewer.onmousemove overridden.<br />
 	'<b>rotate</b>':	mouse will be used to rotate the scene;<br />
 	'<b>zoom</b>':		mouse will be used to do zooming.<br />
@@ -552,8 +552,8 @@ JSC3D.Viewer.prototype.pick = function(clientX, clientY) {
     else {
         var frameX = canvasX;
         var frameY = canvasY;
-        if( this.selectionBuffer != null && 
-           canvasX >= 0 && canvasX < this.canvas.width && 
+        if( this.selectionBuffer != null &&
+           canvasX >= 0 && canvasX < this.canvas.width &&
            canvasY >= 0 && canvasY < this.canvas.height ) {
             switch(this.definition) {
                 case 'low':
@@ -1000,7 +1000,7 @@ JSC3D.Viewer.prototype.loadScene = function() {
 
     loader.onresource = function(resource) {
         if((resource instanceof JSC3D.Texture) && self.isMipMappingOn && !resource.hasMipmap())
-            resource.generateMipmaps();		
+            resource.generateMipmaps();
         self.update();
     };
 
@@ -1010,7 +1010,10 @@ JSC3D.Viewer.prototype.loadScene = function() {
         self.hideProgress();
         if(self.onloadingaborted && (typeof self.onloadingaborted) == 'function')
             self.onloadingaborted();
+
     };
+
+
 
     loader.loadFromUrl(this.sceneUrl);
 
@@ -1062,63 +1065,105 @@ JSC3D.Viewer.prototype.setupScene = function(scene) {
 	@param {String} task text information about current task.
 	@param {Number} progress progress of current task. this should be a number between 0 and 1.
  */
+
+    if(!document.getElementById('hb3d-loader-animation')) {
+    var hb3dLoaderStyle = document.createElement('style');
+    hb3dLoaderStyle.id = 'hb3d-loader-animation';
+    hb3dLoaderStyle.innerHTML =
+    '@keyframes hb3dLoaderSlide {' +
+      '0% { transform: translateX(0); opacity: 0.65; }' +
+      '100% { transform: translateX(150px); opacity: 1; }' +
+    '}';
+    document.head.appendChild(hb3dLoaderStyle);
+}
 JSC3D.Viewer.prototype.reportProgress = function(task, progress) {
-    if(!this.progressFrame) {
-        var canvasRect = this.canvas.getBoundingClientRect();
+if(!this.progressFrame) {
+  var canvasRect = this.canvas.getBoundingClientRect();
 
-        var r = 255 - ((this.bkgColor1 & 0xff0000) >> 16);
-        var g = 255 - ((this.bkgColor1 & 0xff00) >> 8);
-        var b = 255 - (this.bkgColor1 & 0xff);
-        var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+  var barWidth = Math.min(220, canvasRect.width - 100);
+  var barHeight = 7;
+  var cardWidth = barWidth + 54;
 
-        var barX = canvasRect.left + 40;
-        var barY = canvasRect.top + canvasRect.height * 0.38;
-        var barWidth = canvasRect.width - (barX - canvasRect.left) * 2;
-        var barHeight = 20;
+  var barX = canvasRect.left + (canvasRect.width - barWidth) / 2;
+  var barY = canvasRect.top + canvasRect.height * 0.56;
 
-        this.progressFrame = document.createElement('div');
-        this.progressFrame.style.position = 'absolute';
-        this.progressFrame.style.left   = barX + 'px';
-        this.progressFrame.style.top    = barY + 'px';
-        this.progressFrame.style.width  = barWidth + 'px';
-        this.progressFrame.style.height = barHeight + 'px';
-        this.progressFrame.style.border = '1px solid ' + color;
-        this.progressFrame.style.pointerEvents = 'none';
-        document.body.appendChild(this.progressFrame);
+  var cardX = canvasRect.left + (canvasRect.width - cardWidth) / 2;
+  var cardY = barY - 72;
 
-        this.progressRectangle = document.createElement('div');
-        this.progressRectangle.style.position = 'absolute';
-        this.progressRectangle.style.left   = (barX + 3) + 'px';
-        this.progressRectangle.style.top    = (barY + 3) + 'px';
-        this.progressRectangle.style.width  = '0px';
-        this.progressRectangle.style.height = (barHeight - 4) + 'px';
-        this.progressRectangle.style.background = color;
-        this.progressRectangle.style.pointerEvents = 'none';
-        document.body.appendChild(this.progressRectangle);
+  this.progressFrame = document.createElement('div');
+  this.progressFrame.style.position = 'absolute';
+  this.progressFrame.style.left = barX + 'px';
+  this.progressFrame.style.top = barY + 'px';
+  this.progressFrame.style.width = barWidth + 'px';
+  this.progressFrame.style.height = barHeight + 'px';
+  this.progressFrame.style.boxSizing = 'border-box';
+  this.progressFrame.style.border = '0';
+  this.progressFrame.style.borderRadius = '999px';
+  this.progressFrame.style.backgroundColor = '#edf0f2';
+  this.progressFrame.style.overflow = 'hidden';
+  this.progressFrame.style.pointerEvents = 'none';
+  this.progressFrame.style.zIndex = '1001';
+  document.body.appendChild(this.progressFrame);
 
-        if(!this.messagePanel) {
-            this.messagePanel = document.createElement('div');
-            this.messagePanel.style.position = 'absolute';
-            this.messagePanel.style.left   = barX + 'px';
-            this.messagePanel.style.top    = (barY - 16) + 'px';
-            this.messagePanel.style.width  = barWidth + 'px';
-            this.messagePanel.style.height = '14px';
-            this.messagePanel.style.font   = 'bold 14px Courier New';
-            this.messagePanel.style.color  = color;
-            this.messagePanel.style.pointerEvents = 'none';
-            document.body.appendChild(this.messagePanel);
-        }
-    }
+  this.progressRectangle = document.createElement('div');
+  this.progressRectangle.style.position = 'absolute';
+  this.progressRectangle.style.left = barX + 'px';
+  this.progressRectangle.style.top = barY + 'px';
+  this.progressRectangle.style.width = Math.max(54, barWidth * 0.28) + 'px';
+  this.progressRectangle.style.animation = 'hb3dLoaderSlide 1.1s ease-in-out infinite alternate';
+  this.progressRectangle.style.height = barHeight + 'px';
+  this.progressRectangle.style.borderRadius = '999px';
+  this.progressRectangle.style.backgroundColor = '#d62d34';
+  this.progressRectangle.style.pointerEvents = 'none';
+  this.progressRectangle.style.zIndex = '1002';
+  this.progressRectangle.style.transition = 'none';
+  document.body.appendChild(this.progressRectangle);
 
-    if(this.progressFrame.style.display != 'block') {
-        this.progressFrame.style.display = 'block';
-        this.progressRectangle.style.display = 'block';
-    }
-    if(task && this.messagePanel.style.display != 'block')
-        this.messagePanel.style.display = 'block';
+  if(!this.messagePanel) {
+    this.messagePanel = document.createElement('div');
+    this.messagePanel.style.position = 'absolute';
+    this.messagePanel.style.left = cardX + 'px';
+    this.messagePanel.style.top = cardY + 'px';
+    this.messagePanel.style.width = cardWidth + 'px';
+    this.messagePanel.style.height = '55px';
+    this.messagePanel.style.boxSizing = 'border-box';
+    this.messagePanel.style.padding = '18px 16px 12px 45px';
+    this.messagePanel.style.border = '1px solid #eceff1';
+    this.messagePanel.style.borderRadius = '12px';
+    this.messagePanel.style.backgroundColor = 'rgba(255, 255, 255, 0.96)';
+    this.messagePanel.style.boxShadow = '0 10px 25px rgba(26, 32, 44, 0.13)';
+    this.messagePanel.style.font = '600 13px Arial, sans-serif';
+    this.messagePanel.style.letterSpacing = '0.1px';
+    this.messagePanel.style.textAlign = 'left';
+    this.messagePanel.style.color = '#2f3438';
+    this.messagePanel.style.lineHeight = '16px';
+    this.messagePanel.style.pointerEvents = 'none';
+    this.messagePanel.style.zIndex = '1000';
 
-    this.progressRectangle.style.width = (parseFloat(this.progressFrame.style.width) - 4) * progress + 'px';
-    this.messagePanel.innerHTML = task;
+    this.messagePanel.style.backgroundImage =
+      'radial-gradient(circle at 24px 27px, #d62d34 0, #d62d34 7px, transparent 8px)';
+
+    document.body.appendChild(this.messagePanel);
+  }
+}
+
+  if(this.progressFrame.style.display != 'block') {
+    this.progressFrame.style.display = 'block';
+    this.progressRectangle.style.display = 'block';
+  }
+
+  if(task && this.messagePanel.style.display != 'block') {
+    this.messagePanel.style.display = 'block';
+  }
+
+  this.progressRectangle.style.width =
+    parseFloat(this.progressFrame.style.width) * progress + 'px';
+
+  this.messagePanel.innerHTML =
+  '<span style="display:block;">Analyse de votre fichier 3D</span>' +
+  '<span style="display:block; margin-top:2px; font-size:11px; font-weight:400; color:#737a80;">' +
+    'Préparation de l’aperçu…' +
+  '</span>';
 };
 
 /**
@@ -1237,7 +1282,7 @@ JSC3D.Viewer.prototype.fillGradientBackground = function() {
  */
 JSC3D.Viewer.prototype.fillBackgroundWithImage = function() {
     var w = this.frameWidth;
-    var h = this.frameHeight;	
+    var h = this.frameHeight;
     if(this.bkgImage.width <= 0 || this.bkgImage.height <= 0)
         return;
 
@@ -1494,14 +1539,14 @@ JSC3D.Viewer.prototype.sortScene = function(mat) {
             var meshCenter = mesh.aabb.center();
             JSC3D.Math3D.transformVectors(mat, meshCenter, meshCenter);
             var meshMaterial = mesh.material ? mesh.material : this.defaultMaterial;
-            mesh.sortKey = { 
-                depth: meshCenter[2], 
+            mesh.sortKey = {
+                depth: meshCenter[2],
                 isTransparnt: (meshMaterial.transparency > 0) || (mesh.hasTexture() ? mesh.texture.hasTransparency : false)
             };
         }
     }
 
-    renderList.sort( 
+    renderList.sort(
         function(mesh0, mesh1) {
             // opaque meshes should always be prior to transparent ones to be rendered
             if(!mesh0.sortKey.isTransparnt && mesh1.sortKey.isTransparnt)
@@ -3277,7 +3322,7 @@ JSC3D.Viewer.prototype.renderSolidSphereMapped = function(mesh) {
                                     if(z > zbuf[pix]) {
                                         var color = palette[n > 0 ? (~~n) : 0];
                                         var foreColor = sdata[(sv & sbound) * sdim + (sh & sbound)];
-                                        var backColor = cbuf[pix];										
+                                        var backColor = cbuf[pix];
                                         var rr = (((color & 0xff0000) >> 16) * ((foreColor & 0xff0000) >> 8));
                                         var gg = (((color & 0xff00) >> 8) * ((foreColor & 0xff00) >> 8));
                                         var bb = ((color & 0xff) * (foreColor & 0xff)) >> 8;
@@ -3396,7 +3441,7 @@ JSC3D.PickInfo = function() {
 /**
 	@class Scene
 
-	This class implements scene that contains a group of meshes that forms the world. 
+	This class implements scene that contains a group of meshes that forms the world.
  */
 JSC3D.Scene = function(name) {
     this.name = name || '';
@@ -3586,7 +3631,7 @@ JSC3D.Mesh.prototype.init = function() {
 	@returns {Boolean} true if it is trivial; false if not.
  */
 JSC3D.Mesh.prototype.isTrivial = function() {
-    return ( !this.vertexBuffer || this.vertexBuffer.length < 3 || 
+    return ( !this.vertexBuffer || this.vertexBuffer.length < 3 ||
             !this.indexBuffer || this.indexBuffer.length < 3 );
 };
 
@@ -3612,7 +3657,7 @@ JSC3D.Mesh.prototype.setTexture = function(texture) {
  */
 JSC3D.Mesh.prototype.hasTexture = function() {
     return ( (this.texture != null) && this.texture.hasData() &&
-            (this.texCoordBuffer != null) && (this.texCoordBuffer.length >= 2) && 
+            (this.texCoordBuffer != null) && (this.texCoordBuffer.length >= 2) &&
             ((this.texCoordIndexBuffer == null) || ((this.texCoordIndexBuffer.length >= 3) && (this.texCoordIndexBuffer.length >= this.indexBuffer.length))) );
 };
 
@@ -3756,7 +3801,7 @@ JSC3D.Mesh.prototype.calcVertexNormals = function() {
         vnbuf[i] = 0;
     }
 
-    // in this case, the vertex normal index buffer should be set to null 
+    // in this case, the vertex normal index buffer should be set to null
     // since the vertex index buffer will be used to reference vertex normals
     this.vertexNormalIndexBuffer = null;
 
@@ -3836,15 +3881,15 @@ JSC3D.Mesh.prototype.calcCreasedVertexNormals = function() {
     this.vertexNormalIndexBuffer = [];
     var nibuf = this.vertexNormalIndexBuffer;
 
-    /* 
-		Generate vertex normals and normal indices. 
+    /*
+		Generate vertex normals and normal indices.
 		In this case, There will be a separate normal for each vertex of each face.
 	*/
     var threshold = Math.cos(this.creaseAngle * Math.PI / 180);
     for(var i=0, vindex=0, nindex=0, findex0=0; i<ibuf.length; i++) {
         vindex = ibuf[i];
         if(vindex >= 0) {
-            var n = nindex * 3; 
+            var n = nindex * 3;
             var f0 = findex0 * 3;
             // add face normal to vertex normal
             vnbuf[n    ] += fnbuf[f0    ];
@@ -3862,7 +3907,7 @@ JSC3D.Mesh.prototype.calcCreasedVertexNormals = function() {
                     var fnx1 = nfnbuf[f1    ];
                     var fny1 = nfnbuf[f1 + 1];
                     var fnz1 = nfnbuf[f1 + 2];
-                    // if the angle between normals of the adjacent faces is less than the crease-angle, the 
+                    // if the angle between normals of the adjacent faces is less than the crease-angle, the
                     // normal of the other face will be accumulated to the vertex normal of the current face
                     if(fnx0 * fnx1 + fny0 * fny1 + fnz0 * fnz1 > threshold) {
                         vnbuf[n    ] += fnbuf[f1    ];
@@ -4415,7 +4460,7 @@ JSC3D.Math3D = {
             i++;
             j += 3;
         }
-    }, 
+    },
 
     /**
 		Normalize vectors.
@@ -4446,20 +4491,20 @@ JSC3D.Math3D = {
 
 JSC3D.PlatformInfo = (function() {
     var info = {
-        browser:			'other', 
-        version:			'n/a', 
+        browser:			'other',
+        version:			'n/a',
         isTouchDevice:		(document.createTouch != undefined), 		// detect if it is running on touch device
-        supportTypedArrays:	(window.Uint32Array != undefined),			// see if Typed Arrays are supported 
+        supportTypedArrays:	(window.Uint32Array != undefined),			// see if Typed Arrays are supported
         supportWebGL:		(window.WebGLRenderingContext != undefined)	// see if WebGL context is supported
     };
 
     var agents = [
-        ['firefox', /Firefox[\/\s](\d+(?:\.\d+)*)/], 
-        ['chrome',  /Chrome[\/\s](\d+(?:\.\d+)*)/ ], 
-        ['opera',   /Opera[\/\s](\d+(?:\.\d+)*)/], 
-        ['safari',  /Safari[\/\s](\d+(?:\.\d+)*)/], 
-        ['webkit',  /AppleWebKit[\/\s](\d+(?:\.\d+)*)/], 
-        ['ie',      /MSIE[\/\s](\d+(?:\.\d+)*)/], 
+        ['firefox', /Firefox[\/\s](\d+(?:\.\d+)*)/],
+        ['chrome',  /Chrome[\/\s](\d+(?:\.\d+)*)/ ],
+        ['opera',   /Opera[\/\s](\d+(?:\.\d+)*)/],
+        ['safari',  /Safari[\/\s](\d+(?:\.\d+)*)/],
+        ['webkit',  /AppleWebKit[\/\s](\d+(?:\.\d+)*)/],
+        ['ie',      /MSIE[\/\s](\d+(?:\.\d+)*)/],
         /*
 		 * For IE11 and above, as the old keyword 'MSIE' no longer exists there.
 		 * By Laurent Piroelle <laurent.piroelle@fabzat.com>.
@@ -4673,10 +4718,10 @@ JSC3D.BinaryStream.prototype.decodeFloat = function(bytes, significandBits) {
     var eMax = (1 << eLen) - 1;
     var eBias = eMax >> 1;
 
-    var i = bytes - 1; 
-    var d = -1; 
-    var s = this.data[this.offset + i].charCodeAt(0) & 0xff; 
-    i += d; 
+    var i = bytes - 1;
+    var d = -1;
+    var s = this.data[this.offset + i].charCodeAt(0) & 0xff;
+    i += d;
     var bits = -7;
     var e = s & ((1 << (-bits)) - 1);
     s >>= -bits;
@@ -4745,7 +4790,7 @@ JSC3D.LoaderSelector = {
             loaderInst = new loaderCtor();
         }
         catch(e) {
-            loaderInst = null; 
+            loaderInst = null;
         }
 
         return loaderInst;
@@ -4758,7 +4803,7 @@ JSC3D.LoaderSelector = {
 /**
 	@class ObjLoader
 
-	This class implements a scene loader from a wavefront obj file. 
+	This class implements a scene loader from a wavefront obj file.
  */
 JSC3D.ObjLoader = function(onload, onerror, onprogress, onresource) {
     this.onload = (onload && typeof(onload) == 'function') ? onload : null;
@@ -4956,7 +5001,7 @@ JSC3D.ObjLoader.prototype.loadMtlFile = function(scene, urlPath, fileName) {
 };
 
 /**
-	Parse contents of the obj file, generating the scene and returning all required mtllibs. 
+	Parse contents of the obj file, generating the scene and returning all required mtllibs.
 	@private
  */
 JSC3D.ObjLoader.prototype.parseObj = function(scene, data) {
@@ -5335,8 +5380,8 @@ JSC3D.StlLoader.prototype.loadFromUrl = function(urlName) {
                             // this would work on IE6~IE9
                             var scene = new JSC3D.Scene;
                             try {
-                                self.parseStl(	scene, 
-                                              // I had expected this could be done by a single line: 
+                                self.parseStl(	scene,
+                                              // I had expected this could be done by a single line:
                                               //     String.fromCharCode.apply(null, (new VBArray(this.responseBody)).toArray());
                                               // But it tends to result in an 'out of stack space' exception on larger files.
                                               // So we just cut the array to smaller pieces and convert and merge again.
@@ -5345,7 +5390,7 @@ JSC3D.StlLoader.prototype.loadFromUrl = function(urlName) {
                                     for(var i=0; i<arr.length-65536; i+=65536)
                                         str += String.fromCharCode.apply(null, arr.slice(i, i+65536));
                                     return str + String.fromCharCode.apply(null, arr.slice(i));
-                                }) ((new VBArray(this.responseBody)).toArray()) 
+                                }) ((new VBArray(this.responseBody)).toArray())
                                              );
                             } catch(e) {}
                             self.onload(scene);
@@ -5436,17 +5481,17 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
 			Contributed by Triffid Hunter <triffid.hunter@gmail.com>.
 		 */
 
-        var facePattern =	'facet\\s+normal\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' + 
-            'outer\\s+loop\\s+' + 
-            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' + 
-            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' + 
-            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' + 
-            'endloop\\s+' + 
+        var facePattern =	'facet\\s+normal\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' +
+            'outer\\s+loop\\s+' +
+            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' +
+            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' +
+            'vertex\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+([-+]?\\b(?:[0-9]*\\.)?[0-9]+(?:[eE][-+]?[0-9]+)?\\b)\\s+' +
+            'endloop\\s+' +
             'endfacet';
         var faceRegExp = new RegExp(facePattern, 'ig');
         var matches = data.match(faceRegExp);
 
-        if(matches) {		
+        if(matches) {
             var numOfFaces = matches.length;
 
             mesh.faceCount = numOfFaces;
@@ -5497,7 +5542,7 @@ JSC3D.StlLoader.prototype.parseStl = function(scene, data) {
         var numOfFaces = reader.readUInt32();
 
         // calculate the expected length of the stream
-        var expectedLen = HEADER_BYTES + FACE_COUNT_BYTES + 
+        var expectedLen = HEADER_BYTES + FACE_COUNT_BYTES +
             (FACE_NORMAL_BYTES + VERTEX_BYTES * FACE_VERTICES + ATTRIB_BYTE_COUNT_BYTES) * numOfFaces;
 
         // file is not complete
@@ -5621,9 +5666,9 @@ var volumeCm3 = volumeMm3 / 1000.0;       // cm³
 
     if(!mesh.isTrivial()) {
         // Some tools (Blender etc.) export STLs with empty face normals (all equal to 0). In this case we ...
-        // ... simply set the face normal buffer to null so that they will be calculated in mesh's init stage. 
-        if( Math.abs(mesh.faceNormalBuffer[0]) < 1e-6 && 
-           Math.abs(mesh.faceNormalBuffer[1]) < 1e-6 && 
+        // ... simply set the face normal buffer to null so that they will be calculated in mesh's init stage.
+        if( Math.abs(mesh.faceNormalBuffer[0]) < 1e-6 &&
+           Math.abs(mesh.faceNormalBuffer[1]) < 1e-6 &&
            Math.abs(mesh.faceNormalBuffer[2]) < 1e-6 ) {
             mesh.faceNormalBuffer = null;
         }

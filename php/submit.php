@@ -105,12 +105,76 @@ fclose($fp);
 
 $quoteNumber = 'DC-' . date('Y') . '-' . date('md') . '-' . $nextQuoteSeq;
 
+// ----------------------
+// Code client persistant : même e-mail = même code.
+// Le premier nouveau client reçoit CL0778.
+// ----------------------
+$clientCode = '';
+
+$emailKey = strtolower(trim($email));
+
+if ($emailKey !== '' && filter_var($emailKey, FILTER_VALIDATE_EMAIL)) {
+    $clientCodesFile = __DIR__ . '/client_codes.json';
+    $clientCodesLockFile = __DIR__ . '/client_codes.lock';
+
+    $clientCodesLock = fopen($clientCodesLockFile, 'c+');
+
+    if ($clientCodesLock && flock($clientCodesLock, LOCK_EX)) {
+        $clientCodes = [];
+
+        if (is_file($clientCodesFile) && is_readable($clientCodesFile)) {
+            $clientCodesJson = file_get_contents($clientCodesFile);
+            $clientCodesDecoded = json_decode($clientCodesJson, true);
+
+            if (is_array($clientCodesDecoded)) {
+                $clientCodes = $clientCodesDecoded;
+            }
+        }
+
+        if (isset($clientCodes[$emailKey])) {
+            $clientCode = (string) $clientCodes[$emailKey];
+        } else {
+            $lastClientNumber = 777;
+
+            foreach ($clientCodes as $existingClientCode) {
+                if (preg_match('/^CL(\d+)$/', (string) $existingClientCode, $matches)) {
+                    $existingNumber = (int) $matches[1];
+
+                    if ($existingNumber > $lastClientNumber) {
+                        $lastClientNumber = $existingNumber;
+                    }
+                }
+            }
+
+            $nextClientNumber = $lastClientNumber + 1;
+            $clientCode = 'CL' . str_pad((string) $nextClientNumber, 4, '0', STR_PAD_LEFT);
+            $clientCodes[$emailKey] = $clientCode;
+
+            $clientCodesJson = json_encode(
+                $clientCodes,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+            );
+
+            if ($clientCodesJson !== false) {
+                file_put_contents($clientCodesFile, $clientCodesJson . PHP_EOL, LOCK_EX);
+            }
+        }
+
+        flock($clientCodesLock, LOCK_UN);
+    }
+
+    if ($clientCodesLock) {
+        fclose($clientCodesLock);
+    }
+}
+
 // Tableau propre pour le JSON joli
 $cleanData = [
 'date' => $date,
 'devis_id' => $devisId,
 'quote_number' => $quoteNumber,
 'email' => $email,
+'client_code' => $clientCode,
 'nom' => $nom,
 'tel' => $tel,
 'societe' => $societe,
@@ -246,6 +310,7 @@ echo json_encode([
 'devis_id' => $devisId,
 'quote_number' => $quoteNumber,
 'email' => $email,
+'client_code' => $clientCode,
 'nom' => $nom,
 'tel' => $tel,
 'societe' => $societe,

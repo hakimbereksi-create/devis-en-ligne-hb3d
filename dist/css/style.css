@@ -74,13 +74,13 @@ header {
 /* ---------- Layout principal ---------- */
 main {
   padding: 16px 20px;
-  max-width: 1400px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
 .top-columns {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1.2fr 1.20fr 1.3fr 1.2fr;
   gap: 20px;
   margin-top: 8px;
   margin-bottom: 20px;
@@ -167,7 +167,7 @@ main {
   font-family: "Space Age", "Orbitron", system-ui, sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-top: -45px;
 }
 
@@ -184,7 +184,7 @@ main {
 .footer-copy {
   display: block;
   margin-top: 4px;
-  font-size: 1.4rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
   text-transform: none;
   color: #999999;
@@ -496,9 +496,10 @@ th {
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
-  .top-columns {
-    grid-template-columns: repeat(2, 1fr);
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(210px, 1.3fr) minmax(145px, 0.7fr);
   }
+
 
   .steps-bar {
     grid-template-columns: repeat(2, 1fr);
@@ -790,4 +791,4553 @@ label {
   overflow-wrap: anywhere;
   text-align: center;
   line-height: 1.25;
+}
+
+/* =========================================================
+   ERGONOMIE V2 — structure simple et stable
+   Colonne viewer à gauche ; volets 2, 3 et 4 à droite.
+   ========================================================= */
+
+.devis-layout {
+  display: grid !important;
+  grid-template-columns: 42% 58% !important;
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.devis-viewer-column,
+.devis-workflow-column {
+  min-width: 0;
+}
+
+.devis-workflow-column {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Conserve les volets de droite dans leur flux naturel. */
+.devis-workflow-column > .panel {
+  width: 100%;
+  margin: 0;
+}
+
+/* À l'intérieur du volet 3 : panier et coordonnées côte à côte. */
+.devis-order-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.8fr);
+  gap: 22px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.devis-cart-column,
+.devis-personal-column {
+  min-width: 0;
+}
+
+.devis-personal-column {
+  padding-left: 22px;
+  border-left: 1px solid #e5e7eb;
+}
+
+/* Évite les grands vides dans le volet upload. */
+.circular-upload,
+.upload-text {
+  top: 0;
+}
+
+.hb3d-instructions {
+  margin: 18px auto;
+}
+
+/* Prix correctement aligné dans son encadrement. */
+.panier-row-total .panier-value {
+  transform: none;
+}
+
+/* Tablette : toujours 2 colonnes principales, panier/formulaire empilés. */
+@media (max-width: 1050px) {
+  .devis-layout {
+    grid-template-columns: 38% 62% !important;
+    gap: 16px;
+  }
+
+  .devis-order-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .devis-personal-column {
+    padding-left: 0;
+    padding-top: 18px;
+    border-left: 0;
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+/* Mobile uniquement : parcours en une colonne. */
+@media (max-width: 700px) {
+  .devis-layout {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .devis-workflow-column {
+    gap: 14px;
+  }
+
+  .devis-order-grid {
+    display: block;
+  }
+
+  .devis-personal-column {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  #cv {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================================
+   VOLET 2 — technologies verticales et configuration large
+   ========================================================= */
+
+.hb3d-configuration-panel {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  grid-template-areas:
+    "title title"
+    "technos config";
+  gap: 10px 16px;
+  align-items: start;
+}
+
+.hb3d-configuration-panel > h2 {
+  grid-area: title;
+}
+
+.hb3d-configuration-panel > .devis-techno-column {
+  grid-area: technos;
+}
+
+.hb3d-configuration-panel > .devis-config-fields {
+  grid-area: config;
+}
+
+.devis-workflow-column > .panel:first-child > h2 {
+  grid-area: title;
+}
+
+.devis-techno-column {
+  grid-area: technos;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 14px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.devis-techno-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 82px;
+  padding: 6px 4px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #374151;
+  font-family: Orbitron, system-ui, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.devis-techno-card:last-child {
+  border-bottom: 0;
+}
+
+.devis-techno-card img {
+  display: block;
+  max-width: 54px;
+  height: auto;
+  margin-bottom: 4px;
+}
+
+.devis-config-fields {
+  grid-area: config;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.9fr) minmax(260px, 1.1fr);
+  grid-template-areas:
+    "techno notes"
+    "materiau notes"
+    "couleur notes"
+    "quantite action";
+  column-gap: 22px;
+  row-gap: 4px;
+  align-items: start;
+}
+
+.devis-config-fields > label[for="techno"],
+.devis-config-fields > #techno {
+  grid-column: 1;
+}
+
+.devis-config-fields > label[for="materiau"],
+.devis-config-fields > #materiau {
+  grid-column: 1;
+}
+
+.devis-config-fields > label:not([for]),
+.devis-config-fields > .couleurs {
+  grid-column: 1;
+}
+
+.devis-config-fields > label[for="quantite"],
+.devis-config-fields > #quantite {
+  grid-column: 1;
+}
+
+.devis-config-fields > label[for="notes"],
+.devis-config-fields > #notes {
+  grid-column: 2;
+}
+
+.devis-config-fields > #btn-devis {
+  grid-column: 2;
+  width: 100%;
+  margin: 16px 0 0;
+  align-self: end;
+}
+
+/* La zone de demande conserve une hauteur nette sur bureau. */
+.devis-config-fields > #notes {
+  min-height: 156px;
+  height: 156px;
+  resize: vertical;
+}
+
+/* Tablette : machines à gauche ; tous les champs à droite, sans compression. */
+@media (max-width: 1180px) {
+  .devis-workflow-column > .panel:first-child {
+    grid-template-columns: 110px minmax(0, 1fr);
+    grid-template-areas:
+      "title title"
+      "technos config";
+  }
+
+  .devis-config-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .devis-config-fields > label,
+  .devis-config-fields > select,
+  .devis-config-fields > input,
+  .devis-config-fields > .couleurs,
+  .devis-config-fields > textarea,
+  .devis-config-fields > button {
+    grid-column: 1;
+  }
+
+  .devis-config-fields > #notes {
+    min-height: 120px;
+    height: 120px;
+  }
+}
+
+/* Mobile : technologies compactes en ligne, puis réglages en une colonne. */
+@media (max-width: 700px) {
+  .devis-workflow-column > .panel:first-child {
+    display: block;
+  }
+
+  .devis-techno-column {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 6px;
+    margin: 10px 0 16px;
+    padding: 0 0 12px;
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .devis-techno-card {
+    flex: 1 1 0;
+    min-height: 76px;
+    border-bottom: 0;
+    padding: 4px 2px;
+  }
+
+  .devis-config-fields {
+    display: block;
+  }
+
+  .devis-config-fields > #notes {
+    height: 120px;
+    min-height: 120px;
+  }
+
+  .devis-config-fields > #btn-devis {
+    width: 100%;
+  }
+}
+/* =========================================================
+   VOLET 2 — compactage vertical bureau
+   Objectif : configuration dense, sans rogner le contenu.
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  .devis-workflow-column > .panel:first-child {
+    gap: 10px 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .devis-workflow-column > .panel:first-child > h2 {
+    margin-bottom: 0;
+    padding-bottom: 5px;
+  }
+
+  .devis-techno-column {
+    gap: 0;
+    padding-right: 10px;
+  }
+
+  .devis-techno-card {
+    min-height: 66px;
+    padding: 3px 2px;
+    font-size: 0.7rem;
+  }
+
+  .devis-techno-card img {
+    max-width: 44px;
+    max-height: 42px;
+    margin-bottom: 2px;
+    object-fit: contain;
+  }
+
+  .devis-config-fields {
+    column-gap: 16px;
+    row-gap: 0;
+  }
+
+  .devis-config-fields label {
+    margin-top: 4px;
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  .devis-config-fields select,
+  .devis-config-fields input[type="number"] {
+    min-height: 31px;
+    padding: 4px 7px;
+    margin-top: 2px;
+    font-size: 0.8rem;
+  }
+
+  .devis-config-fields .couleurs {
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .devis-config-fields .chip-color .swatch {
+    width: 18px;
+    height: 18px;
+  }
+
+  .devis-config-fields .chip-color .swatch-label {
+    font-size: 0.6rem;
+  }
+
+  .devis-config-fields > #notes {
+    min-height: 112px;
+    height: 112px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .devis-config-fields > #btn-devis {
+    min-height: 38px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 0.72rem;
+    line-height: 1.15;
+  }
+}
+/* =========================================================
+   VOLET 2 — colonne demande compacte et bouton aligné
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  .devis-config-fields {
+    grid-template-columns: minmax(220px, 1fr) minmax(240px, 1fr);
+    grid-template-rows: auto auto auto auto auto;
+    align-items: start;
+  }
+
+  /* Colonne réglages : ordre vertical conservé. */
+  .devis-config-fields > label[for="techno"] {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .devis-config-fields > #techno {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .devis-config-fields > label[for="materiau"] {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .devis-config-fields > #materiau {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .devis-config-fields > label:not([for]) {
+    grid-column: 1;
+    grid-row: 5;
+  }
+
+  .devis-config-fields > .couleurs {
+    grid-column: 1;
+    grid-row: 6;
+  }
+
+  .devis-config-fields > label[for="quantite"] {
+    grid-column: 1;
+    grid-row: 7;
+  }
+
+  .devis-config-fields > #quantite {
+    grid-column: 1;
+    grid-row: 8;
+  }
+
+  /* Colonne demande : bloc compact, sans lignes implicites. */
+  .devis-config-fields > label[for="notes"] {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 4px;
+  }
+
+  .devis-config-fields > #notes {
+    grid-column: 2;
+    grid-row: 2 / span 5;
+    height: 118px;
+    min-height: 118px;
+    margin-top: 2px;
+  }
+
+  .devis-config-fields > #btn-devis {
+    grid-column: 2;
+    grid-row: 7 / span 2;
+    align-self: end;
+    width: 100%;
+    min-height: 38px;
+    margin: 8px 0 0;
+  }
+}
+/* =========================================================
+   VOLET 2 — finition compacte
+   Réduction douce de la hauteur sans couper le contenu.
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  .devis-workflow-column > .panel:first-child {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    gap: 6px 14px;
+  }
+
+  .devis-workflow-column > .panel:first-child > h2 {
+    font-size: 12px;
+    line-height: 1.15;
+    margin-bottom: 0;
+    padding-bottom: 4px;
+  }
+
+  .devis-techno-column {
+    padding-right: 8px;
+  }
+
+  .devis-techno-card {
+    min-height: 56px;
+    padding: 2px;
+    font-size: 0.64rem;
+    line-height: 1.1;
+  }
+
+  .devis-techno-card img {
+    max-width: 38px;
+    max-height: 35px;
+    margin-bottom: 1px;
+  }
+
+  .devis-config-fields {
+    column-gap: 14px;
+    row-gap: 0;
+  }
+
+  .devis-config-fields label {
+    margin-top: 2px;
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .devis-config-fields select,
+  .devis-config-fields input[type="number"] {
+    min-height: 27px;
+    padding: 3px 6px;
+    margin-top: 1px;
+    font-size: 0.75rem;
+  }
+
+  .devis-config-fields .couleurs {
+    gap: 3px;
+    margin-top: 1px;
+  }
+
+  .devis-config-fields .chip-color {
+    gap: 1px;
+  }
+
+  .devis-config-fields .chip-color .swatch {
+    width: 16px;
+    height: 16px;
+  }
+
+  .devis-config-fields .chip-color .swatch-label {
+    font-size: 0.54rem;
+    line-height: 1;
+  }
+
+  .devis-config-fields > #notes {
+    min-height: 92px;
+    height: 92px;
+    padding: 5px 7px;
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+
+  .devis-config-fields > #btn-devis {
+    min-height: 32px;
+    padding: 6px 8px;
+    margin-top: 5px;
+    font-size: 0.64rem;
+    line-height: 1.1;
+  }
+}
+
+/* =========================================================
+   VOLET 3 — panier compact et coordonnées équilibrées
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  /* Le panier reçoit plus de largeur que les coordonnées. */
+  .devis-order-grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(220px, 0.72fr);
+    gap: 18px;
+    margin-top: 4px;
+  }
+
+  .devis-personal-column {
+    padding-left: 18px;
+    border-left: 1px solid #e5e7eb;
+  }
+
+  .devis-order-grid h3 {
+    margin: 2px 0 6px;
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  /* Résumé de la pièce active : densité accrue sans suppression. */
+  .devis-cart-column .panier-stack {
+    margin: 4px 0 10px;
+  }
+
+  .devis-cart-column .panier-row {
+    grid-template-columns: 105px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 5px 0;
+  }
+
+  .devis-cart-column .panier-label {
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  .devis-cart-column .panier-value {
+    font-size: 0.76rem;
+    line-height: 1.2;
+  }
+
+  .devis-cart-column .swatch-panier {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Détail multi-STL. */
+  .devis-cart-column .hb3d-cart-file-details {
+    margin: 8px 0 6px;
+    padding: 6px;
+    font-size: 0.68rem;
+  }
+
+  .devis-cart-column .hb3d-cart-file-title {
+    margin-bottom: 5px;
+    font-size: 0.62rem;
+  }
+
+  .devis-cart-column .hb3d-cart-file-item {
+    padding: 5px 0;
+  }
+
+  .devis-cart-column .hb3d-cart-file-name {
+    font-size: 0.7rem;
+  }
+
+  .devis-cart-column .hb3d-cart-file-meta {
+    margin-top: 2px;
+    font-size: 0.66rem;
+  }
+
+  .devis-cart-column .hb3d-cart-table-wrap {
+    margin: 5px 0;
+  }
+
+  .devis-cart-column .hb3d-cart-table {
+    font-size: 0.64rem;
+  }
+
+  .devis-cart-column .hb3d-cart-table th,
+  .devis-cart-column .hb3d-cart-table td {
+    padding: 4px 3px;
+  }
+
+  .devis-cart-column .hb3d-cart-table-file {
+    max-width: 88px;
+  }
+
+  .devis-cart-column .hb3d-cart-table-config {
+    min-width: 0;
+  }
+
+  /* Total : priorité visuelle, mais faible hauteur. */
+  .devis-cart-column .panier-row-total {
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 5px;
+    padding: 8px 0;
+    border-top: 1px solid #f3d3db;
+    background: #fff7f9;
+  }
+
+  .devis-cart-column .panier-row-total .panier-label {
+    font-size: 0.72rem;
+  }
+
+  .devis-cart-column .panier-row-total .panier-value {
+    font-size: 1.05rem;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .devis-cart-column .devis-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 4px;
+    font-size: 0.68rem;
+  }
+
+  .devis-cart-column .panier-remise-message {
+    margin-top: 2px;
+    font-size: 0.64rem;
+  }
+
+  /* Formulaire : hauteur et espacements cohérents avec le panier. */
+  .devis-personal-column label {
+    margin-top: 6px;
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  .devis-personal-column input[type="text"],
+  .devis-personal-column input[type="email"] {
+    min-height: 29px;
+    padding: 4px 7px;
+    margin-top: 2px;
+    font-size: 0.78rem;
+  }
+
+  .devis-personal-column h3 {
+    margin-bottom: 8px;
+  }
+}
+
+/* Tablette : le volet conserve deux zones, mais sans colonne trop étroite. */
+@media (min-width: 701px) and (max-width: 1180px) {
+  .devis-order-grid {
+    grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.75fr);
+    gap: 16px;
+  }
+
+  .devis-personal-column {
+    padding-left: 16px;
+  }
+}
+
+/* Mobile : même ordre logique, les deux blocs se suivent normalement. */
+@media (max-width: 700px) {
+  .devis-cart-column .panier-row {
+    grid-template-columns: minmax(105px, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .devis-cart-column .panier-row-total {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+
+  .devis-cart-column .panier-row-total .panier-value {
+    text-align: right;
+  }
+}
+
+
+/* =========================================================
+   VOLET 4 — ENVOI DU DEVIS
+   Cible explicite : ne dépend pas de nth-child().
+   ========================================================= */
+
+.hb3d-upload-panel {
+  display: grid;
+  grid-template-columns: minmax(230px, 1fr) minmax(145px, 0.55fr) minmax(245px, 1fr);
+  grid-template-areas:
+    "title title title"
+    "instructions progress action";
+  gap: 14px 24px;
+  align-items: center;
+}
+
+/* Titre sur toute la largeur */
+.hb3d-upload-panel > h2 {
+  grid-area: title;
+  margin: 0;
+}
+
+/* Consignes à gauche */
+.hb3d-upload-panel > .hb3d-instructions {
+  grid-area: instructions;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 12px 14px;
+  background: #fff7f8;
+  border: 1px solid #f3c7d1;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.hb3d-upload-panel > .hb3d-instructions h3 {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.hb3d-upload-panel > .hb3d-instructions p {
+  margin: 0 0 5px;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.hb3d-upload-panel > .hb3d-instructions p:last-child {
+  margin-bottom: 0;
+}
+
+/* Centre : progression uniquement */
+.hb3d-upload-panel > .status-panel {
+  grid-area: progress;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+}
+
+/* Retire HB3D + cube + calculateur de volume du volet final */
+.hb3d-upload-panel .hb3d-mark {
+  display: none;
+}
+
+/* Annule les anciens décalages verticaux. */
+.hb3d-upload-panel .circular-upload,
+.hb3d-upload-panel .upload-text {
+  position: static;
+  top: auto;
+}
+
+.hb3d-upload-panel .circular-upload {
+  width: 88px;
+  height: 88px;
+  margin: 0;
+}
+
+.hb3d-upload-panel .circular-upload::before {
+  width: 66px;
+  height: 66px;
+}
+
+.hb3d-upload-panel .circular-upload span {
+  font-size: 0.75rem;
+}
+
+.hb3d-upload-panel .upload-text {
+  width: auto;
+  margin: 0;
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Bouton d’envoi à droite */
+.hb3d-upload-panel > #btn-upload {
+  grid-area: action;
+  align-self: center;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+/* Tablette : consignes + progression, bouton sur une seconde ligne */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hb3d-upload-panel {
+    grid-template-columns: minmax(0, 1fr) 165px;
+    grid-template-areas:
+      "title title"
+      "instructions progress"
+      "action action";
+  }
+}
+
+/* Mobile : empilement simple et propre */
+@media (max-width: 767px) {
+  .hb3d-upload-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hb3d-upload-panel > .hb3d-instructions {
+    margin: 0;
+  }
+
+  .hb3d-upload-panel > #btn-upload {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   VOLET 1 — LISTE DE FICHIERS + VIEWER JSC3D STABLE
+   ========================================================= */
+
+/* Le panneau du viewer ne grandit plus avec le nombre de fichiers. */
+.hb3d-viewer-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Deux colonnes : liste à gauche, aperçu 3D à droite. */
+.hb3d-viewer-workspace {
+  display: grid;
+  grid-template-columns: minmax(145px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  height: 450px;
+  min-height: 0;
+  margin-top: 12px;
+}
+
+/* ---- Colonne gauche : liste dynamique ---- */
+.hb3d-files-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding-right: 10px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.hb3d-files-sidebar h3 {
+  margin: 0 0 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.hb3d-files-sidebar .hb3d-files-summary {
+  flex: 0 0 auto;
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/*
+  Cette zone reçoit les fichiers à mesure des chargements.
+  Elle défile en interne et ne peut pas étirer le viewer.
+*/
+.hb3d-files-sidebar .hb3d-files-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+.hb3d-files-sidebar .hb3d-volume-summary {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* ---- Colonne droite : aperçu et modes ---- */
+.hb3d-viewer-stage {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.hb3d-viewer-stage #view3d {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+/*
+  Canvas JSC3D.
+  L'affichage occupe l'espace disponible.
+  Les attributs width/height HTML restent présents pour JSC3D.
+*/
+.hb3d-viewer-stage #cv {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Commandes sous le canvas, sans modifier leurs data-mode. */
+.hb3d-viewer-stage .viewer-modes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+
+.hb3d-viewer-stage .viewer-modes button {
+  width: auto;
+  min-width: 72px;
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.66rem;
+  font-family: "Orbitron", system-ui, sans-serif;
+  text-transform: uppercase;
+}
+
+/* Évite qu'une règle générale de boutons les transforme en gros boutons roses. */
+.hb3d-viewer-stage .viewer-modes button:hover,
+.hb3d-viewer-stage .viewer-modes button:focus-visible {
+  border-color: #fa0339;
+  color: #fa0339;
+  outline: none;
+}
+
+/* Écran intermédiaire : hauteur légèrement réduite. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hb3d-viewer-workspace {
+    grid-template-columns: minmax(135px, 0.36fr) minmax(0, 1fr);
+    height: 390px;
+  }
+}
+
+/* Mobile : la liste repasse au-dessus du viewer. */
+@media (max-width: 767px) {
+  .hb3d-viewer-workspace {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .hb3d-files-sidebar {
+    max-height: 210px;
+    padding-right: 0;
+    padding-bottom: 12px;
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .hb3d-files-sidebar .hb3d-files-list {
+    max-height: 120px;
+  }
+
+  .hb3d-viewer-stage {
+    height: 320px;
+  }
+}
+
+/* =========================================================
+   VOLET 1 — fichiers dans la zone de téléversement
+   Viewer stable sous la liste.
+   ========================================================= */
+
+/* Le volet viewer suit un flux vertical simple. */
+.hb3d-viewer-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Zone de dépôt compacte, mais capable d'afficher une liste. */
+.hb3d-viewer-panel .upload-zone {
+  margin-bottom: 12px;
+  padding: 14px;
+}
+
+/* Compteur de fichiers sous le champ de sélection. */
+.hb3d-viewer-panel .hb3d-files-summary {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #374151;
+}
+
+/*
+  La liste grandit jusqu'à cette limite puis défile.
+  Elle ne pourra donc pas repousser indéfiniment le viewer.
+*/
+.hb3d-viewer-panel .hb3d-files-list {
+  max-height: 145px;
+  margin-top: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+/* Volume total placé après la liste de fichiers. */
+.hb3d-viewer-panel .hb3d-volume-summary {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/*
+  Hauteur fixe du viewer.
+  Même après ajout de fichiers, #view3d reste toujours à 390 px.
+*/
+.hb3d-viewer-panel #view3d {
+  height: 390px;
+  min-height: 390px;
+  max-height: 390px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+/* Le canvas suit exactement la zone du viewer. */
+.hb3d-viewer-panel #cv {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Modes d'affichage directement sous le viewer. */
+.hb3d-viewer-panel .viewer-modes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.hb3d-viewer-panel .viewer-modes button {
+  width: auto;
+  min-width: 74px;
+  margin: 0;
+  padding: 6px 9px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hb3d-viewer-panel .viewer-modes button:hover,
+.hb3d-viewer-panel .viewer-modes button:focus-visible {
+  border-color: #fa0339;
+  color: #fa0339;
+  outline: none;
+}
+
+/* Évite que les anciennes classes en grille affectent ce volet. */
+.hb3d-viewer-workspace,
+.hb3d-files-sidebar,
+.hb3d-viewer-stage {
+  display: block;
+  height: auto;
+  min-height: initial;
+}
+
+/* Écran intermédiaire : viewer stable mais légèrement plus compact. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hb3d-viewer-panel #view3d {
+    height: 350px;
+    min-height: 350px;
+    max-height: 350px;
+  }
+}
+
+/* Mobile : conserve une zone pratique sans dépasser l'écran. */
+@media (max-width: 767px) {
+  .hb3d-viewer-panel .hb3d-files-list {
+    max-height: 120px;
+  }
+
+  .hb3d-viewer-panel #view3d {
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+  }
+}
+
+/* =========================================================
+   VOLET 1 — fichiers à gauche / chargement à droite
+   Viewer large et à hauteur stable
+   ========================================================= */
+
+/*
+  Le panneau viewer occupe toute la largeur disponible
+  de la première colonne de .devis-layout.
+*/
+.devis-viewer-column {
+  width: 100%;
+  max-width: none;
+}
+
+/* La zone de dépôt devient une grille à deux colonnes. */
+.hb3d-viewer-panel .hb3d-upload-workspace {
+  display: grid;
+  grid-template-columns: minmax(250px, 1.45fr) minmax(155px, 0.55fr);
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 14px;
+  padding: 14px;
+  text-align: left;
+}
+
+/* Colonne de gauche : fichiers, compteur et volume. */
+.hb3d-upload-workspace .hb3d-upload-files {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 175px;
+  padding-right: 12px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.hb3d-upload-workspace .hb3d-upload-files h3 {
+  margin: 0 0 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.7rem;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.hb3d-upload-workspace .hb3d-files-summary {
+  flex: 0 0 auto;
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #374151;
+  text-align: center;
+}
+
+/*
+  La liste n'agrandit jamais le bloc : à partir de sa hauteur
+  utile, elle affiche une barre de défilement interne.
+*/
+.hb3d-upload-workspace .hb3d-files-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 112px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+/* Volume fixé sous la liste. */
+.hb3d-upload-workspace .hb3d-volume-summary {
+  flex: 0 0 auto;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.67rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* Colonne de droite : actions d'import uniquement. */
+.hb3d-upload-workspace .hb3d-upload-picker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker p {
+  margin: 0 0 12px;
+  color: #4b5563;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker label {
+  margin-top: 0;
+  text-align: left;
+}
+
+/* Le sélecteur de fichiers reste contenu dans la colonne. */
+.hb3d-upload-workspace .hb3d-upload-picker input[type="file"] {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.72rem;
+}
+
+/* Viewer plus large et fixe. */
+.hb3d-viewer-panel #view3d {
+  width: 100%;
+  height: 440px;
+  min-height: 440px;
+  max-height: 440px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.hb3d-viewer-panel #cv {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Les commandes restent discrètes sous le viewer. */
+.hb3d-viewer-panel .viewer-modes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/*
+  Élargit la colonne viewer dans la page complète.
+  La colonne de workflow conserve toutefois davantage de place
+  pour les volets 2, 3 et 4.
+*/
+@media (min-width: 1200px) {
+  .devis-layout {
+    grid-template-columns: minmax(560px, 1.18fr) minmax(620px, 1.22fr);
+    gap: 20px;
+  }
+
+  .devis-viewer-column {
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+}
+
+/* Tablette : les deux colonnes du chargeur restent possibles. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(165px, 0.85fr) minmax(190px, 1.15fr);
+  }
+
+  .hb3d-viewer-panel #view3d {
+    height: 370px;
+    min-height: 370px;
+    max-height: 370px;
+  }
+}
+
+/* Mobile : la liste précède naturellement le chargeur. */
+@media (max-width: 767px) {
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-files {
+    min-height: 0;
+    padding-right: 0;
+    padding-bottom: 12px;
+    border-right: 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .hb3d-upload-workspace .hb3d-files-list {
+    max-height: 120px;
+  }
+
+  .hb3d-viewer-panel #view3d {
+    height: 300px;
+    min-height: 300px;
+    max-height: 300px;
+  }
+}
+
+/* =========================================================
+   ÉQUILIBRE GLOBAL — priorité au volet 1 / viewer 3D
+   ========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-layout {
+    grid-template-columns: minmax(680px, 1.55fr) minmax(430px, 0.75fr);
+    gap: 18px;
+  }
+
+  .devis-viewer-column {
+    width: 100%;
+    max-width: none;
+  }
+
+  .devis-workflow-column {
+    gap: 14px;
+  }
+
+  .devis-workflow-column > .panel {
+    padding: 10px 12px;
+  }
+}
+
+/* =========================================================
+   RÉSUMÉ D'ANALYSE — placé sous le viewer 3D
+   ========================================================= */
+
+/*
+  Annule le style de volume auparavant prévu dans la colonne
+  de fichiers du chargeur.
+*/
+.hb3d-upload-workspace .hb3d-volume-summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Bloc synthèse sous les modes du viewer. */
+.hb3d-viewer-analysis {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  background: #f9fafb;
+  color: #374151;
+  text-align: center;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/*
+  Si object_viewer.js insère plusieurs sous-lignes ou spans
+  dans le résumé, elles resteront aérées et centrées.
+*/
+.hb3d-viewer-analysis > * {
+  display: block;
+  margin-top: 3px;
+}
+
+.hb3d-viewer-analysis > *:first-child {
+  margin-top: 0;
+}
+
+/* Sur mobile, le bloc conserve simplement toute la largeur. */
+@media (max-width: 767px) {
+  .hb3d-viewer-analysis {
+    margin-top: 8px;
+    font-size: 0.68rem;
+  }
+}
+/* =========================================================
+   TYPOGRAPHIE GLOBALE — lisibilité des 4 volets
+   À laisser tout en bas du fichier CSS.
+   ========================================================= */
+
+/* Base générale : texte plus lisible dans l'ensemble du devis. */
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* Titres des quatre volets. */
+.panel h2 {
+  font-size: 1rem;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  padding-bottom: 9px;
+}
+
+/* Sous-titres : panier, fichiers chargés, avant l'envoi, etc. */
+.panel h3,
+.hb3d-upload-files h3,
+.hb3d-files-sidebar h3 {
+  font-size: 0.88rem;
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+}
+
+/* Texte courant dans les panneaux et la zone de dépôt. */
+.panel,
+.upload-zone,
+.hb3d-upload-picker,
+.hb3d-instructions {
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+/* Informations secondaires : résumé de fichiers, volume, progression. */
+.hb3d-files-summary,
+.hb3d-files-list,
+.hb3d-volume-summary,
+.hb3d-viewer-analysis,
+.upload-text,
+#hb3d-upload-text {
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* Nom des fichiers injectés dynamiquement et éléments associés. */
+.hb3d-files-list *,
+.hb3d-cart-file-details,
+.hb3d-cart-file-details * {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+/* Formulaire, sélecteurs et champs du volet 2 / 3. */
+label,
+.form-label,
+.devis-label,
+.resume-label {
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+input[type="email"],
+textarea {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+/* Valeurs du panier et lignes de total. */
+.panier-label {
+  font-size: 0.84rem;
+  line-height: 1.3;
+}
+
+.panier-value {
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+/* Boutons principaux. */
+.btn,
+#btn-devis,
+#btn-upload,
+button,
+input[type="button"],
+input[type="submit"] {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+/* Boutons de vue : plus petits mais réellement lisibles. */
+.viewer-modes button {
+  font-size: 0.76rem;
+  line-height: 1.2;
+}
+
+/* Tableaux de technologies, tableaux du panier et détails de fichiers. */
+table,
+th,
+td,
+.panel table,
+.panel table td,
+.panel table th {
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+/* Puce, couleurs et légendes dans le volet de configuration. */
+.chip-color,
+.chip-color .swatch-label,
+.swatch-panier-label {
+  font-size: 0.78rem;
+}
+
+/* Prix final : garde une vraie hiérarchie visuelle. */
+.panier-row-total .panier-value,
+.hb3d-viewer-total .panier-value {
+  font-size: 1.25rem;
+}
+
+/* Mobile : jamais de texte microscopique. */
+@media (max-width: 767px) {
+  .panel h2 {
+    font-size: 0.94rem;
+  }
+
+  .panel,
+  .upload-zone,
+  .hb3d-upload-picker,
+  .hb3d-instructions {
+    font-size: 0.92rem;
+  }
+
+  .hb3d-files-summary,
+  .hb3d-files-list,
+  .hb3d-volume-summary,
+  .upload-text,
+  #hb3d-upload-text,
+  label,
+  .panier-label,
+  table,
+  th,
+  td {
+    font-size: 0.8rem;
+  }
+
+  .btn,
+  #btn-devis,
+  #btn-upload {
+    font-size: 0.88rem;
+  }
+}
+
+/* =========================================================
+   BOUTONS — format compact, lisible et cohérent
+   ========================================================= */
+
+/* Le bouton natif de sélection des STL / OBJ. */
+.hb3d-upload-picker input[type="file"] {
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+/* Le bouton interne « Choisir un fichier » selon navigateur. */
+.hb3d-upload-picker input[type="file"]::file-selector-button {
+  margin-right: 8px;
+  padding: 6px 9px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Action de calcul du volet 2 : plus petite, mais facile à lire/clicker. */
+#btn-devis {
+  width: 100%;
+  max-width: 245px;
+  min-height: 36px;
+  margin: 12px auto 0;
+  padding: 7px 12px;
+  font-size: 0.76rem;
+  line-height: 1.15;
+}
+
+/* =========================================================
+   LISTE DES FICHIERS — lecture complète, sans ascenseur
+   ========================================================= */
+
+.hb3d-upload-workspace .hb3d-files-list {
+  flex: 0 0 auto;
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  overscroll-behavior: auto;
+  padding-right: 0;
+}
+
+/* =========================================================
+   FICHIERS SÉLECTIONNÉS — cartes compactes
+   ========================================================= */
+
+/*
+  Réduit tous les boutons créés dans les lignes de fichiers :
+  « Valider pour le devis » et « Retirer ».
+*/
+.hb3d-files-list button,
+.hb3d-upload-files button {
+  min-height: 22px;
+  margin: 0 0 0 4px;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Le libellé long est remplacé visuellement par une forme courte. */
+.hb3d-files-list button[data-action="validate"] {
+  font-size: 0;
+}
+
+.hb3d-files-list button[data-action="validate"]::after {
+  content: "Valider";
+  font-size: 0.56rem;
+}
+
+/* Variante si le bouton emploie une classe différente. */
+.hb3d-files-list .btn-validate,
+.hb3d-files-list .validate-file,
+.hb3d-files-list .hb3d-file-validate {
+  font-size: 0.56rem;
+  min-height: 22px;
+  padding: 3px 5px;
+}
+
+/* Bouton de retrait réduit, sans casser son comportement JavaScript. */
+.hb3d-files-list button[data-action="remove"] {
+  min-width: 22px;
+  padding-right: 4px;
+  padding-left: 4px;
+}
+
+/* Réduit les marges de chaque élément créé dans la liste. */
+.hb3d-files-list > * {
+  margin-top: 4px !important;
+  margin-bottom: 0 !important;
+  padding: 5px 6px !important;
+  line-height: 1.2;
+}
+
+/* Réduit la taille des informations secondaires. */
+.hb3d-files-list small,
+.hb3d-files-list .file-meta,
+.hb3d-files-list .hb3d-file-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.62rem;
+  line-height: 1.2;
+}
+
+/* Une seule ligne d'informations dans la carte. */
+.hb3d-files-list p {
+  margin: 2px 0 0 !important;
+  font-size: 0.62rem;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   FICHIERS SÉLECTIONNÉS — boutons alignés avec le titre
+   ========================================================= */
+
+/*
+  La carte de fichier devient le repère de positionnement.
+  Les actions sont remontées en haut à droite.
+*/
+.hb3d-files-list > * {
+  position: relative;
+  padding-top: 6px !important;
+  padding-right: 148px !important;
+  min-height: 50px;
+}
+
+/*
+  Conteneur des deux boutons :
+  positionné dans le coin supérieur droit de chaque carte.
+*/
+.hb3d-files-list .hb3d-file-actions {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 0 !important;
+  white-space: nowrap;
+}
+
+/* Bouton principal : compact, mais encore compréhensible. */
+.hb3d-files-list .hb3d-file-preview {
+  min-height: 21px;
+  margin: 0 !important;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 0.53rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+/* Bouton retirer : même hauteur et même alignement. */
+.hb3d-files-list .hb3d-file-remove {
+  min-height: 21px;
+  margin: 0 !important;
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 0.53rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+/* Sur petit écran, on évite tout chevauchement avec les noms longs. */
+@media (max-width: 767px) {
+  .hb3d-files-list > * {
+    padding-right: 6px !important;
+    padding-top: 33px !important;
+  }
+
+  .hb3d-files-list .hb3d-file-actions {
+    top: 5px;
+    right: 5px;
+  }
+}
+
+/* =========================================================
+   FICHIERS — volume + estimation sur une seule ligne
+   ========================================================= */
+
+/*
+  Les informations secondaires de chaque fichier restent
+  sur une seule ligne : Volume + Estimation.
+*/
+.hb3d-files-list > * > p,
+.hb3d-files-list > * > small,
+.hb3d-files-list > * > .hb3d-file-meta,
+.hb3d-files-list > * > .file-meta {
+  display: block;
+  width: 100%;
+  margin-top: 3px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.58rem;
+  line-height: 1.2;
+}
+
+/* =========================================================
+   FICHIERS — une ligne Volume + Estimation, sans <br>
+   ========================================================= */
+
+/* Empêche le retour automatique dans les informations de chaque fichier. */
+.hb3d-files-list > * {
+  white-space: normal;
+}
+
+/*
+  Tout le contenu hors titre et actions est normalement la ligne
+  Volume / Estimation. On le force sur une seule ligne.
+*/
+.hb3d-files-list > * > :not(.hb3d-file-actions):not(button):not(:first-child) {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/*
+  S'il y a un <br> entre Volume et Estimation, on le masque
+  uniquement dans les cartes de fichiers.
+*/
+.hb3d-files-list br {
+  display: none;
+}
+
+/* =========================================================
+   FICHIERS — une ligne Volume + Estimation, sans <br>
+   ========================================================= */
+
+/* Empêche le retour automatique dans les informations de chaque fichier. */
+.hb3d-files-list > * {
+  white-space: normal;
+}
+
+/*
+  Tout le contenu hors titre et actions est normalement la ligne
+  Volume / Estimation. On le force sur une seule ligne.
+*/
+.hb3d-files-list > * > :not(.hb3d-file-actions):not(button):not(:first-child) {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/*
+  S'il y a un <br> entre Volume et Estimation, on le masque
+  uniquement dans les cartes de fichiers.
+*/
+.hb3d-files-list br {
+  display: none;
+}
+
+/* =========================================================
+   RÉSUMÉ D'ANALYSE SOUS LE VIEWER — une seule ligne
+   ========================================================= */
+
+.hb3d-viewer-analysis,
+#hb3d-volume-summary {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*
+  Si le script injecte un <br> entre « STL analysés »
+  et « Volume total STL », on supprime seulement ce saut
+  de ligne dans le bloc d'analyse situé sous le viewer.
+*/
+.hb3d-viewer-analysis br,
+#hb3d-volume-summary br {
+  display: none;
+}
+
+/* =========================================================
+   RÉSUMÉ SOUS LE VIEWER — ligne unique, DOM réel
+   ========================================================= */
+
+#hb3d-volume-summary.hb3d-viewer-analysis {
+  display: block;
+  width: 100%;
+  white-space: nowrap !important;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Le script injecte un <br> : on le neutralise dans ce seul bloc. */
+#hb3d-volume-summary.hb3d-viewer-analysis br {
+  display: none !important;
+}
+
+/* La valeur de volume reste dans le flux de texte, sans retour forcé. */
+#hb3d-volume-summary.hb3d-viewer-analysis strong {
+  display: inline !important;
+  white-space: nowrap !important;
+  margin-left: 2px;
+}
+
+/* =========================================================
+   FICHIERS SÉLECTIONNÉS — titre + compteur sur une ligne
+   ========================================================= */
+
+/*
+  Le titre et le résumé deviennent deux éléments alignés :
+  titre à gauche, état / compteur à droite.
+*/
+.hb3d-upload-workspace .hb3d-upload-files {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "title summary"
+    "list list";
+  column-gap: 8px;
+  row-gap: 6px;
+  align-items: center;
+}
+
+/* Titre à gauche. */
+.hb3d-upload-workspace .hb3d-upload-files h3 {
+  grid-area: title;
+  margin: 0;
+  padding: 0;
+  border-bottom: 0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Compteur sur la même ligne, aligné à droite. */
+.hb3d-upload-workspace .hb3d-files-summary {
+  grid-area: summary;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Liste des STL : ligne suivante, sur toute la largeur. */
+.hb3d-upload-workspace .hb3d-files-list {
+  grid-area: list;
+  width: 100%;
+  margin: 0;
+}
+
+/*
+  Les anciennes règles flex pourraient encore être actives ;
+  on annule les contraintes de hauteur de la colonne.
+*/
+.hb3d-upload-workspace .hb3d-upload-files {
+  min-height: 0;
+  padding-right: 10px;
+}
+
+/* =========================================================
+VOLET 2 — configuration compacte, sans dépendre de nth-child
+========================================================= */
+
+@media (min-width: 1181px) {
+  .hb3d-configuration-panel {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    grid-template-areas:
+      "title title"
+      "technos config";
+    gap: 6px 12px;
+    align-items: start;
+    padding: 7px 10px 8px;
+  }
+
+  .hb3d-configuration-panel > h2 {
+    grid-area: title;
+    margin: 0;
+    padding-bottom: 4px;
+    font-size: 0.84rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-configuration-panel > .devis-techno-column {
+    grid-area: technos;
+    gap: 0;
+    padding-right: 8px;
+  }
+
+  .hb3d-configuration-panel .devis-techno-card {
+    min-height: 43px;
+    padding: 2px;
+    font-size: 0.6rem;
+    line-height: 1.05;
+  }
+
+  .hb3d-configuration-panel .devis-techno-card img {
+    max-width: 30px;
+    max-height: 28px;
+    margin-bottom: 1px;
+    object-fit: contain;
+  }
+
+  .hb3d-configuration-panel > .devis-config-fields {
+    grid-area: config;
+    display: grid;
+    grid-template-columns: 92px minmax(128px, 1fr) 72px minmax(0, 1.5fr);
+    grid-template-areas:
+      "techno-label techno notes-label notes"
+      "techno-input techno notes-label notes"
+      "material-label material notes-label notes"
+      "material-input material notes-label notes"
+      "color-label colors notes-label notes"
+      "quantity-label quantity action action";
+    gap: 2px 8px;
+    align-items: center;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > label[for="techno"] {
+    grid-area: techno-label;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #techno {
+    grid-area: techno-input;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > label[for="materiau"] {
+    grid-area: material-label;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #materiau {
+    grid-area: material-input;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > label:not([for]) {
+    grid-area: color-label;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #couleurs-fdm,
+  .hb3d-configuration-panel .devis-config-fields > #couleurs-sla {
+    grid-area: colors;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > label[for="quantite"] {
+    grid-area: quantity-label;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #quantite {
+    grid-area: quantity;
+    width: 100%;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > label[for="notes"] {
+    grid-area: notes-label;
+    align-self: start;
+    margin-top: 2px;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #notes {
+    grid-area: notes;
+    min-height: 100px;
+    height: 100px;
+    margin: 0;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    resize: vertical;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields > #btn-devis {
+    grid-area: action;
+    justify-self: end;
+    width: 100%;
+    max-width: 210px;
+    min-height: 32px;
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 0.66rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields label {
+    margin: 0;
+    font-size: 0.64rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields select,
+  .hb3d-configuration-panel .devis-config-fields input[type="number"] {
+    min-height: 27px;
+    margin: 0;
+    padding: 3px 6px;
+    font-size: 0.74rem;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .couleurs {
+    gap: 3px;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .chip-color {
+    gap: 1px;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .chip-color .swatch {
+    width: 15px;
+    height: 15px;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .chip-color .swatch-label {
+    font-size: 0.52rem;
+    line-height: 1;
+  }
+}
+
+/* =========================================================
+VOLET 4 — sous le viewer dans la colonne gauche
+========================================================= */
+
+.devis-viewer-column > .hb3d-upload-panel {
+  margin-top: 14px;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-upload-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(105px, 0.45fr) minmax(190px, 0.95fr);
+    grid-template-areas:
+      "title title title"
+      "instructions progress action";
+    gap: 10px 14px;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > h2 {
+    grid-area: title;
+    margin: 0;
+    padding-bottom: 5px;
+    font-size: 0.82rem;
+    line-height: 1.15;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions {
+    grid-area: instructions;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 0.64rem;
+    line-height: 1.3;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions h3 {
+    margin: 0 0 5px;
+    font-size: 0.68rem;
+    line-height: 1.15;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions p {
+    margin: 0 0 3px;
+    font-size: 0.6rem;
+    line-height: 1.25;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions p:last-child {
+    margin-bottom: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .status-panel {
+    grid-area: progress;
+    gap: 4px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-mark {
+    display: none;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload {
+    position: static;
+    width: 70px;
+    height: 70px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload::before {
+    width: 52px;
+    height: 52px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload span {
+    font-size: 0.66rem;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .upload-text {
+    position: static;
+    width: auto;
+    margin: 0;
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > #btn-upload {
+    grid-area: action;
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1199px) {
+  .devis-viewer-column > .hb3d-upload-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 135px;
+    grid-template-areas:
+      "title title"
+      "instructions progress"
+      "action action";
+    gap: 12px;
+    align-items: center;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > h2 {
+    grid-area: title;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions {
+    grid-area: instructions;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .status-panel {
+    grid-area: progress;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > #btn-upload {
+    grid-area: action;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .devis-viewer-column > .hb3d-upload-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions {
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > #btn-upload {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* =========================================================
+FINITIONS — titres de volets plus compacts
+========================================================= */
+
+.panel > h2 {
+  margin: 0;
+  padding: 3px 0 4px;
+  min-height: 0;
+  font-size: 0.82rem;
+  line-height: 1.1;
+  letter-spacing: 0.045em;
+}
+
+/* Évite un espace supplémentaire dans les panneaux compacts. */
+.hb3d-configuration-panel > h2,
+.hb3d-upload-panel > h2 {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1200px) {
+  .devis-workflow-column > .panel,
+  .devis-viewer-column > .panel {
+    padding-top: 7px;
+    padding-bottom: 8px;
+  }
+}
+
+/* =========================================================
+VOLET 1 — téléversement plus compact sur bureau
+========================================================= */
+
+@media (min-width: 1200px) {
+  /* Le panneau 1 : moins d'espace autour du contenu. */
+  .devis-workflow-column > .hb3d-viewer-panel {
+    padding: 6px 10px 8px;
+  }
+
+  /* Espace réduit sous le titre du volet. */
+  .devis-workflow-column > .hb3d-viewer-panel > h2 {
+    margin: 0 0 4px;
+    padding-bottom: 3px;
+  }
+
+  /* Conteneur pointillé : gagne de la hauteur. */
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(0, 1.55fr) minmax(160px, 0.45fr);
+    gap: 10px;
+    margin: 0;
+    padding: 8px 10px;
+    min-height: 0;
+  }
+
+  /* Partie gauche : enlève l'espace bas devenu inutile. */
+  .hb3d-upload-workspace .hb3d-upload-files {
+    min-height: 0;
+    padding-right: 8px;
+  }
+
+  /* Titre / compteur sur une ligne, sans respiration excessive. */
+  .hb3d-upload-workspace .hb3d-upload-files h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 0.66rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-upload-workspace .hb3d-files-summary {
+    margin: 0;
+    padding: 0;
+    font-size: 0.58rem;
+    line-height: 1.1;
+  }
+
+  /* Réduit la hauteur des cartes de fichiers sans modifier leur JavaScript. */
+  .hb3d-upload-workspace .hb3d-files-list > * {
+    min-height: 0;
+    margin-top: 3px !important;
+    padding: 4px 5px !important;
+    padding-right: 142px !important;
+  }
+
+  .hb3d-upload-workspace .hb3d-files-list .hb3d-file-actions {
+    top: 4px;
+    right: 4px;
+    gap: 3px;
+  }
+
+  .hb3d-upload-workspace .hb3d-files-list .hb3d-file-preview,
+  .hb3d-upload-workspace .hb3d-files-list .hb3d-file-remove {
+    min-height: 19px;
+    padding: 2px 4px;
+    font-size: 0.5rem;
+  }
+
+  /* Ligne Volume / estimation très dense, toujours sur une seule ligne. */
+  .hb3d-upload-workspace .hb3d-files-list > * > p,
+  .hb3d-upload-workspace .hb3d-files-list > * > small,
+  .hb3d-upload-workspace .hb3d-files-list > * > .hb3d-file-meta,
+  .hb3d-upload-workspace .hb3d-files-list > * > .file-meta {
+    margin-top: 2px !important;
+    font-size: 0.54rem;
+    line-height: 1.1;
+  }
+
+  /* Partie droite : dépôt et sélecteur sans grands espaces verticaux. */
+  .hb3d-upload-workspace .hb3d-upload-picker {
+    justify-content: center;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker strong {
+    margin-bottom: 4px;
+    font-size: 0.66rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker p {
+    margin: 0 0 6px;
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker label {
+    margin: 0 0 2px;
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker input[type="file"] {
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker input[type="file"]::file-selector-button {
+    margin-right: 5px;
+    padding: 4px 6px;
+    font-size: 0.6rem;
+    line-height: 1;
+  }
+}
+/* =========================================================
+VOLET 1 — hauteur stable jusqu'à 5 fichiers
+La liste défile en interne au-delà de 3 cartes environ.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-upload-workspace {
+    align-items: stretch;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-upload-files {
+    min-height: 50px;
+    max-height: 60px;
+    overflow: hidden;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-files-list {
+    min-height: 0;
+    max-height: 92px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding-right: 4px;
+  }
+}
+
+/* =========================================================
+COLONNE DROITE — cartes distinctes pour les volets 2, 3 et 4
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-workflow-column {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .devis-workflow-column > .panel {
+    width: 100%;
+    margin: 0;
+    padding: 8px 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.045);
+  }
+
+  /* Le volet 2 conserve sa grille interne. */
+  .devis-workflow-column > .hb3d-configuration-panel {
+    display: grid;
+  }
+
+  /* Volets 3 et 4 sont des blocs standards. */
+  .devis-workflow-column > .hb3d-order-panel,
+  .devis-workflow-column > .hb3d-upload-panel {
+    display: block;
+  }
+
+  .devis-workflow-column > .panel > h2 {
+    margin: 0 0 5px;
+    padding: 0 0 4px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}
+
+/* =========================================================
+VOLET 1 — zone de dépôt plus visible et plus incitative
+========================================================= */
+
+.hb3d-upload-workspace .hb3d-upload-picker {
+  position: relative;
+  min-height: 100%;
+  padding: 10px 12px;
+  border: 2px dashed #f70438;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fff7f9 0%, #ffffff 100%);
+  box-shadow: inset 0 0 0 1px rgba(247, 4, 56, 0.08);
+  text-align: center;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker:hover {
+  border-color: #c9002e;
+  background: #fff0f4;
+  box-shadow:
+    inset 0 0 0 1px rgba(247, 4, 56, 0.16),
+    0 4px 12px rgba(247, 4, 56, 0.12);
+  transform: translateY(-1px);
+}
+
+.hb3d-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 5px;
+  border-radius: 50%;
+  background: #f70438;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 3px 8px rgba(247, 4, 56, 0.24);
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #a60027;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker p {
+  margin: 0 0 7px;
+  color: #4b5563;
+  font-size: 0.62rem;
+  line-height: 1.3;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker label {
+  margin: 0 0 3px;
+  color: #374151;
+  font-size: 0.64rem;
+  text-align: center;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 185px;
+  margin: 0 auto;
+  font-size: 0.6rem;
+}
+
+.hb3d-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0 auto 3px;
+  border-radius: 50%;
+  background: #f70438;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 3px 8px rgba(247, 4, 56, 0.24);
+}
+
+/* =========================================================
+ZONE DE DÉPÔT — icône alignée avec le titre
+========================================================= */
+
+.hb3d-upload-workspace .hb3d-upload-picker {
+  text-align: left;
+}
+
+/* L'icône et « Zone de dépôt » forment la première ligne. */
+.hb3d-upload-heading {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  column-gap: 7px;
+  align-items: start;
+  margin-bottom: 6px;
+}
+
+.hb3d-upload-icon-inline {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  border-radius: 50%;
+  background: #ff0138;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 3px 8px rgba(247, 4, 56, 0.24);
+}
+
+/* Le titre commence exactement au niveau supérieur de l'icône. */
+.hb3d-upload-heading-text {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  padding-top: 1px;
+}
+
+.hb3d-upload-heading-text strong {
+  display: block;
+  margin: 0 0 3px;
+  color: #a60027;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.hb3d-upload-heading-text p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.58rem;
+  line-height: 1.25;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker > label {
+  display: block;
+  margin: 0 0 3px;
+  color: #374151;
+  font-size: 0.62rem;
+  text-align: left;
+}
+
+.hb3d-upload-workspace .hb3d-upload-picker > input[type="file"] {
+  width: 100%;
+  margin: 0;
+}
+
+/* =========================================================
+VOLET 1 — zone de dépôt plus large et moins haute
+========================================================= */
+
+@media (min-width: 1200px) {
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(0, 1.15fr) minmax(150px, 0.54fr);
+    gap: 10px;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker {
+    padding: 8px 10px;
+  }
+
+  .hb3d-upload-heading {
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .hb3d-upload-icon-inline {
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+  }
+
+  .hb3d-upload-heading-text strong {
+    font-size: 0.66rem;
+    line-height: 1.1;
+  }
+
+  .hb3d-upload-heading-text p {
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker > label {
+    margin-bottom: 2px;
+    font-size: 0.6rem;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker > input[type="file"] {
+    max-width: 100%;
+    font-size: 0.58rem;
+  }
+}
+
+/* =========================================================
+V2F — CONFIGURATEUR À GAUCHE / FICHIERS + PANIER À DROITE
+À placer tout à la fin de style.css
+========================================================= */
+
+@media (min-width: 1200px) {
+
+  /* Deux colonnes équilibrées, avec priorité visuelle au configurateur. */
+  .devis-layout {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.18fr) !important;
+    gap: 18px;
+    align-items: start;
+  }
+
+  /* Les colonnes restent indépendantes et ne provoquent pas de débordement. */
+  .devis-viewer-column,
+  .devis-workflow-column {
+    min-width: 0;
+  }
+
+  /* À droite : volet 1 puis panier, avec un espace court et lisible. */
+  .devis-workflow-column {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .devis-workflow-column > .panel {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* =====================================================
+     COLONNE GAUCHE — volet 2 compact au-dessus du viewer
+     ===================================================== */
+
+  .devis-viewer-column > .hb3d-configuration-panel {
+    display: grid;
+    grid-template-columns: 74px minmax(150px, 0.9fr) minmax(0, 1.5fr);
+    grid-template-areas:
+      "title title title"
+      "technos settings notes";
+    gap: 7px 12px;
+    margin: 0 0 10px;
+    padding: 7px 10px 8px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel > h2 {
+    grid-area: title;
+    margin: 0;
+    padding: 0 0 4px;
+    font-size: 0.78rem;
+    line-height: 1.1;
+  }
+
+  /* Machines : colonne verticale à gauche. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column {
+    grid-area: technos;
+    display: flex;
+    gap: 0;
+    padding-right: 7px;
+    border-right: 1px solid #e5e7eb;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card {
+    min-height: 38px;
+    padding: 2px;
+    font-size: 0.54rem;
+    line-height: 1;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card img {
+    max-width: 27px;
+    max-height: 25px;
+    margin-bottom: 1px;
+    object-fit: contain;
+  }
+
+  /* Champs : technologie, matériau, couleurs, quantité. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-config-fields {
+    grid-area: settings;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto auto;
+    gap: 1px;
+    align-content: start;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="techno"] {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #techno {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="materiau"] {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #materiau {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label:not([for]) {
+    grid-column: 1;
+    grid-row: 5;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #couleurs-sla {
+    grid-column: 1;
+    grid-row: 6;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="quantite"] {
+    grid-column: 1;
+    grid-row: 7;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #quantite {
+    grid-column: 1;
+    grid-row: 8;
+    width: 100%;
+  }
+
+  /* Notes : colonne droite. */
+.devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="notes"] {
+  grid-column: 3;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+  font-size: 0.58rem;
+  line-height: 1.1;
+}
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #notes {
+    grid-column: 3;
+    grid-row: 2;
+    width: 100%;
+    min-height: 76px;
+    height: 76px;
+    margin: 0;
+    padding: 4px 6px;
+    font-size: 0.66rem;
+    line-height: 1.2;
+    resize: vertical;
+  }
+
+  /* Bouton d'estimation dans la colonne notes, sous la zone de texte. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #btn-devis {
+    grid-column: 3;
+    grid-row: 3;
+    width: 100%;
+    min-height: 30px;
+    margin: 5px 0 0;
+    padding: 5px 8px;
+    font-size: 0.61rem;
+    line-height: 1.1;
+  }
+
+  /* Dimensions communes, compactes et lisibles. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields label {
+    margin: 0;
+    color: #374151;
+    font-size: 0.58rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields select,
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields input[type="number"] {
+    min-height: 24px;
+    margin: 0;
+    padding: 2px 5px;
+    font-size: 0.68rem;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields .couleurs {
+    gap: 3px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields .chip-color {
+    gap: 1px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields .chip-color .swatch {
+    width: 15px;
+    height: 15px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields .chip-color .swatch-label {
+    font-size: 0.5rem;
+    line-height: 1;
+  }
+
+  /* =====================================================
+     VIEWER — hauteur équilibrée avec la nouvelle colonne
+     ===================================================== */
+
+  .devis-viewer-column > #view3d {
+    width: 100%;
+    height: 345px;
+    min-height: 345px;
+    max-height: 345px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+
+  .devis-viewer-column > #cv {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .devis-viewer-column > .viewer-modes {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 6px 0 8px;
+  }
+
+  .devis-viewer-column > .viewer-modes button {
+    width: auto;
+    min-width: 58px;
+    margin: 0;
+    padding: 4px 6px;
+    font-size: 0.58rem;
+  }
+
+  /* =====================================================
+     VOLET 4 — sous le viewer, dans la colonne gauche
+     ===================================================== */
+
+  .devis-viewer-column > .hb3d-upload-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(90px, 0.45fr) minmax(160px, 0.95fr);
+    grid-template-areas:
+      "title title title"
+      "instructions progress action";
+    gap: 8px 12px;
+    margin: 0;
+    padding: 8px 10px;
+    align-items: center;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > h2 {
+    grid-area: title;
+    margin: 0;
+    padding: 0 0 4px;
+    font-size: 0.76rem;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions {
+    grid-area: instructions;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 7px 8px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions h3 {
+    margin: 0 0 4px;
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions p {
+    margin: 0 0 3px;
+    font-size: 0.54rem;
+    line-height: 1.2;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-instructions p:last-child {
+    margin-bottom: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .status-panel {
+    grid-area: progress;
+    gap: 3px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .hb3d-mark {
+    display: none;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload,
+  .devis-viewer-column > .hb3d-upload-panel .upload-text {
+    position: static;
+    top: auto;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload {
+    width: 62px;
+    height: 62px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload::before {
+    width: 46px;
+    height: 46px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload span {
+    font-size: 0.62rem;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .upload-text {
+    width: auto;
+    margin: 0;
+    font-size: 0.54rem;
+    line-height: 1.15;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > #btn-upload {
+    grid-area: action;
+    width: 100%;
+    min-height: 36px;
+    margin: 0;
+    padding: 7px 8px;
+    font-size: 0.62rem;
+    line-height: 1.15;
+  }
+
+  /* =====================================================
+     DROITE — volet 1 et panier adaptés à la largeur F
+     ===================================================== */
+
+  .devis-workflow-column > .hb3d-viewer-panel,
+  .devis-workflow-column > .hb3d-order-panel {
+    padding: 8px 10px;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel > h2,
+  .devis-workflow-column > .hb3d-order-panel > h2 {
+    margin: 0 0 5px;
+    padding: 0 0 4px;
+    font-size: 0.78rem;
+    line-height: 1.1;
+  }
+}
+
+/* =========================================================
+V2F — volet 1 : liste complète, sans ascenseur interne
+Maximum prévu : 5 fichiers.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-upload-files {
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-files-list {
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    overflow-x: visible;
+    overflow-y: visible;
+    overscroll-behavior: auto;
+    scrollbar-gutter: auto;
+    padding-right: 0;
+  }
+}
+
+/* =========================================================
+V2F — FUSION VISUELLE : VIEWER JSC3D + CONFIGURATION
+À ajouter tout à la fin de style.css
+========================================================= */
+
+@media (min-width: 1200px) {
+
+  /* La colonne gauche devient une grille de configurateur. */
+  .devis-viewer-column {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr) 112px;
+    grid-template-areas:
+      "summary summary summary"
+      "techno  viewer  colors"
+      "techno  viewer  colors"
+      "qty     modes   colors"
+      "send    send    send";
+    column-gap: 10px;
+    row-gap: 8px;
+    align-items: start;
+  }
+
+  /* Résumé général sur toute la largeur. */
+  .devis-viewer-column > #hb3d-volume-summary {
+    grid-area: summary;
+    margin: 0;
+  }
+
+  /* Le panneau de configuration cesse d'être une carte autonome. */
+  .devis-viewer-column > .hb3d-configuration-panel {
+    display: contents;
+  }
+
+  /* Le titre du volet 2 est masqué : la configuration est désormais intégrée. */
+  .devis-viewer-column > .hb3d-configuration-panel > h2 {
+    display: none;
+  }
+
+  /* Technologies à gauche du viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column {
+    grid-area: techno;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 6px;
+    border: 0;
+    background: #ffffff;
+    border-radius: 7px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card {
+    min-height: 68px;
+    padding: 4px 2px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.62rem;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card:last-child {
+    border-bottom: 0;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card img {
+    max-width: 38px;
+    max-height: 38px;
+    margin-bottom: 2px;
+    object-fit: contain;
+  }
+
+  /* Viewer central : c'est le grand espace fonctionnel. */
+  .devis-viewer-column > #view3d {
+    grid-area: viewer;
+    width: 100%;
+    height: 420px;
+    min-height: 420px;
+    max-height: 420px;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+    background: #ffffff;
+  }
+
+  .devis-viewer-column > #cv {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  /* Les modes restent sous le viewer. */
+  .devis-viewer-column > #viewer-modes {
+    grid-area: modes;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > #viewer-modes button {
+    width: auto;
+    min-width: 62px;
+    margin: 0;
+    padding: 4px 7px;
+    font-size: 0.6rem;
+  }
+
+  /* Les champs de configuration deviennent une zone sans carte. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-config-fields {
+    display: contents;
+  }
+
+  /* Dans F, technologie et matériau restent visibles mais discrets.
+     Ils sont placés sous la colonne technologies. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="techno"],
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #techno,
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="materiau"],
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #materiau {
+    display: none;
+  }
+
+  /* La couleur forme une colonne à droite du viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label:not([for]) {
+    grid-area: colors;
+    align-self: start;
+    margin: 0 0 4px;
+    padding: 8px 6px 0;
+    color: #374151;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #couleurs-sla {
+    grid-area: colors;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    margin: 28px 0 0;
+    padding: 0 6px 8px;
+    background: #ffffff;
+    border-radius: 7px;
+  }
+
+  /* Le groupe SLA garde son display:none inline tant qu'il est masqué par JavaScript.
+     Cette règle ne doit pas le forcer visible. */
+  #couleurs-sla[style*="display:none"] {
+    display: none !important;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .chip-color {
+    gap: 2px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .chip-color .swatch {
+    width: 20px;
+    height: 20px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .chip-color .swatch-label {
+    font-size: 0.56rem;
+    line-height: 1;
+  }
+
+  /* Quantité sous la colonne technologies. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="quantite"] {
+    grid-area: qty;
+    margin: 0;
+    padding: 0 5px 3px;
+    color: #374151;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #quantite {
+    grid-area: qty;
+    align-self: end;
+    width: 100%;
+    margin: 0;
+    padding: 3px 5px;
+    font-size: 0.68rem;
+  }
+
+  /* Notes et bouton estimation : cachés dans la fusion F initiale.
+     La demande libre peut être réintroduite dans le volet 4 ensuite. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > label[for="notes"],
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #notes,
+  .devis-viewer-column > .hb3d-configuration-panel .devis-config-fields > #btn-devis {
+    display: none;
+  }
+
+  /* Volet 4 sous tout le configurateur. */
+  .devis-viewer-column > .hb3d-upload-panel {
+    grid-area: send;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+/* =========================================================
+V2F — légende au-dessus des imprimantes
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column::before {
+    content: "Technologie";
+    display: block;
+    width: 100%;
+    margin: 0 0 7px;
+    color: #374151;
+    font-family: "Orbitron", system-ui, sans-serif;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+V2F — quantité : correction sûre sans modifier la grille mère
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > label[for="quantite"] {
+    grid-area: qty;
+    align-self: start;
+    margin: 0;
+    padding: 0 4px 4px;
+    color: #374151;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #quantite {
+    grid-area: qty;
+    align-self: end;
+    width: 100%;
+    min-height: 25px;
+    margin: 0;
+    padding: 3px 5px;
+    font-size: 0.68rem;
+  }
+}
+
+/* =========================================================
+V2F — BÂTISSEMENT DU CONFIGURATEUR :
+bandeaux Technologie / Couleur à la hauteur du viewer
++ Matériau visible sous les technologies
+========================================================= */
+
+@media (min-width: 1200px) {
+
+  /* Les zones latérales suivent exactement la hauteur du viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column,
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-sla {
+    align-self: stretch;
+    min-height: 420px;
+    box-sizing: border-box;
+  }
+
+  /* Bandeau Technologie : fond blanc, hauteur du viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column {
+    grid-area: techno;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    min-height: 420px;
+    padding: 8px 7px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+  }
+
+  /* L'intitulé ajouté par ::before reste visible en haut. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column::before {
+    margin-bottom: 8px;
+  }
+
+  /* Cartes imprimantes compactes et homogènes. */
+  .devis-viewer-column > .hb3d-configuration-panel .devis-techno-card {
+    width: 100%;
+    min-height: 64px;
+    padding: 4px 2px;
+  }
+
+  /* Réaffiche seulement « Matériau » et le select existant. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > label[for="materiau"] {
+    display: block;
+    grid-area: techno;
+    align-self: end;
+    width: 100%;
+    margin: 0 0 29px;
+    padding: 0 7px;
+    color: #374151;
+    font-size: 0.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #materiau {
+    display: block;
+    grid-area: techno;
+    align-self: end;
+    width: calc(100% - 14px);
+    margin: 0 7px 6px;
+    min-height: 25px;
+    padding: 3px 5px;
+    background: #ffffff;
+    font-size: 0.65rem;
+  }
+
+  /* Bandeau Couleur : même hauteur que le viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm {
+    grid-area: colors;
+    align-self: stretch;
+    min-height: 420px;
+    margin: 0;
+    padding: 8px 6px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+  }
+
+  /* Le titre Couleur reste au sommet du bandeau droit. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > label:not([for]) {
+    grid-area: colors;
+    align-self: start;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 9px 6px 0;
+    background: transparent;
+  }
+
+  /* Les puces commencent sous le titre et restent en colonne. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm {
+    padding-top: 34px;
+  }
+
+  /* Si SLA est affiché par le JavaScript, il reprend aussi le style colonne. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-sla:not([style*="display:none"]) {
+    grid-area: colors;
+    align-self: stretch;
+    min-height: 420px;
+    margin: 0;
+    padding: 34px 6px 8px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+  }
+
+  /* Quantité : placée au bas du bandeau technologie. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > label[for="quantite"] {
+    grid-area: techno;
+    align-self: end;
+    width: 100%;
+    margin: 0 0 29px;
+    padding: 0 7px;
+    color: #374151;
+    font-size: 0.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #quantite {
+    grid-area: techno;
+    align-self: end;
+    width: calc(100% - 14px);
+    margin: 0 7px 6px;
+    min-height: 25px;
+    padding: 3px 5px;
+    background: #ffffff;
+    font-size: 0.65rem;
+  }
+}
+
+/* =========================================================
+V2F — bandeau Technologie :
+Matériau + Quantité regroupés et séparés
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > .hb3d-piece-settings {
+    grid-area: techno;
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 7px 8px;
+    border-top: 1px solid #d9dde3;
+    background: #ffffff;
+  }
+
+  .hb3d-piece-settings .hb3d-piece-setting {
+    width: 100%;
+  }
+
+  .hb3d-piece-settings label {
+    display: block;
+    margin: 0 0 3px;
+    color: #374151;
+    font-family: "Orbitron", system-ui, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  .hb3d-piece-settings select,
+  .hb3d-piece-settings input[type="number"] {
+    width: 100%;
+    min-height: 25px;
+    margin: 0;
+    padding: 3px 5px;
+    border: 1px solid #cfd4dc;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.65rem;
+  }
+
+  .hb3d-piece-settings .hb3d-quantity-setting {
+    padding-top: 8px;
+    border-top: 1px solid #edf0f3;
+  }
+}
+
+/* =========================================================
+V2F — CARTES TECHNOLOGIES CLIQUABLES
+FDM et SLA pilotent le select #techno existant.
+SLS reste désactivée jusqu'à disponibilité réelle.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card {
+    width: 100%;
+    margin: 0 0 5px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: #374151;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card:hover:not(:disabled) {
+    background: #fff2f5;
+    border-color: #f7a3b8;
+    transform: translateY(-1px);
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card.is-active {
+    background: #fff1f4;
+    border-color: #f70438;
+    box-shadow: 0 2px 8px rgba(247, 4, 56, 0.18);
+    color: #a60027;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card.is-active span {
+    font-weight: 800;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card:focus-visible {
+    outline: 2px solid #f70438;
+    outline-offset: 2px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-techno-card small {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.46rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+}
+
+/* =========================================================
+V2F — TOTAL PANIER + BOUTON D'ESTIMATION
+Le total reste sur une ligne : libellé à gauche, prix à droite.
+Le bouton est centré sous le total.
+========================================================= */
+
+.panier-row.panier-row-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panier-row.panier-row-total .panier-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.panier-row.panier-row-total .panier-value {
+  flex: 0 0 auto;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.panier-row.panier-row-total #prix-panier {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.panier-estimation-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 0 10px;
+}
+
+.panier-estimation-action #btn-devis {
+  width: min(100%, 300px);
+  min-height: 42px;
+  margin: 0;
+}
+
+/* =========================================================
+V2F — VOLET 4 : COORDONNÉES | ACTION | SUIVI
+Référence : formulaire à gauche, CTA central, statut à droite.
+Les consignes restent provisoirement dans le volet 3.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-upload-panel {
+    display: grid;
+    grid-template-columns:
+      minmax(230px, 1.15fr)
+      minmax(260px, 1.25fr)
+      minmax(150px, 0.7fr);
+    grid-template-areas:
+      "title title title"
+      "personal action progress";
+    column-gap: 24px;
+    row-gap: 10px;
+    align-items: center;
+    padding: 8px 12px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > h2 {
+    grid-area: title;
+    margin: 0;
+    padding: 0 0 4px;
+    font-size: 0.78rem;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-send-personal {
+    grid-area: personal;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-send-personal h3 {
+    margin: 0 0 6px;
+    font-size: 0.72rem;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-send-personal label {
+    margin: 0 0 2px;
+    color: #374151;
+    font-size: 0.58rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .hb3d-send-personal input:not([type="hidden"]) {
+    width: 100%;
+    min-height: 24px;
+    margin: 0 0 4px;
+    padding: 3px 6px;
+    font-size: 0.68rem;
+    line-height: 1.1;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > #btn-upload {
+    grid-area: action;
+    justify-self: center;
+    align-self: center;
+    width: min(100%, 330px);
+    min-height: 48px;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+    line-height: 1.15;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel > .status-panel {
+    grid-area: progress;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .hb3d-mark {
+    display: none;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload,
+  .devis-viewer-column > .hb3d-upload-panel .upload-text {
+    position: static;
+    top: auto;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload {
+    width: 82px;
+    height: 82px;
+    margin: 0;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload::before {
+    width: 62px;
+    height: 62px;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .circular-upload span {
+    font-size: 0.72rem;
+  }
+
+  .devis-viewer-column > .hb3d-upload-panel .upload-text {
+    width: auto;
+    margin: 0;
+    font-size: 0.62rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+V2F — DESKTOP : VOLETS 1 ET 3 À HAUTEUR STABLE
+La colonne droite occupe la hauteur de la colonne gauche.
+Volet 1 et volet 3 se partagent l'espace disponible.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-layout {
+    align-items: stretch;
+  }
+
+  .devis-viewer-column,
+  .devis-workflow-column {
+    min-height: 0;
+  }
+
+  .devis-workflow-column {
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+    align-self: stretch;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel,
+  .devis-workflow-column > .hb3d-order-panel {
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Volet 1 : seule la liste de fichiers peut défiler. */
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-upload-files {
+    min-height: 0;
+  }
+
+  .devis-workflow-column > .hb3d-viewer-panel .hb3d-files-list {
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* Volet 3 : le détail du panier peut défiler sans agrandir le volet. */
+  .devis-workflow-column > .hb3d-order-panel .devis-order-grid,
+  .devis-workflow-column > .hb3d-order-panel .devis-cart-column {
+    min-height: 0;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-file-details {
+    max-height: 155px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+/* =========================================================
+V2F — VOLET 3 : 5 FICHIERS VISIBLES, SANS ASCENSEUR
+Le panier reste compact et le détail du lot s'affiche en entier.
+========================================================= */
+
+@media (min-width: 1200px) {
+  /* Aucun ascenseur dans le détail du panier. */
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-file-details {
+    max-height: none;
+    overflow: visible;
+  }
+
+  /* Réduit les marges générales du volet 3. */
+  .devis-workflow-column > .hb3d-order-panel {
+    padding: 7px 10px 8px;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel > h2 {
+    margin: 0 0 4px;
+    padding: 0 0 3px;
+    font-size: 0.76rem;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .devis-order-grid {
+    gap: 14px;
+    margin-top: 2px;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel h3 {
+    margin: 1px 0 4px;
+    font-size: 0.72rem;
+    line-height: 1.1;
+  }
+
+  /* Ligne « Lot de fichiers » compacte. */
+  .devis-workflow-column > .hb3d-order-panel .panier-stack {
+    margin: 2px 0 5px;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-row {
+    min-height: 0;
+    padding: 3px 0;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-label {
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-value {
+    font-size: 0.70rem;
+    line-height: 1.1;
+  }
+
+  /* Tableau du lot : cinq lignes visibles et plus denses. */
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-file-details {
+    margin: 3px 0 4px;
+    padding: 0;
+    font-size: 0.62rem;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-file-title {
+    margin: 0 0 3px;
+    font-size: 0.58rem;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-table-wrap {
+    margin: 0;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-table {
+    width: 100%;
+    margin: 0;
+    font-size: 0.60rem;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-table th,
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-table td {
+    padding: 3px 3px;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .hb3d-cart-table-file {
+    max-width: 86px;
+  }
+
+  /* Total + action : compact mais toujours lisible. */
+  .devis-workflow-column > .hb3d-order-panel .panier-row-total {
+    margin-top: 4px;
+    padding: 6px 0;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-row-total .panier-label {
+    font-size: 0.68rem;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-row-total .panier-value {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-estimation-action {
+    padding: 7px 0 5px;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-estimation-action #btn-devis {
+    width: min(100%, 250px);
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 0.62rem;
+    line-height: 1.1;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .devis-row {
+    padding-top: 2px;
+    font-size: 0.60rem;
+  }
+
+  .devis-workflow-column > .hb3d-order-panel .panier-remise-message {
+    margin-top: 1px;
+    font-size: 0.58rem;
+    line-height: 1.1;
+  }
+}
+
+/* =========================================================
+V2F — VIEWER FUSIONNÉ
+Technologies + viewer + couleurs deviennent une seule zone.
+Les séparations et cadres latéraux disparaissent.
+========================================================= */
+
+@media (min-width: 1200px) {
+  /* Supprime l'espace entre les trois zones du configurateur. */
+  .devis-viewer-column {
+    column-gap: 0;
+  }
+
+  /* Le canvas devient le seul contour extérieur visible. */
+  .devis-viewer-column > #view3d {
+    border-radius: 0;
+  }
+
+  /* Bandeau Technologie : sans contour ni fond de carte distinct. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column {
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+  }
+
+  /* Bandeau Couleur : sans contour ni fond de carte distinct. */
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-sla:not([style*="display:none"]) {
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+  }
+
+  /* Laisse un léger retrait interne : les contrôles ne touchent pas le viewer. */
+  .devis-viewer-column > .hb3d-configuration-panel > .devis-techno-column {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-sla:not([style*="display:none"]) {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+}
+
+/* =========================================================
+V2F — ALIGNEMENT BANDEAU COULEUR / BAS DU VIEWER
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-fdm,
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > #couleurs-sla:not([style*="display:none"]) {
+    min-height: 400px;
+    height: 420px;
+  }
+}
+
+/* V2F — viewer : liseret extérieur blanc */
+@media (min-width: 1200px) {
+  .devis-viewer-column > #view3d {
+    border-color: #ffffff;
+  }
+}
+
+/* V2F — bandeau Technologie : matériau et quantité centrés */
+@media (min-width: 1200px) {
+  .hb3d-piece-settings label {
+    text-align: center;
+  }
+
+  .hb3d-piece-settings select,
+  .hb3d-piece-settings input[type="number"] {
+    text-align: center;
+  }
+
+  .hb3d-piece-settings select {
+    text-align-last: center;
+  }
+}
+
+/* V2F — icône de dépôt active */
+.hb3d-upload-icon-inline {
+  cursor: pointer;
+}
+
+.hb3d-upload-icon-inline:focus-visible {
+  outline: 2px solid #f70438;
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+/* =========================================================
+V2F — BOUTON FLÈCHE ACTIF DANS LA ZONE DE DÉPÔT
+Classe dédiée : n'hérite pas du style des CTA globaux.
+========================================================= */
+
+.hb3d-upload-heading .hb3d-upload-icon-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  min-width: 30px;
+  height: 30px;
+  min-height: 30px;
+  margin: 0 9px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f70438;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 3px 9px rgba(247, 4, 56, 0.32);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease;
+}
+
+.hb3d-upload-heading .hb3d-upload-icon-button:hover {
+  background: #d90032;
+  box-shadow: 0 5px 13px rgba(247, 4, 56, 0.42);
+  transform: translateY(-1px);
+}
+
+.hb3d-upload-heading .hb3d-upload-icon-button:active {
+  box-shadow: 0 1px 4px rgba(247, 4, 56, 0.28);
+  transform: translateY(0);
+}
+
+.hb3d-upload-heading .hb3d-upload-icon-button:focus-visible {
+  outline: 2px solid #f70438;
+  outline-offset: 3px;
+}
+
+.hb3d-upload-heading .hb3d-upload-icon-button span {
+  display: block;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+V2F — BANDEAU TECHNOLOGIE :
+Matériau et quantité remontés, sans trait de séparation.
+========================================================= */
+
+@media (min-width: 1200px) {
+  .devis-viewer-column > .hb3d-configuration-panel
+    .devis-config-fields > .hb3d-piece-settings {
+    border-top: 0;
+    padding-top: 0;
+    transform: translateY(-30px);
+  }
+
+  .hb3d-piece-settings .hb3d-quantity-setting {
+    border-top: 0;
+    padding-top: 6px;
+  }
+}
+
+#hb3d-volume-summary.hb3d-viewer-analysis {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 58px !important;
+  white-space: nowrap !important;
+}
+
+#hb3d-volume-summary.hb3d-viewer-analysis .hb3d-stl-count,
+#hb3d-volume-summary.hb3d-viewer-analysis .hb3d-stl-volume {
+  display: inline-block !important;
+  white-space: nowrap !important;
+}
+
+/* ----------------------------------------------------------
+   VOLET 1 — Zone de dépôt à gauche, liste des fichiers à droite
+   ---------------------------------------------------------- */
+@media (min-width: 768px) {
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(100px, 0.42fr) minmax(0, 1.18fr);
+    grid-template-areas: "picker files";
+    align-items: stretch;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker {
+    grid-area: picker;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-files {
+    grid-area: files;
+    padding-right: 0;
+    padding-left: 10px;
+    border-right: 0;
+    border-left: 1px solid #e5e7eb;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-picker label {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    grid-template-columns: minmax(100px, 0.42fr) minmax(0, 1.18fr);
+    grid-template-areas: "picker files";
+  }
+
+  /* La colonne de dépôt conserve sa largeur réduite,
+     mais la carte se rapproche visuellement du centre. */
+  .hb3d-upload-workspace .hb3d-upload-picker {
+    grid-area: picker;
+    justify-self: end;
+    align-self: center;
+    width: min(190px, 100%);
+    min-height: 0;
+    margin-right: 2px;
+    padding: 12px 10px;
+  }
+
+  /* Liste des fichiers à droite, avec son séparateur */
+  .hb3d-upload-workspace .hb3d-upload-files {
+    grid-area: files;
+    padding-left: 10px;
+    padding-right: 0;
+    border-left: 1px solid #e5e7eb;
+    border-right: 0;
+  }
+}
+
+/* ----------------------------------------------------------
+   VOLET 4 — Empêche le débordement horizontal après réduction
+   de la largeur globale de l'interface.
+   À laisser en dernier dans style.css.
+---------------------------------------------------------- */
+
+.hb3d-upload-panel {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@media (min-width: 1200px) {
+  .hb3d-upload-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 110px minmax(0, 1fr);
+    grid-template-areas:
+      "title title title"
+      "instructions progress action";
+    gap: 10px 14px;
+    align-items: center;
+  }
+
+  .hb3d-upload-panel h2 {
+    grid-area: title;
+  }
+
+  .hb3d-upload-panel .hb3d-instructions {
+    grid-area: instructions;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hb3d-upload-panel .status-panel {
+    grid-area: progress;
+    min-width: 0;
+  }
+
+  .hb3d-upload-panel #btn-upload {
+    grid-area: action;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .hb3d-upload-panel .circular-upload {
+    width: 70px;
+    height: 70px;
+  }
+
+  .hb3d-upload-panel .circular-upload::before {
+    width: 52px;
+    height: 52px;
+  }
+
+  .hb3d-upload-panel .upload-text {
+    max-width: 110px;
+    font-size: 0.62rem;
+    line-height: 1.2;
+  }
+}
+
+/* Volet 4 : décale uniquement le disque de progression vers la gauche */
+
+
+@media (min-width: 1200px) {
+  .hb3d-upload-panel .status-panel {
+    transform: translateX(-25px);
+  }
+}
+
+/* Notification intégrée au viewer 3D */
+#view3d {
+  position: relative;
+}
+
+
+
+.hb3d-viewer-notification-icon {
+  display: inline-flex;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ff5555;
+  border-radius: 50%;
+  color: #ff5555;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#hb3d-viewer-notification-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hb3d-viewer-notification-close {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 20px;
+}
+
+.hb3d-viewer-notification-close:hover {
+  color: #ff5555;
+}
+
+@media (max-width: 600px) {
+  .hb3d-viewer-notification {
+    top: 10px;
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   HB3D — Carbon Factory Compact
+   Skin visuel uniquement : aucun changement de structure,
+   aucune hauteur forcée sur le viewer ou les panneaux.
+   ========================================================= */
+
+:root {
+  --hb3d-red: #f21d2b;
+  --hb3d-red-deep: #b40c18;
+  --hb3d-carbon: #0b1018;
+  --hb3d-carbon-soft: #182230;
+  --hb3d-ink: #172033;
+  --hb3d-line: #dbe2ea;
+  --hb3d-page: #edf1f5;
+}
+
+/* Fond technique léger */
+body {
+  background-color: var(--hb3d-page);
+  background-image:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.025) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(15, 23, 42, 0.025) 25%, transparent 25%);
+  background-size: 18px 18px;
+  color: var(--hb3d-ink);
+}
+
+/* En-tête carbone, sans changer sa hauteur */
+header {
+  background: linear-gradient(115deg, #090e15, #1a2532 55%, #0b1018);
+  border-bottom: 3px solid var(--hb3d-red);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.24);
+}
+
+/* Cartes blanches, contraste net */
+.panel {
+  border: 1px solid var(--hb3d-line);
+  border-radius: 9px;
+  background: #ffffff;
+  box-shadow: 0 7px 18px rgba(15, 23, 42, 0.08);
+}
+
+/* Titres des volets, sans padding ou hauteur supplémentaire */
+.panel h2 {
+  border-bottom-color: #dfe5ec;
+  color: var(--hb3d-ink);
+  font-family: Orbitron, Arial, sans-serif;
+  font-weight: 800;
+}
+
+.panel h2::before {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 7px;
+  vertical-align: 1px;
+  content: "";
+  border: 2px solid var(--hb3d-red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(242, 29, 43, 0.10);
+}
+
+/* Viewer : encadrement seulement.
+   Aucun padding, aucune hauteur, aucun ::before / ::after. */
+#view3d {
+  border-color: #c7bebe;
+  background: #ffffff;
+  box-shadow:
+    0 8px 18px rgba(238, 236, 236, 0.14),
+    inset 0 0 0 1px rgba(178, 180, 184, 0.05);
+}
+
+/* Ne pas créer de faux bandeau dans le viewer. */
+#view3d::before,
+#view3d::after {
+  content: none !important;
+}
+
+/* Zone de dépôt et cartes de fichiers */
+.upload-zone {
+  border-color: #cbd5df;
+  background: #f8fafc;
+}
+
+.hb3d-upload-picker {
+  border: 2px dashed var(--hb3d-red);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fff7f8, #ffffff);
+}
+
+#hb3d-files-list .hb3d-file-row {
+  border-color: #dde4ed;
+  border-left: 4px solid var(--hb3d-red);
+  background: #ffffff;
+}
+
+/* Champs : sobriété et focus rouge */
+select,
+input,
+textarea {
+  border-color: #cbd5e1;
+  color: var(--hb3d-ink);
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: var(--hb3d-red);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(242, 29, 43, 0.12);
+}
+
+/* Nuancier : fond demandé */
+#couleurs-fdm,
+#couleurs-sla,
+.couleurs {
+  background: #111827;
+  border-color: #2d3b51;
+}
+
+/* Boutons principaux */
+.btn,
+#btn-devis,
+#btn-upload {
+  border-color: #a50d18;
+  background: linear-gradient(180deg, #ff4653, var(--hb3d-red) 55%, #c90e1a);
+  box-shadow: 0 4px 0 #8f0b13, 0 8px 14px rgba(242, 29, 43, 0.20);
+  color: #ffffff;
+  font-family: Orbitron, Arial, sans-serif;
+  font-weight: 800;
+}
+
+.btn:hover,
+#btn-devis:hover,
+#btn-upload:hover {
+  background: linear-gradient(180deg, #ff5a65, #eb1322 55%, #b90c17);
+}
+
+/* Total du devis */
+.panier-row-total {
+  border-left: 5px solid var(--hb3d-red);
+  background: linear-gradient(90deg, #fff3f4, #ffffff 72%);
+}
+
+.panier-row-total .panier-value,
+#prix-panier {
+  color: #eb0817;
+  font-family: Orbitron, Arial, sans-serif;
+  font-weight: 500;
+}
+
+/* Footer carbone : uniquement couleurs, aucun changement de hauteur */
+.hb3d-footer {
+  border-top: 3px solid var(--hb3d-red);
+  background: linear-gradient(115deg, #090e15, #182230 60%, #0b1018);
+}
+
+.hb3d-footer,
+.hb3d-footer * {
+  color: #edf2f7 !important;
+}
+
+.hb3d-footer .footer-copy {
+  color: #cbd5e1 !important;
+}
+
+.hb3d-cart-quantity-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 58px;
+}
+
+
+.hb3d-cart-quantity-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid #c3ccd8;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #cf0d1a;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.hb3d-cart-quantity-value {
+  display: inline-block;
+  min-width: 16px;
+  color: #172033;
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+}
+
+
+.hb3d-viewer-notification {
+  position: absolute;
+  z-index: 50;
+  top: 16px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(420px, calc(100% - 28px));
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 55, 55, 0.95);
+  border-left: 5px solid #f00;
+  border-radius: 8px;
+  background: rgba(25, 10, 10, 0.94);
+  box-shadow: 0 10px 28px rgba(255, 0, 0, 0.24);
+  color: #fff;
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+  transform: translate(-50%, -14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+
+.hb3d-viewer-notification.is-visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
 }

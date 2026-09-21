@@ -9,6 +9,8 @@ uploads/*
 # Journaux et compteurs générés
 php/devis_log.txt
 php/quote_counter.txt
+php/client_codes.json
+php/client_codes.lock
 
 # Fichiers temporaires
 *.log

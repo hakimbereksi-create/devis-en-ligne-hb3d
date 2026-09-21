@@ -108,47 +108,311 @@
   padding: 20px;
 }
 
-.hb3d-modal-box {
-  background: #fff;
-  width: 100%;
-  max-width: 520px;
-  border-radius: 16px;
-  padding: 28px 24px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+/* Pop-up de confirmation : surcharge compacte finale */
+.hb3d-modal .hb3d-modal-box {
+  width: min(100%, 390px) !important;
+  max-width: 390px !important;
+  padding: 16px 18px !important;
+  border-radius: 12px !important;
 }
 
-.hb3d-modal-title {
-  font-family: Orbitron, Arial, sans-serif;
-  font-size: 28px;
-  font-weight: 700;
-  color: #f00;
-  margin-bottom: 18px;
+.hb3d-modal .hb3d-modal-title {
+  margin: 0 0 8px !important;
+  font-size: 20px !important;
+  line-height: 1.1 !important;
 }
 
-.hb3d-modal-text {
-  font-size: 20px;
-  line-height: 1.55;
-  color: #222;
-  margin-bottom: 22px;
+.hb3d-modal .hb3d-modal-text {
+  margin: 0 0 10px !important;
+  font-size: 12px !important;
+  line-height: 1.28 !important;
 }
 
-.hb3d-modal-btn {
-  background: #f00;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 12px 22px;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
+.hb3d-modal .hb3d-modal-btn {
+  padding: 7px 15px !important;
+  border-radius: 7px !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
 }
 
 .hb3d-modal-btn:hover {
   background: #cc0000;
 }
 
-	
+@media (max-width: 480px) {
+  .hb3d-modal-box {
+    padding: 18px 16px;
+  }
+
+  .hb3d-modal-title {
+    font-size: 20px;
+  }
+
+  .hb3d-modal-text {
+    font-size: 13px;
+  }
+}
+
+.hb3d-files-summary {
+  margin-top: 10px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: #444;
+}
+
+.hb3d-files-list {
+  margin-top: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+
+.hb3d-file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 6px 0;
+  padding: 7px 8px;
+  border: 1px solid #e3e3e3;
+  border-left: 4px solid #f00;
+  background: #fafafa;
+}
+
+.hb3d-file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hb3d-file-remove {
+  flex: 0 0 auto;
+  padding: 3px 8px;
+  border: 1px solid #f00;
+  border-radius: 4px;
+  background: #fff;
+  color: #d00;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.hb3d-file-remove:hover {
+  background: #f00;
+  color: #fff;
+}
+
+.hb3d-volume-summary {
+  margin-top: 10px;
+  padding: 8px;
+  border-left: 4px solid #f00;
+  background: #fff7f7;
+  color: #9b0000;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.hb3d-file-details {
+  display: block;
+  margin-top: 3px;
+  color: #8b0000;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.hb3d-file-details.pending {
+  color: #777;
+  font-style: italic;
+}
+
+.hb3d-file-row {
+  flex-wrap: wrap;
+}
+
+.hb3d-file-name {
+  flex: 1 1 100%;
+}
+
+.hb3d-file-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.hb3d-file-preview:disabled,
+.hb3d-file-preview-disabled {
+  opacity: 0.55;
+  cursor: wait;
+  background: #eee;
+  color: #777;
+}
+
+.hb3d-cart-file-details {
+  margin: 10px 0 8px;
+  padding: 8px;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+
+.hb3d-cart-file-title {
+  margin-bottom: 7px;
+  font-family: Orbitron, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.hb3d-cart-file-item {
+  padding: 7px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.hb3d-cart-file-item:first-of-type {
+  border-top: 0;
+}
+
+.hb3d-cart-file-name {
+  overflow: hidden;
+  color: #222;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hb3d-cart-file-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 3px;
+  color: #666;
+  line-height: 1.35;
+}
+
+.hb3d-cart-file-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hb3d-cart-file-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #bdbdbd;
+  border-radius: 2px;
+}
+
+.hb3d-cart-file-empty {
+  color: #777;
+  font-style: italic;
+  line-height: 1.4;
+}
+.hb3d-cart-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.hb3d-cart-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  color: #333;
+}
+
+.hb3d-cart-table th:nth-child(1),
+.hb3d-cart-table td:nth-child(1) {
+  width: 24%;
+}
+
+.hb3d-cart-table th:nth-child(2),
+.hb3d-cart-table td:nth-child(2) {
+  width: 32%;
+}
+
+.hb3d-cart-table th:nth-child(3),
+.hb3d-cart-table td:nth-child(3) {
+  width: 8%;
+}
+
+.hb3d-cart-table th:nth-child(4),
+.hb3d-cart-table td:nth-child(4) {
+  width: 18%;
+}
+
+.hb3d-cart-table th:nth-child(5),
+.hb3d-cart-table td:nth-child(5) {
+  width: 18%;
+}
+
+.hb3d-cart-table th,
+.hb3d-cart-table td {
+  padding: 6px 5px;
+  border: 1px solid #e7e7e7;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.hb3d-cart-table th {
+  background: #f6f6f6;
+  color: #444;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hb3d-cart-table td:nth-child(3),
+.hb3d-cart-table td:nth-child(4),
+.hb3d-cart-table td:nth-child(5) {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.hb3d-cart-table-file {
+  max-width: 105px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.hb3d-cart-table-config {
+  min-width: 135px;
+  white-space: nowrap;
+}
+
+.hb3d-cart-table .hb3d-cart-file-swatch {
+  width: 8px;
+  height: 8px;
+  margin: 0 3px 0 4px;
+  vertical-align: middle;
+}
+
+.panier-row-total {
+  display: grid;
+  grid-template-columns: 1fr 78px;
+  align-items: center;
+}
+
+.panier-row-total .panier-label {
+  text-align: left;
+}
+
+.panier-row-total .panier-value {
+  min-width: 0;
+  text-align: right;
+  justify-self: end;
+}
+
+  .panier-row-total .panier-value {
+  transform: translateX(-20px);
+  white-space: nowrap;
+}
 </style>
 </head>
 
@@ -164,86 +428,95 @@
 </header>
 
   <main>
-    <section class="top-columns">
-<!-- VOLET 1 -->
-<div class="panel">
-  <h2 align="center">1. Téléversez votre fichier 3D</h2>
+  <section class="devis-layout">
+<!-- COLONNE GAUCHE : scène 3D + fichiers -->
+<div class="devis-viewer-column">
+  <div
+    id="hb3d-volume-summary"
+    class="hb3d-volume-summary hb3d-viewer-analysis"
+    aria-live="polite"
+  >
+    <span class="hb3d-stl-count">
+      STL analysés : <strong> </strong>
+    </span>
 
-  <div class="upload-zone">
-    <strong>Zone de dépôt</strong><br>
-    Glissez-déposez vos fichiers ici<br>
-    ou cliquez pour sélectionner (STL, OBJ)
-    <br><br>
-    <label for="file"><b>Votre fichier STL :</b></label>
-    <input type="file" name="file" id="file">
+    <span class="hb3d-stl-volume">
+      Volume total STL : <strong> cm³</strong>
+    </span>
   </div>
-
-  <!-- VUE 3D : viewer JSC3D -->
-    <div id="view3d">
-    <canvas id="cv" width="350" height="450"></canvas>
-   
-   <!-- 
-  <div id="viewer-info"></div>
-     <style="font-size: 12px; margin-top: 4px; color: #4b5563; font-family: 'Courier New', monospace;">
-      <Dimensions (mm) : – x – x – — Volume : – cm³ — Poids estimé : – g>
-      -->
-</div>
-
-
-    <div id="viewer-modes" class="viewer-modes">
-  <button data-mode="flat">Plein</button>
-  <button data-mode="wireframe">Wireframe</button>
-  <button data-mode="point">Points</button>
-   
-</div>
-
-    
-</div>
-
-      <!-- VOLET 2 -->
-      <div class="panel">
+<!-- VOLET 2 -->
+<div class="panel hb3d-configuration-panel">
         <h2 align="center">2. Configuration impression & devis</h2>
 
-        <label for="techno">Technologie :</label>
-        <table width="50" border="1">
-          <tr>
-            <td width="33%"><div align="center">
-              <p><img src="images/Anycubic max.png" width="42" height="54" align="middle" longdesc="images/Anycubic max.png"></p>
-              <p>FDM</p>
-            </div></td>
-            <td width="33%"><div align="center">
-              <p><img src="images/SLA.png" width="38" height="50" align="absmiddle" longdesc="images/SLA.png"></p>
-              <p>SLA</p>
-            </div></td>
-            <td width="34%"><div align="center">
-              <p><img src="images/ProJet1000.png" width="54" height="55" longdesc="images/ProJet1000.png"></p>
-              <p>SLA</p>
-            </div></td>
-          </tr>
-        </table>
-        <select id="techno">
+<div class="devis-techno-column" aria-label="Technologies disponibles">
+ <button
+  type="button"
+  class="devis-techno-card"
+  data-techno="FDM"
+  aria-pressed="true"
+>
+  <img src="images/Anycubic max.png" width="42" height="54" alt="">
+  <span>FDM</span>
+</button>
+
+<button
+  type="button"
+  class="devis-techno-card"
+  data-techno="SLA"
+  aria-pressed="false"
+>
+  <img src="images/SLA.png" width="38" height="50" alt="">
+  <span>SLA</span>
+</button>
+
+<button
+  type="button"
+  class="devis-techno-card is-disabled"
+  data-techno="SLS"
+  aria-disabled="true"
+  disabled
+>
+  <img src="images/ProJet1000.png" width="54" height="55" alt="">
+  <span>SLS</span>
+  <small>Prochainement</small>
+</button>
+</div>
+<div class="devis-config-fields">
+  <label for="techno">Technologie :</label>
+  <select id="techno">
+
           <option>FDM</option>
           <option>SLA</option>
           <option>SLS ..>>>..Prochainenemt</option>
         </select>
 
-        <label for="materiau">Matériau</label>
-        <select id="materiau">
-          <option>PLA</option>
-          <option>ABS</option>
-          <option>PET</option>
-          <option>PETG</option>
-          <option>ASA</option>
-          <option>TPU</option>
-          <option>PA-CF</option>
-          <option>HIPS</option>
-          <option>Résine Standard</option>
-          <option>Résine Tough</option>
-          <option>Résine Calcinable</option>
-          <option>Résine Flexible</option>
-        </select>
+        <div class="hb3d-piece-settings">
+  <div class="hb3d-piece-setting">
+    <label for="materiau">Matériau</label>
 
-  <label>Couleur</label>  
+    <select id="materiau">
+      <option>PLA</option>
+      <option>ABS</option>
+      <option>PET</option>
+      <option>PETG</option>
+      <option>ASA</option>
+      <option>TPU</option>
+      <option>PA-CF</option>
+      <option>HIPS</option>
+      <option>Résine Standard</option>
+      <option>Résine Tough</option>
+      <option>Résine Calcinable</option>
+      <option>Résine Flexible</option>
+    </select>
+  </div>
+
+  <div class="hb3d-piece-setting hb3d-quantity-setting">
+    <label for="quantite">Quantité</label>
+    <input id="quantite" type="number" min="1" value="1">
+  </div>
+</div>
+
+  <label>Couleur</label>
 <div id="couleurs-fdm" class="couleurs">
   <label class="chip-color">
     <input type="radio" name="couleur" value="plablanc" checked>
@@ -320,29 +593,209 @@
   </label>
 </div>
 
-        <label for="quantite">Quantité</label>
-        <input id="quantite" type="number" min="1" value="1" />
+
 
         <label for="notes">Précisez votre demande</label>
-        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…"></textarea>
-        
+        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…">
+        </textarea>
 
-        <button class="btn" id="btn-devis">Obtenir une estimation</button>
+
+        </div>
+
+</div>
+
+<!-- Viewer JSC3D -->
+    <div id="view3d">
+      <canvas id="cv" width="550" height="420"></canvas>
+    </div>
+
+    <div id="hb3d-viewer-notification"
+     class="hb3d-viewer-notification"
+     role="alert"
+     aria-live="assertive"
+     aria-hidden="true">
+  <span class="hb3d-viewer-notification-icon">!</span>
+  <span id="hb3d-viewer-notification-text"></span>
+  <button type="button"
+          id="hb3d-viewer-notification-close"
+          class="hb3d-viewer-notification-close"
+          aria-label="Fermer le message">
+    ×
+  </button>
+</div>
+
+<!-- Commandes de rendu -->
+  <div id="viewer-modes" class="viewer-modes">
+  <button data-mode="smooth" type="button">Plein</button>
+  <button data-mode="wireframe" type="button">Wireframe</button>
+  <button data-mode="point" type="button">Points</button>
+</div>
+
+<!-- VOLET 4 -->
+<div class="panel hb3d-upload-panel">
+  <h2 align="center">3. ENVOYEZ VOTRE DEMANDE</h2>
+
+  <div class="devis-personal-column hb3d-send-personal">
+    <h3>Détails personnels</h3>
+
+    <form id="form">
+      <label for="nom">Nom / Prénom</label>
+      <input id="nom" name="HB3D" type="text">
+
+      <label for="societe">Société (optionnel)</label>
+      <input id="societe" name="Bienvenue" type="text">
+
+      <label for="email">Email</label>
+      <input id="email" name="client_email" type="email">
+
+      <label for="tel">Téléphone</label>
+      <input id="tel" name="client_id" type="text">
+
+      <input type="hidden" id="quantite-hidden" name="quantite" value="1">
+      <input type="hidden" id="prix_affiche" name="prix" value="">
+      <input type="hidden" id="fichier" name="fichier" value="">
+      <input type="hidden" id="time" name="time" value="">
+      <input type="hidden" id="quote_number" name="quote_number" value="">
+      <input type="hidden" id="message" name="message" value="">
+      <input type="hidden" id="stripe_link" name="stripe_link" value="">
+      <input type="hidden" id="tech_hidden" name="tech" value="">
+      <input type="hidden" id="material_hidden" name="material" value="">
+      <input type="hidden" id="color_hidden" name="color" value="">
+      <input type="hidden" id="devis_id" name="devis_id" value="">
+    </form>
+  </div>
+
+    <button id="btn-upload" class="btn" type="button">
+    Téléchargez vos fichiers 3D pour obtenir votre devis.
+  </button>
+
+  <div class="status-panel">
+
+    <!-- Bloc graphique facultatif : caché sur ordinateur par le CSS -->
+    <div class="hb3d-mark">
+      <div class="name">HB3D</div>
+
+      <!-- Conserve l’image seulement si elle existe déjà dans ton code -->
+      <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="32" height="22">
+
+      <div class="subtitle">
+        CALCULATEUR<br>
+        DE VOLUME<br>
+        EN LIGNE
       </div>
+    </div>
+
+    <!-- Ne change surtout pas les id utilisés par upload_handler.js -->
+    <div class="circular-upload">
+      <span id="hb3d-upload-percent">0%</span>
+    </div>
+
+    <div id="hb3d-upload-text" class="upload-text">
+      En attente de fichier<br>
+      Fichier 0 / 0
+    </div>
+  </div>
+
+
+</div>
+</div>
+
+ <div class="devis-workflow-column">
+<!-- VOLET 1 : téléversement -->
+
+  <div class="panel hb3d-viewer-panel">
+    <h2 align="center">1. Téléversez vos fichiers 3D</h2>
+
+    <div class="upload-zone hb3d-upload-workspace">
+
+  <!-- Colonne gauche : fichiers réellement chargés -->
+  <aside class="hb3d-upload-files">
+  <h3>Fichiers sélectionnés</h3>
+
+  <div
+    id="hb3d-files-summary"
+    class="hb3d-files-summary"
+    aria-live="polite"
+  >
+    Aucun fichier sélectionné — 0 / 5
+  </div>
+
+  <div
+    id="hb3d-files-list"
+    class="hb3d-files-list"
+    aria-live="polite"
+  ></div>
+</aside>
+
+<!-- Colonne droite : ajout de fichiers -->
+<div class="hb3d-upload-picker">
+  <div class="hb3d-upload-heading">
+
+<button
+  type="button"
+  class="hb3d-upload-icon-button"
+  id="hb3d-upload-icon-button"
+  aria-label="Sélectionner vos fichiers 3D"
+  title="Sélectionner vos fichiers 3D"
+>
+  <span aria-hidden="true">⇧</span>
+</button>
+
+    <div class="hb3d-upload-heading-text">
+      <strong>Zone de dépôt</strong>
+
+      <p>
+        Glissez-déposez vos fichiers ici<br>
+        ou cliquez pour sélectionner<br>
+        (STL, OBJ)
+      </p>
+    </div>
+  </div>
+
+  <label for="file"><b>Vos fichiers 3D :</b></label>
+
+  <input
+    type="file"
+    name="files[]"
+    id="file"
+    accept=".stl,.obj"
+
+  >
+</div>
+
+ </div>
+</div>
+
+
+<!-- Fin .devis-viewer-column -->
+
+
+ <!-- COLONNE DROITE : configuration, panier, envoi -->
+
 
       <!-- VOLET 3 -->
-<div class="panel">
-  <h2 align="center">3. Panier & détails personnels</h2>
+
+<div class="panel hb3d-order-panel">
+  <h2 align="center">2. VOTRE PANIER</h2>
+  <div class="devis-order-grid">
+  <div class="devis-cart-column">
 
   <h3>Votre panier <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
 
   <div class="panier-stack">
   <div class="panier-row">
-    <div class="panier-label">Nom du fichier</div>
-    <div class="panier-value">
-      <span id="nom-fichier-panier">piecev1.stl</span>
-    </div>
+  <div class="panier-label">Lot de fichiers</div>
+  <div class="panier-value">
+    <span id="lot-fichiers-panier">Aucun fichier sélectionné</span>
   </div>
+</div>
+<!-- DEBUT recapitulatif panier temporairement masque
+<div class="panier-row">
+  <div class="panier-label">Aperçu actif</div>
+  <div class="panier-value">
+    <span id="nom-fichier-panier">Aucun aperçu</span>
+  </div>
+</div>
 
   <div class="panier-row">
     <div class="panier-label">Techno</div>
@@ -367,18 +820,32 @@
   </div>
 
   <div class="panier-row">
-    <div class="panier-label">Quantité</div>
+    <div class="panier-label">Quantité de chaque fichier</div>
     <div class="panier-value">
       <span id="qte-panier">1</span>
     </div>
   </div>
+   <!-- FIN recapitulatif panier temporairement masque -->
 
-  <div class="panier-row panier-row-total">
-    <div class="panier-label">Total</div>
-    <div class="panier-value">
-      <span id="prix-panier">En attente</span>
-    </div>
+  <div id="hb3d-cart-file-details" class="hb3d-cart-file-details">
+  <div class="hb3d-cart-file-empty">
+    Les détails des fichiers analysés apparaîtront ici.
   </div>
+</div>
+
+<div class="panier-row panier-row-total">
+  <div class="panier-label">Total estimatif du lot</div>
+
+  <div class="panier-value">
+    <span id="prix-panier">En attente</span>
+  </div>
+</div>
+
+<div class="panier-estimation-action">
+  <button type="button" class="btn" id="btn-devis">
+    Obtenir une estimation
+  </button>
+</div>
 
 <div class="devis-row">
   <span>Remise</span>
@@ -388,82 +855,35 @@
 <div id="remise-message" class="panier-remise-message"></div>
 
 </div>
-
-
-
- 
-<h3>Détails personnels</h3>
-
-<form id="form">
-  <label for="nom">Nom / Prénom</label>
-  <input id="nom" name="HB3D" type="text" />
-
-  <label for="societe">Société (optionnel)</label>
-  <input id="societe" name="Bienvenue" type="text" />
-
-  <label for="email">Email</label>
-  <input id="email" name="client_email" type="email" />
-
-  <label for="tel">Téléphone</label>
-  <input id="tel" name="client_id" type="text" />
-
-  <!-- cachés -->
-  <input type="hidden" id="quantite-hidden" name="quantite" value="1">
-  <input type="hidden" id="prix_affiche" name="prix"    value="" />
-  <input type="hidden" id="fichier"     name="fichier"  value="" />
-  <input type="hidden" id="time"        name="time"     value="" />
-  <input type="hidden" id="quote_number" name="quote_number" value="">
-  <input type="hidden" id="message"     name="message"  value="" />    
-  <input type="hidden" id="stripe_link" name="stripe_link" value="" />
-  <input type="hidden" id="tech_hidden" name="tech" value="" />
-  <input type="hidden" id="material_hidden" name="material" value="" />
-  <input type="hidden" id="color_hidden" name="color" value="" />
-  <input type="hidden" id="devis_id" name="devis_id" value="">
-  
-</form>
-
-</div>
-<!-- VOLET 4 -->
-<div class="panel">
-  <h2 align="center">4. Upload</h2>
-
-  <div class="status-panel">
-    <div class="hb3d-mark">
-      <div class="name">
-        <p><strong>HB3D</strong>        </p>
-        <p>
-          <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="92" height="72">        </p>
-      </div>
-      <div class="subtitle">
-        <p>Calculateur de volume en ligne</p>
-      </div>
-    </div>
-
-    <div class="circular-upload">
-      <span id="hb3d-upload-percent">0%</span>
-    </div>
-
-    <div id="hb3d-upload-text" class="upload-text">
-      En attente de fichier<br>Fichier 0 / 0
-    </div>
   </div>
 
-  <div class="hb3d-instructions">
+    <!-- Fin .devis-personal-column -->
+
+    <div class="hb3d-instructions">
   <h3>Avant l’envoi</h3>
   <p>Sur mobile, votre fichier doit être stocké localement.</p>
   <p>Choisissez la technologie, le matériau, la couleur et la quantité.</p>
   <p>Formats acceptés : STL, OBJ. Taille max : 50 Mo.</p>
   <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
-</div>
+  </div>
 
-  <button class="btn secondary" id="btn-upload">Téléchargez vos fichiers 3D pour obtenir votre devis.</button>
+ </div>
+  <!-- Fin .devis-order-grid -->
+
 </div>
-    </section>
-  </main>
+<!-- Fin VOLET 3 : .panel.hb3d-order-panel -->
+
+</div>
+<!-- Fin .devis-workflow-column -->
+
+</section>
+<!-- Fin .devis-layout -->
+</main>
+ <div class="panel hb3d-order-panel">
   <div id="footer color">
    <footer class="hb3d-footer">
   <div class="hb3d-footer-inner">
-    <img src="images/Logo HBD.jpg" width="32" height="25" alt="HB3D">
+    <img src="images/hb3d-logo.png" width="27" height="25" alt="HB3D">
     <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
   </div>
   <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
@@ -476,7 +896,7 @@
   <script src="dist/js/jsc3d.console.js"></script>
   <script src="dist/js/object_viewer.js"></script>
   <script src="dist/js/upload_handler.js"></script>
-  
+
  <script>
 // =========================
 // Couleurs & viewer
@@ -609,7 +1029,7 @@ function remplirMateriauxPourTechno(techno) {
 document.addEventListener('DOMContentLoaded', function () {
   const selectTechno = document.getElementById('techno');
   if (!selectTechno) return;
-  
+
 
   remplirMateriauxPourTechno(selectTechno.value);
   selectTechno.addEventListener('change', function () {
@@ -624,7 +1044,21 @@ window.currentVolumeMm3 = 0;
 
 function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
   const vol = Number(volumeCm3);
-  window.currentVolumeMm3 = (!vol || !isFinite(vol) || vol <= 0) ? 0 : (vol * 1000);
+
+// En mode multi-fichiers, le cumul est maintenu par object_viewer.js.
+// On ne doit donc pas le remplacer par le volume du STL actuellement aperçu.
+const volumeLotMm3 = (
+  typeof window.hb3dGetVolumeTotalMm3 === 'function'
+)
+  ? window.hb3dGetVolumeTotalMm3()
+  : 0;
+
+if (volumeLotMm3 > 0) {
+  window.currentVolumeMm3 = volumeLotMm3;
+} else {
+  window.currentVolumeMm3 =
+    (!vol || !isFinite(vol) || vol <= 0) ? 0 : (vol * 1000);
+}
 
   const inputQte = document.getElementById('quantite');
   const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
@@ -650,10 +1084,10 @@ function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
     couleurPanier.textContent = labelCouleur;
   }
 
-  console.log('HB3D volume chargé', {
-    volumeCm3: vol,
-    volumeMm3: window.currentVolumeMm3
-  });
+  console.log('[HB3D] Volume charge', {
+  volumeCm3: vol,
+  volumeMm3: vol * 1000
+});
 }
 
 function majNomFichierPanier(nomFichier) {
@@ -746,44 +1180,100 @@ function getDiscountRate(qty) {
 }
 
 function calculerEstimation() {
-  const volumeMm3   = window.currentVolumeMm3 || 0;
-  const technoVal   = $techno.val();
-  const materiauVal = $materiau.val();
-  const qte         = parseInt($quantite.val(), 10) || 1;
+  const volumesParFichier = window.hb3dVolumesParFichier || {};
+  const configsParFichier = window.hb3dConfigParFichier || {};
 
-  const volumeEnMm3 = volumeMm3;
-  const volumeEnCm3 = volumeEnMm3 / 1000;
+  let prixBrut = 0;
+  let volumeMm3Total = 0;
+  let fichiersFactures = 0;
 
-  let prixUnitaire = 0;
+  Object.keys(volumesParFichier).forEach(function(fileKey) {
+    const volumeMm3 = Number(volumesParFichier[fileKey]) || 0;
 
-  const technoTarifs  = TARIFS[technoVal];
-  const materiauTarif = technoTarifs ? technoTarifs[materiauVal] : null;
+    if (volumeMm3 <= 0) {
+      return;
+    }
 
-  if (materiauTarif) {
-    prixUnitaire = materiauTarif.A + (materiauTarif.B * volumeEnCm3);
-  }
+    const config = configsParFichier[fileKey] || {
+      techno: 'FDM',
+      materiau: 'PLA',
+      couleur: 'plablanc',
+      quantite: 1
+    };
 
-  // --- TOTAL BRUT (sans remise)
-  let prixBrut = prixUnitaire * qte;
-  if (!Number.isFinite(prixBrut) || prixBrut < 0) prixBrut = 0;
+    const technoTarifs = TARIFS[config.techno];
+    const tarif = technoTarifs
+      ? technoTarifs[config.materiau]
+      : null;
 
-  // --- REMISE SUR LE TOTAL
-  const rate   = getDiscountRate(qte);   // ex: 0.15
+    if (!tarif) {
+      console.warn(
+        '[HB3D] Tarif introuvable pour :',
+        fileKey,
+        config.techno,
+        config.materiau
+      );
+      return;
+    }
+
+    const volumeCm3 = volumeMm3 / 1000;
+    const quantiteFichier = Math.max(
+      1,
+      parseInt(config.quantite || '1', 10)
+    );
+
+    const prixUnitaireFichier =
+      tarif.A + (tarif.B * volumeCm3);
+
+    const prixLigne =
+      prixUnitaireFichier * quantiteFichier;
+
+    prixBrut += prixLigne;
+    volumeMm3Total += volumeMm3 * quantiteFichier;
+    fichiersFactures += 1;
+
+    console.log('[HB3D] Prix fichier :', {
+      fileKey: fileKey,
+      techno: config.techno,
+      materiau: config.materiau,
+      volumeCm3: volumeCm3,
+      quantite: quantiteFichier,
+      prixUnitaire: prixUnitaireFichier,
+      prixLigne: prixLigne
+    });
+  });
+
+  const quantiteGlobale = Math.max(
+    1,
+    parseInt(quantite.value || '1', 10)
+  );
+
+  const rate = getDiscountRate(quantiteGlobale);
   const remise = prixBrut * rate;
   const prixNet = prixBrut - remise;
 
-  // --- FORMATAGE
   const prixFormatte = prixNet.toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }) + ' €';
+  });
 
-  // Affichage volumes (inchangé)
-  $('#volume-mm3').text(volumeEnMm3.toFixed(0) + ' mm³');
-  $('#volume-cm3').text(volumeEnCm3.toFixed(2) + ' cm³');
+  $('#volume-mm3').text(volumeMm3Total.toFixed(0) + ' mm³');
+  $('#volume-cm3').text(
+    (volumeMm3Total / 1000).toFixed(2).replace('.', ',') + ' cm³'
+  );
 
-  // On renvoie prix + taux de remise
-  return { prixFormatte, rate };
+  console.log('[HB3D] Prix total du lot :', {
+    fichiersFactures: fichiersFactures,
+    prixBrut: prixBrut,
+    remise: remise,
+    prixNet: prixNet,
+    tauxRemise: rate
+  });
+
+  return {
+    prixFormatte: prixFormatte,
+    rate: rate
+  };
 }
 
   function syncQuantiteEtPanier() {
@@ -813,7 +1303,7 @@ function calculerEstimation() {
   if ($materiauPanier.length) $materiauPanier.text($materiau.val());
   if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
   if ($qtePanier.length)      $qtePanier.text($quantite.val());
-  if ($prixPanier.length)     $prixPanier.text(prixEstime);
+  if ($prixPanier.length)     $prixPanier.text(prixEstime + ' € TTC');
 
   // Affichage de l’info remise
   const $remiseInfo = $('#remise-info');
@@ -824,7 +1314,7 @@ function calculerEstimation() {
       $remiseInfo.text('');
     }
   }
-  
+
 
   // Message spécial gros volumes
   const $remiseMessage = $('#remise-message');
@@ -841,6 +1331,9 @@ function calculerEstimation() {
   }
 }
 
+// Pont entre le calculateur local et le système multi-fichiers.
+window.hb3dCalculerEstimation = calculerEstimation;
+window.hb3dRecalculerPanier = recalculerPanierAutomatiquement;
   let estimationActive = false;
 
   $techno.on('change', function () {
@@ -875,10 +1368,16 @@ function calculerEstimation() {
       return;
     }
 
-    if (!window.currentVolumeMm3 || window.currentVolumeMm3 <= 0) {
-      alert('Merci de charger un fichier 3D avant de demander une estimation.');
-      return;
-    }
+    const volumeLotMm3 = (
+  typeof window.hb3dGetVolumeTotalMm3 === 'function'
+)
+  ? window.hb3dGetVolumeTotalMm3()
+  : (window.currentVolumeMm3 || 0);
+
+if (!volumeLotMm3 || volumeLotMm3 <= 0) {
+  alert('Merci de charger au moins un fichier STL valide avant de demander une estimation.');
+  return;
+}
 
     estimationActive = true;
     recalculerPanierAutomatiquement();
@@ -895,6 +1394,65 @@ function calculerEstimation() {
       publicKey: 'yMCFNhgV27X8SzqIp',
     });
   })();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const technoSelect = document.getElementById("techno");
+  const technoCards = document.querySelectorAll(
+    ".devis-techno-card[data-techno]:not(:disabled)"
+  );
+
+  if (!technoSelect || !technoCards.length) {
+    return;
+  }
+
+  function synchroniserCartesTechnologie() {
+    const technologieActive = technoSelect.value;
+
+    technoCards.forEach(function (card) {
+      const active = card.dataset.techno === technologieActive;
+
+      card.classList.toggle("is-active", active);
+      card.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+  }
+
+  technoCards.forEach(function (card) {
+    card.addEventListener("click", function () {
+      const technologieChoisie = card.dataset.techno;
+
+      if (technoSelect.value !== technologieChoisie) {
+        technoSelect.value = technologieChoisie;
+
+        technoSelect.dispatchEvent(
+          new Event("change", { bubbles: true })
+        );
+      }
+
+      synchroniserCartesTechnologie();
+    });
+  });
+
+  technoSelect.addEventListener("change", synchroniserCartesTechnologie);
+
+  synchroniserCartesTechnologie();
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const uploadIcon = document.getElementById("hb3d-upload-icon-button");
+  const fileInput = document.getElementById("file");
+
+  if (!uploadIcon || !fileInput) {
+    return;
+  }
+
+  uploadIcon.addEventListener("click", function () {
+    fileInput.click();
+  });
+});
 </script>
 
 
