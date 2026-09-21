@@ -5826,3 +5826,10 @@ textarea:focus {
     font-weight: 800 !important;
   }
 }
+/* HB3D — interactions tactiles du viewer 3D sur mobile */
+#cv {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
