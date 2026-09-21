@@ -31,3 +31,6 @@ tmp/
 sessions/
 # Métadonnées d’images
 images/_notes/
+
+# Sauvegardes locales de travail
+index.before-mobile-order-*.html

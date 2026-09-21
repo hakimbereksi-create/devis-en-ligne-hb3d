@@ -5377,3 +5377,452 @@ textarea:focus {
     margin-top: 1px !important;
   }
 }
+
+/* =========================================================
+   HB3D — RESPONSIVE DEVIS
+   Couche finale, isolée de style.css.
+   Objectif : rendre la page devis lisible sans modifier
+   le JavaScript ni la structure HTML.
+   ========================================================= */
+
+.devis-layout,
+.devis-layout * {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MOBILE — moins de 768 px
+   Parcours : téléversement + panier, puis configuration,
+   viewer et coordonnées.
+   ========================================================= */
+@media (max-width: 767px) {
+  .devis-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: none !important;
+    gap: 14px !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+  }
+
+  .devis-viewer-column,
+  .devis-workflow-column {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    gap: 14px !important;
+  }
+
+  .devis-workflow-column {
+    order: 1 !important;
+  }
+
+  .devis-viewer-column {
+    order: 2 !important;
+  }
+
+  .devis-viewer-column > .panel,
+  .devis-workflow-column > .panel,
+  .devis-viewer-column > #hb3d-volume-summary {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  .devis-layout .panel {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Téléversement : fichiers puis sélection, en une colonne. */
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 12px !important;
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-files,
+  .hb3d-upload-workspace .hb3d-upload-picker {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Configuration : retour au flux normal, sans positionnement rigide. */
+  .hb3d-configuration-panel {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .hb3d-configuration-panel > .devis-techno-column,
+  .hb3d-configuration-panel > .devis-config-fields {
+    position: static !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 0 14px !important;
+  }
+
+  .devis-techno-column {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .devis-techno-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+  }
+
+  .devis-config-fields {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .devis-config-fields > label,
+  .devis-config-fields > select,
+  .devis-config-fields > input,
+  .devis-config-fields > textarea,
+  .devis-config-fields > .couleurs,
+  .devis-config-fields > .hb3d-piece-settings {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .hb3d-piece-settings {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 110px) !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .hb3d-piece-setting {
+    min-width: 0 !important;
+  }
+
+  .hb3d-piece-setting select,
+  .hb3d-piece-setting input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .devis-config-fields .couleurs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .devis-config-fields .chip-color {
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .devis-config-fields #notes {
+    width: 100% !important;
+    min-height: 96px !important;
+    margin: 0 !important;
+  }
+
+  /* Viewer fluide, sans débordement horizontal. */
+  .devis-viewer-column #view3d {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    overflow: hidden !important;
+  }
+
+  .devis-viewer-column #cv {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+  }
+
+  .devis-viewer-column .viewer-modes {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 8px !important;
+    margin: 0 !important;
+  }
+
+  .devis-viewer-column .viewer-modes button {
+    flex: 1 1 90px !important;
+    min-width: 0 !important;
+  }
+
+  /* Panier et coordonnées en largeur complète. */
+  .devis-order-grid,
+  .devis-cart-column,
+  .devis-personal-column,
+  .hb3d-send-personal,
+  .hb3d-upload-panel form,
+  .hb3d-upload-panel input:not([type="hidden"]) {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  .devis-order-grid {
+    display: block !important;
+  }
+
+  .hb3d-upload-panel form {
+    display: grid !important;
+    gap: 8px !important;
+  }
+
+  .hb3d-upload-panel > #btn-upload,
+  .devis-order-grid #btn-devis {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .hb3d-cart-table-wrap {
+    width: 100% !important;
+    overflow-x: auto !important;
+  }
+}
+
+/* =========================================================
+   TABLETTE — 768 à 1199 px
+   Panneaux empilés, zones internes fluides.
+   ========================================================= */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .devis-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: min(100% - 32px, 980px) !important;
+    margin: 0 auto !important;
+    gap: 16px !important;
+  }
+
+  .devis-viewer-column,
+  .devis-workflow-column {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 16px !important;
+  }
+
+  .devis-workflow-column {
+    order: 1 !important;
+  }
+
+  .devis-viewer-column {
+    order: 2 !important;
+  }
+
+  .devis-viewer-column > .panel,
+  .devis-workflow-column > .panel,
+  .devis-viewer-column > #hb3d-volume-summary {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .devis-layout .panel {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .hb3d-viewer-panel .hb3d-upload-workspace {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr) !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .hb3d-configuration-panel {
+    display: grid !important;
+    grid-template-columns: minmax(190px, 0.6fr) minmax(0, 1fr) !important;
+    column-gap: 18px !important;
+    width: 100% !important;
+  }
+
+  .hb3d-configuration-panel > h2 {
+    grid-column: 1 / -1 !important;
+  }
+
+  .hb3d-configuration-panel > .devis-techno-column,
+  .hb3d-configuration-panel > .devis-config-fields {
+    position: static !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .devis-techno-column {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .devis-config-fields {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .devis-config-fields > label,
+  .devis-config-fields > select,
+  .devis-config-fields > input,
+  .devis-config-fields > textarea,
+  .devis-config-fields > .couleurs,
+  .devis-config-fields > .hb3d-piece-settings {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .hb3d-piece-settings {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 120px !important;
+    gap: 10px !important;
+  }
+
+  .devis-viewer-column #view3d {
+    width: min(100%, 720px) !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3;
+    margin: 0 auto !important;
+  }
+
+  .devis-viewer-column #cv {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .devis-order-grid {
+    display: block !important;
+  }
+}
+
+/* =========================================================
+   DESKTOP — 1200 px et plus
+   Aucun changement de géométrie du desktop validé.
+   ========================================================= */
+@media (min-width: 1200px) {
+  .devis-layout,
+  .devis-layout * {
+    min-width: 0;
+  }
+}
+
+/* =========================================================
+   HB3D — CORRECTIONS MOBILE : couleurs et panier
+   ========================================================= */
+@media (max-width: 767px) {
+
+  /* Palette : fond clair, pas de bande sombre derrière les pastilles. */
+  .hb3d-configuration-panel .devis-config-fields .couleurs {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 2px 0 6px !important;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .chip-color {
+    background: transparent !important;
+    color: #172033 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .hb3d-configuration-panel .devis-config-fields .chip-color .swatch-label {
+    color: #172033 !important;
+  }
+
+  /* Panier : le tableau devient une fiche lisible par fichier. */
+  .hb3d-order-panel .hb3d-cart-table-wrap {
+    overflow: visible !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table,
+  .hb3d-order-panel .hb3d-cart-table tbody,
+  .hb3d-order-panel .hb3d-cart-table tr,
+  .hb3d-order-panel .hb3d-cart-table td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table thead {
+    display: none !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table tr {
+    margin: 0 0 10px !important;
+    padding: 9px 10px !important;
+    border: 1px solid #e1e5eb !important;
+    border-left: 4px solid #f20b42 !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table td {
+    box-sizing: border-box !important;
+    min-height: 0 !important;
+    padding: 4px 0 !important;
+    border: 0 !important;
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
+  /* Le nom du fichier devient le titre de sa fiche. */
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(1) {
+    overflow: hidden !important;
+    color: #172033 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Les trois valeurs financières se lisent sur leurs propres lignes. */
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(2)::before {
+    content: "Configuration : " !important;
+    color: #687385 !important;
+    font-weight: 700 !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(3)::before {
+    content: "Quantité : " !important;
+    color: #687385 !important;
+    font-weight: 700 !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(4)::before {
+    content: "Prix unitaire : " !important;
+    color: #687385 !important;
+    font-weight: 700 !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(5)::before {
+    content: "Sous-total : " !important;
+    color: #687385 !important;
+    font-weight: 700 !important;
+  }
+
+  .hb3d-order-panel .hb3d-cart-table td:nth-child(5) {
+    color: #d90736 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+  }
+}
