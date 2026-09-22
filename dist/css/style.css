@@ -5833,3 +5833,22 @@ textarea:focus {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* HB3D — palette couleur lisible sur téléphone, tablette et desktop. */
+.hb3d-configuration-panel .devis-config-fields .couleurs {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 2px 0 6px !important;
+}
+
+.hb3d-configuration-panel .devis-config-fields .chip-color {
+  background: transparent !important;
+  color: #172033 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.hb3d-configuration-panel .devis-config-fields .chip-color .swatch-label {
+  color: #172033 !important;
+}

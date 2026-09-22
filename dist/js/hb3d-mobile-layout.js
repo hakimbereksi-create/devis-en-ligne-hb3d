@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  var MOBILE_MAX_WIDTH = 767;
+  var MOBILE_MAX_WIDTH = 1199;
   var orderPanel = null;
   var workflowColumn = null;
   var uploadPanel = null;
@@ -28,7 +28,7 @@
   function placeOrderPanel() {
     if (!findElements()) return;
 
-    if (window.matchMedia('(max-width: 767px)').matches) {
+    if (window.matchMedia('(max-width: 1199px)').matches) {
       if (orderPanel.parentNode !== uploadPanel.parentNode || orderPanel.nextElementSibling !== uploadPanel) {
         uploadPanel.parentNode.insertBefore(orderPanel, uploadPanel);
       }
