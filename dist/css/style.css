@@ -5118,7 +5118,7 @@ Matériau et quantité remontés, sans trait de séparation.
   --hb3d-carbon-soft: #182230;
   --hb3d-ink: #172033;
   --hb3d-line: #dbe2ea;
-  --hb3d-page: #edf1f5;
+  --hb3d-page: #ffffff;
 }
 
 /* Fond technique léger */
@@ -5839,7 +5839,7 @@ textarea:focus {
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
-  padding: 2px 0 6px !important;
+  padding: 35px 0 6px !important;
 }
 
 .hb3d-configuration-panel .devis-config-fields .chip-color {
@@ -5852,3 +5852,4 @@ textarea:focus {
 .hb3d-configuration-panel .devis-config-fields .chip-color .swatch-label {
   color: #172033 !important;
 }
+
