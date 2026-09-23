@@ -5440,6 +5440,14 @@ textarea:focus {
     overflow: visible !important;
   }
 
+  .hb3d-upload-workspace .hb3d-upload-files {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title"
+        "summary"
+        "list";
+}
+
   /* Téléversement : fichiers puis sélection, en une colonne. */
   .hb3d-viewer-panel .hb3d-upload-workspace {
     display: flex !important;
@@ -5713,6 +5721,21 @@ textarea:focus {
   .devis-order-grid {
     display: block !important;
   }
+
+  @media (max-width: 1199px) {
+  .hb3d-upload-workspace .hb3d-upload-files {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "summary"
+      "list";
+  }
+
+  .hb3d-upload-workspace .hb3d-upload-files h3,
+  .hb3d-upload-workspace .hb3d-files-summary {
+    white-space: nowrap;
+  }
+}
 }
 
 /* =========================================================
