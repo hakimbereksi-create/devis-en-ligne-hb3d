@@ -5836,7 +5836,7 @@ textarea:focus {
 
 /* HB3D — palette couleur lisible sur téléphone, tablette et desktop. */
 .hb3d-configuration-panel .devis-config-fields .couleurs {
-  background: transparent !important;
+  background: #ffffff !important;
   border: 0 !important;
   box-shadow: none !important;
   padding: 35px 0 6px !important;
