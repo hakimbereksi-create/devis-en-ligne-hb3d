@@ -566,6 +566,7 @@ function ajouterChampSubmit(nom, valeur) {
 // visuellement placés hors de #form.
 ajouterChampSubmit('email', $('#email').val() || '');
 ajouterChampSubmit('clientemail', $('#email').val() || '');
+ajouterChampSubmit('client_email', $('#email').val() || '');
 ajouterChampSubmit('nom', $('#nom').val() || '');
 ajouterChampSubmit('tel', $('#tel').val() || '');
 ajouterChampSubmit('societe', $('#societe').val() || '');
@@ -642,19 +643,7 @@ console.log('HB3D DEBUG données envoyées à submit.php :', formData);
           var notes = $('#notes').val() || '';
   $('#message').val(notes);
 
-          console.log('EmailJS: envoi sendForm');
-
-          emailjs.sendForm(
-          'service_np51rgo',
-          'template_9s5e5co',
-          '#form'
-          )
-        .then(function(response) {
-        console.log('EmailJS OK', response.status, response.text);
-        }, function(error) {
-        console.error('EmailJS ERROR', error);
-        });
-
+          
                   // --- HB3D : e-mail interne de test multi-fichiers ---
           // Cet envoi est indépendant du sendForm() existant.
           // Il utilise la configuration mémorisée de chaque fichier du lot.
