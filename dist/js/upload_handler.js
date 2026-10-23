@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  // Serveur PHP : adresse publique uniquement depuis GitHub Pages.
+  var hb3dPhpBaseUrl =
+    window.location.hostname === 'hakimbereksi-create.github.io'
+      ? 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/'
+      : '/devis/php/';
   // -------------------------
   // Fonctions d'affichage
   // -------------------------
@@ -457,7 +462,7 @@ $('input[name="couleur"]').on('change', function () {
         return xhr;
       },
 
-      url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/upload.php?files',
+      url: hb3dPhpBaseUrl + 'upload.php?files',
       type: 'POST',
       data: data,
       cache: false,
@@ -607,7 +612,7 @@ console.log('HB3D DEBUG données envoyées à submit.php :', formData);
   }
 
   $.ajax({
-    url: 'https://unamusable-nonacidic-wilfred.ngrok-free.dev/devis/php/submit.php',
+    url: hb3dPhpBaseUrl + 'submit.php',
     type: 'POST',
     data: formData,
     cache: false,
