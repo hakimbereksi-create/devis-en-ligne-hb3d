@@ -1566,11 +1566,64 @@ function connectLotPicking() {
     ) return;
 
     var viewer = window.hb3dRaccordementViewer;
-    var info = viewer.pick(event.clientX, event.clientY);
+    if (!viewer) return;
 
-    var file = info && info.mesh
-      ? lotOwners.get(info.mesh)
-      : null;
+    var info = viewer.pick(event.clientX, event.clientY);
+    var mesh = info && info.mesh ? info.mesh : null;
+    var file = mesh ? lotOwners.get(mesh) : null;
+
+    /*
+     * Repli pour le moteur logiciel :
+     * convertir la position affichée vers le buffer interne.
+     */
+    if (
+      !file &&
+      !viewer.webglBackend &&
+      viewer.selectionBuffer &&
+      viewer.frameWidth > 0 &&
+      viewer.frameHeight > 0 &&
+      rect.width > 0 &&
+      rect.height > 0
+    ) {
+      var frameWidth = viewer.frameWidth;
+      var frameHeight = viewer.frameHeight;
+
+      var xBuffer = Math.floor(
+        (event.clientX - rect.left) *
+        frameWidth / rect.width
+      );
+
+      var yBuffer = Math.floor(
+        (event.clientY - rect.top) *
+        frameHeight / rect.height
+      );
+
+      if (
+        xBuffer >= 0 && xBuffer < frameWidth &&
+        yBuffer >= 0 && yBuffer < frameHeight
+      ) {
+        var internalId = viewer.selectionBuffer[
+          yBuffer * frameWidth + xBuffer
+        ];
+
+        var scene = viewer.getScene
+          ? viewer.getScene()
+          : viewer.scene;
+
+        var meshes = scene &&
+          typeof scene.getChildren === 'function'
+            ? scene.getChildren()
+            : [];
+
+        var bufferMesh = meshes.find(function (item) {
+          return item.internalId === internalId;
+        });
+
+        file = bufferMesh
+          ? lotOwners.get(bufferMesh)
+          : null;
+      }
+    }
 
     if (
       file &&
