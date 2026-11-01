@@ -1,4 +1,4 @@
-﻿# Windows
+# Windows
 desktop.ini
 Thumbs.db
 
@@ -34,3 +34,9 @@ images/_notes/
 
 # Sauvegardes locales de travail
 index.before-mobile-order-*.html
+
+# Lecteur CAO OCCT pour la V3 publique
+!vendor/
+vendor/*
+!vendor/occt/
+!vendor/occt/**

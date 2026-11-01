@@ -1,1486 +1,693 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HB3D - Calculateur de volume en ligne</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Orbitron (Google Fonts) -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-  <!-- Space Age (CDNFonts) -->
-  <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet">
+  <title>HB3D — Maquette V3 · 03</title>
 
-  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css"> -->
-  <link rel="stylesheet" href="dist/css/style.css">
-  <link rel="stylesheet" href="dist/css/hb3d-upload.css">
-  <style type="text/css">
-#notes {
-	margin-bottom: 100px;
-	height: 100px;
-}
-#view3d {
-}
-#view3d #viewer-modes {
-	color: #F00;
-	background-color: #FFF;
-}
-.panel #view3d #viewer-modes button {
-	background-color: #F00;
-	color: #FFF;
-	font-weight: normal;
-	border-top-color: #FFF;
-	border-right-color: #FFF;
-	border-bottom-color: #FFF;
-	border-left-color: #FFF;
-	font-size: 10px;
-	font-family: Orbitron;
-}
-.subtitle p {
-	font-size: 16px;
-	color: #333;
-	margin-top: 50px;
-}
-.hb3d-mark .name p {
-	margin-top: 35px;
-	font-size: 16px;
-	font-weight: normal;
-	font-family: "space Age";
-	color: #F00;
-}
-#btn-upload div {
-	font-size: 16px;
-	float: none;
-	font-family: "space Age";
-	font-weight: bold;
-	color: #FFF;
-}
-.hb3d-mark .name p strong {
-	font-size: 11px;
-}
-.top-columns .panel h3 {
-	font-family: Orbitron;
-}
-.panel #form {
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-left: 0px;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-}
-.panel table tr td div {
-	font-family: Orbitron;
-}
-#viewer-modes {
-	font-family: Orbitron;
-}
-.top-columns .panel {
-}
-.top-columns .panel #viewer-modes button {
-	font-family: Orbitron;
-	color: #FFF;
-	background-color: #F00;
-	border-top-color: #FFF;
-	border-right-color: #FFF;
-	border-bottom-color: #FFF;
-	border-left-color: #FFF;
-	font-size: 12px;
-	font-weight: bolder;
-}
-.hb3d-mark .name p strong {
-}
-#viewer-modes button {
-	font-family: Orbitron;
-	font-size: 9px;
-	font-weight: normal;
-}
+  <link rel="stylesheet" href="maquette-v3.css">
+  <link rel="stylesheet" href="hb3d-raccordement.css">
 
-.hb3d-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  padding: 20px;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script src="maquette-v3.js" defer></script>
+  <script src="./hb3d-chat-raccordement.js"></script>
+  <script src="./hb3d-chat-flottant-test.js"></script>
+  <script src="dist/js/jsc3d_mod.js" defer></script>
+  <script src="vendor/occt/occt-import-js.js" defer></script>
+  <script src="hb3d-raccordement.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-/* Pop-up de confirmation : surcharge compacte finale */
-.hb3d-modal .hb3d-modal-box {
-  width: min(100%, 390px) !important;
-  max-width: 390px !important;
-  padding: 16px 18px !important;
-  border-radius: 12px !important;
-}
-
-.hb3d-modal .hb3d-modal-title {
-  margin: 0 0 8px !important;
-  font-size: 20px !important;
-  line-height: 1.1 !important;
-}
-
-.hb3d-modal .hb3d-modal-text {
-  margin: 0 0 10px !important;
-  font-size: 12px !important;
-  line-height: 1.28 !important;
-}
-
-.hb3d-modal .hb3d-modal-btn {
-  padding: 7px 15px !important;
-  border-radius: 7px !important;
-  font-size: 11px !important;
-  line-height: 1.1 !important;
-}
-
-.hb3d-modal-btn:hover {
-  background: #cc0000;
-}
-
-@media (max-width: 480px) {
-  .hb3d-modal-box {
-    padding: 18px 16px;
-  }
-
-  .hb3d-modal-title {
-    font-size: 20px;
-  }
-
-  .hb3d-modal-text {
-    font-size: 13px;
-  }
-}
-
-.hb3d-files-summary {
-  margin-top: 10px;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  color: #444;
-}
-
-.hb3d-files-list {
-  margin-top: 8px;
-  font-family: Arial, sans-serif;
-  font-size: 12px;
-}
-
-.hb3d-file-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 6px 0;
-  padding: 7px 8px;
-  border: 1px solid #e3e3e3;
-  border-left: 4px solid #f00;
-  background: #fafafa;
-}
-
-.hb3d-file-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.hb3d-file-remove {
-  flex: 0 0 auto;
-  padding: 3px 8px;
-  border: 1px solid #f00;
-  border-radius: 4px;
-  background: #fff;
-  color: #d00;
-  cursor: pointer;
-  font-size: 11px;
-}
-
-.hb3d-file-remove:hover {
-  background: #f00;
-  color: #fff;
-}
-
-.hb3d-volume-summary {
-  margin-top: 10px;
-  padding: 8px;
-  border-left: 4px solid #f00;
-  background: #fff7f7;
-  color: #9b0000;
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.hb3d-file-details {
-  display: block;
-  margin-top: 3px;
-  color: #8b0000;
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  line-height: 1.35;
-}
-
-.hb3d-file-details.pending {
-  color: #777;
-  font-style: italic;
-}
-
-.hb3d-file-row {
-  flex-wrap: wrap;
-}
-
-.hb3d-file-name {
-  flex: 1 1 100%;
-}
-
-.hb3d-file-actions {
-  display: flex;
-  gap: 6px;
-  margin-left: auto;
-}
-
-.hb3d-file-preview:disabled,
-.hb3d-file-preview-disabled {
-  opacity: 0.55;
-  cursor: wait;
-  background: #eee;
-  color: #777;
-}
-
-.hb3d-cart-file-details {
-  margin: 10px 0 8px;
-  padding: 8px;
-  border-top: 1px solid #e6e6e6;
-  border-bottom: 1px solid #e6e6e6;
-  font-family: Arial, sans-serif;
-  font-size: 11px;
-}
-
-.hb3d-cart-file-title {
-  margin-bottom: 7px;
-  font-family: Orbitron, Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  color: #555;
-  text-transform: uppercase;
-}
-
-.hb3d-cart-file-item {
-  padding: 7px 0;
-  border-top: 1px solid #f0f0f0;
-}
-
-.hb3d-cart-file-item:first-of-type {
-  border-top: 0;
-}
-
-.hb3d-cart-file-name {
-  overflow: hidden;
-  color: #222;
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.hb3d-cart-file-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 3px;
-  color: #666;
-  line-height: 1.35;
-}
-
-.hb3d-cart-file-color {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.hb3d-cart-file-swatch {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border: 1px solid #bdbdbd;
-  border-radius: 2px;
-}
-
-.hb3d-cart-file-empty {
-  color: #777;
-  font-style: italic;
-  line-height: 1.4;
-}
-.hb3d-cart-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  margin: 8px 0;
-}
-
-.hb3d-cart-table {
-  width: 100%;
-  min-width: 0;
-  table-layout: fixed;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  color: #333;
-}
-
-.hb3d-cart-table th:nth-child(1),
-.hb3d-cart-table td:nth-child(1) {
-  width: 24%;
-}
-
-.hb3d-cart-table th:nth-child(2),
-.hb3d-cart-table td:nth-child(2) {
-  width: 32%;
-}
-
-.hb3d-cart-table th:nth-child(3),
-.hb3d-cart-table td:nth-child(3) {
-  width: 8%;
-}
-
-.hb3d-cart-table th:nth-child(4),
-.hb3d-cart-table td:nth-child(4) {
-  width: 18%;
-}
-
-.hb3d-cart-table th:nth-child(5),
-.hb3d-cart-table td:nth-child(5) {
-  width: 18%;
-}
-
-.hb3d-cart-table th,
-.hb3d-cart-table td {
-  padding: 6px 5px;
-  border: 1px solid #e7e7e7;
-  text-align: left;
-  vertical-align: middle;
-}
-
-.hb3d-cart-table th {
-  background: #f6f6f6;
-  color: #444;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.hb3d-cart-table td:nth-child(3),
-.hb3d-cart-table td:nth-child(4),
-.hb3d-cart-table td:nth-child(5) {
-  white-space: nowrap;
-  text-align: right;
-}
-
-.hb3d-cart-table-file {
-  max-width: 105px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 700;
-}
-
-.hb3d-cart-table-config {
-  min-width: 135px;
-  white-space: nowrap;
-}
-
-.hb3d-cart-table .hb3d-cart-file-swatch {
-  width: 8px;
-  height: 8px;
-  margin: 0 3px 0 4px;
-  vertical-align: middle;
-}
-
-.panier-row-total {
-  display: grid;
-  grid-template-columns: 1fr 78px;
-  align-items: center;
-}
-
-.panier-row-total .panier-label {
-  text-align: left;
-}
-
-.panier-row-total .panier-value {
-  min-width: 0;
-  text-align: right;
-  justify-self: end;
-}
-
-  .panier-row-total .panier-value {
-  transform: translateX(-20px);
-  white-space: nowrap;
-}
-
-/* Alignement haut du panneau de configuration et des couleurs */
-.hb3d-piece-settings {
-    align-self: flex-start;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-/* La palette couleur démarre au plus près de son titre */
-.hb3d-piece-settings > label {
-    display: block;
-    margin-top: 8px;
-    margin-bottom: 4px;
-}
-
-#couleurs-fdm,
-#couleurs-sla {
-    margin-top: 0 !important;
-}
-
-</style>
+  <link
+  href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap"
+  rel="stylesheet"
+>
 </head>
 
 <body>
-  <header>
-  <div class="header-inner">
-    <div class="header-top">
-      <div class="logo">
-        <div align="center">HB3D</div>
-      </div>
-    </div>
+ <header class="topbar">
+  <div class="header-identity">
+    <img
+      class="header-logo"
+      src="images/Logo Rond HB3D.png"
+      alt=""
+    >
+
+    <span class="brand">HB3D</span>
+    <h1>Votre devis en ligne</h1>
   </div>
+
+  <span class="prototype">V3.0</span>
 </header>
 
-  <main>
-  <section class="devis-layout">
-<!-- COLONNE GAUCHE : scène 3D + fichiers -->
-<div class="devis-viewer-column">
-  <div
-    id="hb3d-volume-summary"
-    class="hb3d-volume-summary hb3d-viewer-analysis"
-    aria-live="polite"
-  >
-    <span class="hb3d-stl-count">
-      STL analysés : <strong> </strong>
-    </span>
-
-    <span class="hb3d-stl-volume">
-      Volume total STL : <strong> cm³</strong>
-    </span>
-  </div>
-<!-- VOLET 2 -->
-<div class="panel hb3d-configuration-panel">
-        <h2 align="center">2. Configuration impression & devis</h2>
-
-<div class="devis-techno-column" aria-label="Technologies disponibles">
- <button
-  type="button"
-  class="devis-techno-card"
-  data-techno="FDM"
-  aria-pressed="true"
->
-  <img src="images/Anycubic max.png" width="42" height="54" alt="">
-  <span>FDM</span>
-</button>
-
-<button
-  type="button"
-  class="devis-techno-card"
-  data-techno="SLA"
-  aria-pressed="false"
->
-  <img src="images/SLA.png" width="38" height="50" alt="">
-  <span>SLA</span>
-</button>
-
-<button
-  type="button"
-  class="devis-techno-card is-disabled"
-  data-techno="SLS"
-  aria-disabled="true"
-  disabled
->
-  <img src="images/ProJet1000.png" width="54" height="55" alt="">
-  <span>SLS</span>
-  <small>Prochainement</small>
-</button>
+<main class="workspace">
+<aside class="navigation" aria-label="Étapes du devis">
+<section class="panel"><h2><button class="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-files"><span>▧ &nbsp;1. Fichiers</span><span>⌄</span></button></h2><div class="panel-body" id="panel-files" hidden>
+    <p class="hint">
+  Ajoutez vos pièces au lot, jusqu’à 5 fichiers.
+  Aperçu STL, OBJ, STEP, STP, IGS et IGES disponible.
+</p><label class="upload">Choisir jusqu’à 5 fichiers<input id="files" type="file" multiple accept=".stl,.obj,.step,.stp,.iges,.igs,.sldprt,.sat,.x_t,.x_b,.ipt,.prt,.catpart">
+</label><p id="file-feedback" class="hint" role="status"></p><div id="file-list" class="file-list"></div><nav class="pager" aria-label="Pages des fichiers">
+    <button id="files-prev" type="button">Précédent</button>
+    <span id="files-page">
+    
+</span>
+<button id="files-next" type="button">Suivant</button>
+</nav>
+<small>
+  Aperçu STL, OBJ, STEP, STP, IGS et IGES disponible.
+  Autres formats CAO non pris en charge à cette étape.
+  Aucun contrôle technique automatique.
+</small>
 </div>
-<div class="devis-config-fields">
-  <label for="techno">Technologie :</label>
-  <select id="techno">
-
-          <option>FDM</option>
-          <option>SLA</option>
-          <option>SLS ..>>>..Prochainenemt</option>
-        </select>
-
-        <div class="hb3d-piece-settings">
-  <div class="hb3d-piece-setting">
-    <label for="materiau">Matériau</label>
-
-    <select id="materiau">
-      <option>PLA</option>
-      <option>ABS</option>
-      <option>PET</option>
-      <option>PETG</option>
-      <option>ASA</option>
-      <option>TPU</option>
-      <option>PA-CF</option>
-      <option>HIPS</option>
-      <option>Résine Standard</option>
-      <option>Résine Tough</option>
-      <option>Résine Calcinable</option>
-      <option>Résine Flexible</option>
-    </select>
-  </div>
-
-  <div class="hb3d-piece-setting hb3d-quantity-setting">
-    <label for="quantite">Quantité</label>
-    <input id="quantite" type="number" min="1" value="1">
-  </div>
-</div>
-
-  <label>Couleur</label>
-<div id="couleurs-fdm" class="couleurs">
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plablanc" checked>
-    <span class="swatch" style="background-color:#F5F5F5"></span>
-    <span class="swatch-label">Blanc</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="planoir">
-    <span class="swatch" style="background-color:#222222"></span>
-    <span class="swatch-label">Noir</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plagris">
-    <span class="swatch" style="background-color:#9F9F9F"></span>
-    <span class="swatch-label">Gris</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plarouge">
-    <span class="swatch" style="background-color:#FF3333"></span>
-    <span class="swatch-label">Rouge</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plavert">
-    <span class="swatch" style="background-color:#00B050"></span>
-    <span class="swatch-label">Vert</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plableu">
-    <span class="swatch" style="background-color:#3366FF"></span>
-    <span class="swatch-label">Bleu</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plaorange">
-    <span class="swatch" style="background-color:#ffa602"></span>
-    <span class="swatch-label">Orange</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plajaune">
-    <span class="swatch" style="background-color:#fae206"></span>
-    <span class="swatch-label">Jaune</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="plapurple">
-    <span class="swatch" style="background-color:#800080"></span>
-    <span class="swatch-label">Purple</span>
-  </label>
-</div>
-
-<div id="couleurs-sla" class="couleurs" style="display:none;">
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="slablanc">
-    <span class="swatch" style="background-color:#F5F5F5"></span>
-    <span class="swatch-label">Blanc</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="slanoir">
-    <span class="swatch" style="background-color:#222222"></span>
-    <span class="swatch-label">Noir</span>
-  </label>
-
-  <label class="chip-color">
-    <input type="radio" name="couleur" value="slagris">
-    <span class="swatch" style="background-color:#9F9F9F"></span>
-    <span class="swatch-label">Gris</span>
-  </label>
-</div>
+</section>
 
 
+<!--Volet 2-->
+<section class="panel">
+  <h2>
+    <button class="panel-toggle" type="button"
+            aria-expanded="false" aria-controls="panel-config">
+      <span>⚙ &nbsp;2. Configuration</span>
+      <span>⌄</span>
+    </button>
+  </h2>
 
-        <label for="notes">Précisez votre demande</label>
-        <textarea id="notes" name="notes" placeholder="Tolérances, finitions, délais…">
-        </textarea>
+  <div class="panel-body" id="panel-config" hidden>
 
-
-        </div>
-
-</div>
-
-<!-- Viewer JSC3D -->
-    <div id="view3d">
-      <canvas id="cv" width="550" height="420"></canvas>
+    <div class="config-piece">
+      <p class="config-label">Pièce à configurer</p>
+      <p class="active-copy" id="config-name"></p>
     </div>
 
-    <div id="hb3d-viewer-notification"
-     class="hb3d-viewer-notification"
-     role="alert"
-     aria-live="assertive"
-     aria-hidden="true">
-  <span class="hb3d-viewer-notification-icon">!</span>
-  <span id="hb3d-viewer-notification-text"></span>
-  <button type="button"
-          id="hb3d-viewer-notification-close"
-          class="hb3d-viewer-notification-close"
-          aria-label="Fermer le message">
+    <section class="config-summary" aria-labelledby="config-summary-title">
+      <h3 id="config-summary-title">Vos choix</h3>
+
+      <dl class="config-values">
+        <div>
+          <dt>Technologie</dt>
+          <dd id="config-tech"></dd>
+        </div>
+        <div>
+          <dt>Matériau</dt>
+          <dd id="config-material"></dd>
+        </div>
+        <div>
+          <dt>Couleur</dt>
+          <dd class="config-color-control">
+            <span
+              class="config-color-dot"
+              id="config-color-dot"
+              aria-hidden="true"
+            ></span>
+
+            <select
+              id="config-color-select"
+              aria-label="Couleur de la pièce active"
+              disabled
+            ></select>
+
+            <span id="config-color" hidden>—</span>
+          </dd>
+        </div>
+
+        <div>
+          <dt>Quantité</dt>
+          <dd class="config-quantity-control">
+            <button
+              id="config-minus"
+              type="button"
+              aria-label="Diminuer la quantité de la pièce active"
+              disabled
+            >−</button>
+
+            <span id="config-quantity">—</span>
+
+            <button
+              id="config-plus"
+              type="button"
+              aria-label="Augmenter la quantité de la pièce active"
+              disabled
+            >+</button>
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <label class="config-finish">
+      Finition
+      <select id="finish">
+        <option>Standard</option>
+        <option>Ponçage</option>
+        <option>Peinture sur demande</option>
+      </select>
+    </label>
+
+        <p class="hint">
+      Modifiez la technologie et le matériau à gauche du viewer.
+      La couleur et la quantité sont également modifiables ici.
+    </p>
+
+    <small class="config-notice">
+      Maquette : choix non vérifiés techniquement.
+    </small>
+
+  </div>
+</section>
+
+<section class="panel"><h2><button class="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-cart"><span>🛒 &nbsp;3. Panier</span><span>⌄</span></button></h2><div class="panel-body" id="panel-cart" hidden>
+<section id="cart-summary" class="view"><div class="view-heading"><h3>Votre lot</h3><span id="cart-count"></span></div><div id="cart-list"></div><nav class="pager" aria-label="Pages du panier"><button id="cart-prev" type="button">Précédent</button><span id="cart-page"></span><button id="cart-next" type="button">Suivant</button></nav><div class="total"><span>Total estimatif du lot</span><strong id="cart-total"></strong></div><small>Prix fictifs, sans calcul de fabrication.</small><div class="actions"><button id="show-notes" type="button">Préciser la demande</button><button id="go-send" class="primary" type="button">Passer aux coordonnées</button></div></section>
+<section id="cart-detail" class="view" hidden><button id="back-cart" class="back" type="button">← Retour au panier</button><div class="view-heading"><h3 id="detail-name"></h3><span id="detail-index"></span></div><dl class="details"><div><dt>Technologie</dt><dd id="detail-tech"></dd></div><div><dt>Matériau</dt><dd id="detail-material"></dd></div><div><dt>Couleur</dt><dd id="detail-color"></dd></div><div><dt>Quantité</dt><dd id="detail-quantity"></dd></div><div><dt>Prix unitaire fictif</dt><dd id="detail-unit"></dd></div><div><dt>Total de la pièce</dt><dd id="detail-total"></dd></div></dl><nav class="pager" aria-label="Pièces du panier"><button id="piece-prev" type="button">Précédente</button><button id="piece-next" type="button">Suivante</button></nav></section>
+<section id="cart-notes" class="view" hidden><button id="back-notes" class="back" type="button">← Retour au panier</button><h3>Précisez votre demande</h3><p class="hint">Tolérances, usage, délai ou contraintes. Un champ par page, sans défilement.</p><label>Précisions — 180 caractères par page<textarea id="notes" maxlength="180" rows="3"></textarea></label><nav class="pager" aria-label="Pages des précisions"><button id="notes-prev" type="button">Précédente</button><span id="notes-page"></span><button id="notes-next" type="button">Suivante</button></nav><button id="notes-add" type="button">Ajouter une page</button><small>Texte conservé en mémoire jusqu’au rechargement.</small></section>
+</div></section>
+<section class="panel"><h2><button class="panel-toggle" type="button" aria-expanded="false" aria-controls="panel-send"><span>➤ &nbsp;4. Envoyer</span><span>⌄</span></button></h2><div class="panel-body" id="panel-send" hidden><div class="view-heading"><h3>Préparer la demande</h3><span id="send-step"></span></div>
+
+<div id="hb3d-send-progress" class="hb3d-send-progress" hidden>
+  <div
+    id="hb3d-send-disc"
+    class="hb3d-send-disc"
+    role="progressbar"
+    aria-label="Traitement de la demande"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+    aria-valuetext="Progression indicative : 0 %"
+  >
+    <span id="hb3d-send-percent">0 %</span>
+  </div>
+
+  <p id="hb3d-send-progress-label" role="status" aria-live="polite">
+    Préparation…
+  </p>
+
+  <small>Progression indicative des étapes de traitement.</small>
+</div>
+
+<form id="demo-form" novalidate>
+<section id="send-contact" class="send-view"><p class="hint">Coordonnées fictives uniquement.</p><label>Nom / Prénom<input id="demo-name" autocomplete="off" maxlength="60" placeholder="Client de démonstration"></label><label>Email<input id="demo-email" type="email" autocomplete="off" maxlength="100" placeholder="exemple@domaine.fr"></label></section>
+<section id="send-extra" class="send-view" hidden><p class="hint">Informations complémentaires facultatives.</p><label>Société<input id="demo-company" autocomplete="off" maxlength="80"></label><label>Téléphone<input id="demo-phone" type="tel" autocomplete="off" maxlength="30"></label></section>
+<section id="send-review" class="send-view" hidden><p class="hint">Vérification de démonstration</p><dl class="details"><div><dt>Pièces</dt><dd id="review-count"></dd></div><div><dt>Total fictif</dt><dd id="review-total"></dd></div><div><dt>Contact</dt><dd id="review-name"></dd></div></dl><p class="hint">Aucun fichier analysé. Aucun contrôle technique ni envoi réel.</p></section>
+<div class="actions send-actions"><button id="send-prev" type="button">Retour</button><button id="send-next" class="primary" type="button">Suivant</button></div></form>
+<section id="send-done" hidden><h3>Parcours terminé</h3><p>Rien n’a été envoyé.</p><p class="hint">Cette confirmation remplace le formulaire : elle ne s’ajoute pas dessous.</p><button id="send-restart" type="button">Revenir à la vérification</button></section></div></section>
+</aside>
+<section class="stage" aria-label="Aperçu 3D et configuration">
+    <div class="viewer">
+      <header class="viewer-header">
+  <div class="active-piece">
+    Pièce active : <strong id="active-name"></strong>
+  </div>
+
+<div class="hb3d-view-switch"
+     role="group"
+     aria-labelledby="hb3d-view-switch-label">
+
+  <span id="hb3d-view-switch-label"
+        class="hb3d-view-switch-label">
+    Vue 3D
+  </span>
+
+  <button id="hb3d-view-lot"
+          type="button"
+          aria-pressed="true"
+          title="Afficher toutes les pièces du lot"
+          disabled>
+    <svg viewBox="0 0 24 24"
+         aria-hidden="true"
+         focusable="false">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+    <span>Voir tout le lot</span>
+  </button>
+
+  <button id="hb3d-view-piece"
+          type="button"
+          aria-pressed="false"
+          title="Afficher uniquement la pièce sélectionnée"
+          disabled>
+    <svg viewBox="0 0 24 24"
+         aria-hidden="true"
+         focusable="false">
+      <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/>
+      <rect x="8" y="8" width="8" height="8" rx="1"/>
+    </svg>
+    <span>Isoler la pièce</span>
+  </button>
+
+</div>
+
+</header>
+      <div class="scene" id="scene">
+    <span class="scene-note">
+    Version de raccordement · aucun modèle chargé
+    </span>
+
+<div class="hb3d-real-viewer" id="hb3d-real-viewer">
+
+  <div id="hb3d-duplicate-notice"
+     class="hb3d-duplicate-notice"
+     hidden>
+
+  <span class="hb3d-duplicate-icon" aria-hidden="true">!</span>
+
+  <p id="hb3d-duplicate-text"
+     role="status"
+     aria-live="polite"
+     aria-atomic="true"></p>
+
+  <button id="hb3d-duplicate-close"
+          type="button"
+          aria-label="Fermer l’avertissement">
     ×
   </button>
 </div>
+  <canvas
+    id="cv"
+    width="900"
+    height="620"
+    aria-label="Aperçu 3D de la pièce"
+    aria-describedby="hb3d-viewer-status"
+  >
+    Aperçu 3D de la pièce.
+  </canvas>
 
-<!-- Commandes de rendu -->
-  <div id="viewer-modes" class="viewer-modes">
-  <button data-mode="smooth" type="button">Plein</button>
-  <button data-mode="wireframe" type="button">Wireframe</button>
-  <button data-mode="point" type="button">Points</button>
-</div>
-
-<!-- VOLET 4 -->
-<div class="panel hb3d-upload-panel">
-  <h2 align="center">3. ENVOYEZ VOTRE DEMANDE</h2>
-
-  <div class="devis-personal-column hb3d-send-personal">
-    <h3>Détails personnels</h3>
-
-    <form id="form">
-      <label for="nom">Nom / Prénom</label>
-      <input id="nom" name="HB3D" type="text">
-
-      <label for="societe">Société (optionnel)</label>
-      <input id="societe" name="Bienvenue" type="text">
-
-      <label for="email">Email</label>
-      <input id="email" name="client_email" type="email">
-
-      <label for="tel">Téléphone</label>
-      <input id="tel" name="client_id" type="text">
-
-      <input type="hidden" id="quantite-hidden" name="quantite" value="1">
-      <input type="hidden" id="prix_affiche" name="prix" value="">
-      <input type="hidden" id="fichier" name="fichier" value="">
-      <input type="hidden" id="time" name="time" value="">
-      <input type="hidden" id="quote_number" name="quote_number" value="">
-      <input type="hidden" id="message" name="message" value="">
-      <input type="hidden" id="stripe_link" name="stripe_link" value="">
-      <input type="hidden" id="tech_hidden" name="tech" value="">
-      <input type="hidden" id="material_hidden" name="material" value="">
-      <input type="hidden" id="color_hidden" name="color" value="">
-      <input type="hidden" id="devis_id" name="devis_id" value="">
-    </form>
+  <div class="hb3d-viewer-placeholder" id="hb3d-viewer-placeholder">
+     <span>Aucune pièce à afficher</span>
+     <small>Ajoutez un fichier STL ou OBJ pour afficher son aperçu 3D.</small>
   </div>
 
-    <button id="btn-upload" class="btn" type="button">
-    Téléchargez vos fichiers 3D pour obtenir votre devis.
-  </button>
+  <p
+    id="hb3d-viewer-status"
+    class="sr-only"
+    role="status"
+  >
+    Aucun modèle chargé dans le viewer.
+  </p>
+</div>
 
-  <div class="status-panel">
 
-    <!-- Bloc graphique facultatif : caché sur ordinateur par le CSS -->
-    <div class="hb3d-mark">
-      <div class="name">HB3D</div>
+<div class="viewer-toolbar">
 
-      <!-- Conserve l’image seulement si elle existe déjà dans ton code -->
-      <img src="images/Logo HBD.jpg" alt="HB3D Logo" width="32" height="22">
+    <svg class="viewer-axis" viewBox="0 0 76 54"
+       role="img" aria-label="Repère XYZ fixe, illustratif">
+    <title>Repère XYZ fixe — non synchronisé avec la vue</title>
 
-      <div class="subtitle">
-        CALCULATEUR<br>
-        DE VOLUME<br>
-        EN LIGNE
+    <g fill="none" stroke-width="1.8"
+       stroke-linecap="round" stroke-linejoin="round">
+      <path d="M38 33V9m-3 5 3-5 3 5" stroke="#2878d0"/>
+      <path d="M38 33 14 43m3-5-3 5 6 1" stroke="#df315d"/>
+      <path d="m38 33 23 10m-6 1 6-1-3-5" stroke="#36a578"/>
+    </g>
+
+    <g font-family="Arial, sans-serif"
+       font-size="9" font-weight="700">
+      <text x="35" y="8" fill="#2878d0">Z</text>
+      <text x="5" y="49" fill="#df315d">X</text>
+      <text x="65" y="49" fill="#36a578">Y</text>
+    </g>
+  </svg>
+
+    <div
+    class="viewer-navigation"
+    role="group"
+    aria-label="Navigation dans la vue 3D"
+  >
+    <button
+      type="button"
+      data-navigation="orbit"
+      aria-pressed="true"
+      title="Rotation de la vue"
+      disabled
+    >Orbite</button>
+
+    <button
+      type="button"
+      data-navigation="pan"
+      aria-pressed="false"
+      title="Déplacement de la vue"
+      disabled
+    >Pan</button>
+
+    <button
+      type="button"
+      data-navigation="zoom"
+      aria-pressed="false"
+      title="Zoom dans la vue"
+      disabled
+    >Zoom</button>
+  </div>
+
+  <div class="viewer-modes" role="group"
+       aria-label="Modes d’affichage de la pièce">
+
+    <button type="button" data-mode="smooth"
+            aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3 21 8 12 13 3 8Z"
+              fill="currentColor" fill-opacity=".25"/>
+        <path d="m12 3 9 5v9l-9 5-9-5V8Z
+                 M3 8l9 5 9-5M12 13v9"/>
+      </svg>
+      <span>Plein</span>
+    </button>
+
+    <button type="button" data-mode="wire"
+            aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="m12 3 9 5v9l-9 5-9-5V8Z
+                 M3 8l9 5 9-5M12 13v9"/>
+        <path d="m12 3 0 10M3 17l9-4 9 4"
+              stroke-dasharray="2 2" opacity=".55"/>
+      </svg>
+      <span>Fil de fer</span>
+    </button>
+
+      <button type="button"
+        data-mode="point"
+        aria-pressed="false"
+        title="Afficher les sommets du maillage">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <g fill="currentColor" stroke="none">
+          <circle cx="12" cy="3" r="1.5"/>
+          <circle cx="3" cy="8" r="1.5"/>
+          <circle cx="21" cy="8" r="1.5"/>
+          <circle cx="12" cy="13" r="1.5"/>
+          <circle cx="3" cy="17" r="1.5"/>
+          <circle cx="21" cy="17" r="1.5"/>
+          <circle cx="12" cy="22" r="1.5"/>
+          <circle cx="7.5" cy="5.5" r="1"/>
+          <circle cx="16.5" cy="5.5" r="1"/>
+          <circle cx="7.5" cy="10.5" r="1"/>
+          <circle cx="16.5" cy="10.5" r="1"/>
+        </g>
+      </svg>
+      <span>Points</span>
+    </button>
+
+  </div>
+
+    <div
+    class="viewer-views"
+    role="group"
+    aria-label="Vues prédéfinies du modèle"
+  >
+    <button
+      type="button"
+      data-view="plan"
+      title="Vue en plan"
+      disabled
+    >Plan</button>
+
+    <button
+      type="button"
+      data-view="face"
+      title="Vue de face"
+      disabled
+    >Face</button>
+
+    <button
+      type="button"
+      data-view="iso"
+      title="Vue isométrique"
+      disabled
+    >Iso</button>
+  </div>
+
+
+
+</div>
+
+<div class="toolbox">
+
+    
+
+  <section class="toolbox-card" aria-label="Technologie et matériau">
+    <div class="technology-group">
+      <span class="toolbox-label">Technologie</span>
+
+      <div class="technology-options" role="group"
+           aria-label="Choisir la technologie">
+        <button class="machine-choice" type="button"
+                data-tech="FDM" aria-pressed="true">
+          <img src="images/Anycubic%20max.png" alt="">
+          <span>FDM</span>
+        </button>
+
+        <button class="machine-choice" type="button"
+                data-tech="SLA" aria-pressed="false">
+          <img src="images/SLA.png" alt="">
+          <span>SLA</span>
+        </button>
+
+        <button class="machine-choice machine-soon" type="button"
+                disabled aria-label="SLS — Prochainement">
+          <img src="images/SLS.png" alt="">
+          <span>SLS · bientôt</span>
+        </button>
       </div>
     </div>
 
-    <!-- Ne change surtout pas les id utilisés par upload_handler.js -->
-    <div class="circular-upload">
-      <span id="hb3d-upload-percent">0%</span>
+    <label class="material-group" for="material">
+      <span class="toolbox-label">Matériau</span>
+      <select id="material"></select>
+    </label>
+
+    <select id="technology" hidden aria-label="Technologie">
+      <option>FDM</option>
+      <option>SLA</option>
+    </select>
+  </section>
+
+  <section class="toolbox-card" aria-label="Couleur et quantité">
+    <div class="colors-group">
+      <span class="toolbox-label">
+        Couleur <span id="selected-color-name">Gris</span>
+      </span>
+
+      <div class="color-options" role="group"
+           aria-label="Choisir la couleur">
+        <button class="color-dot" type="button" data-color="Blanc"
+                style="--dot:#ffffff" aria-label="Blanc"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Noir"
+                style="--dot:#252932" aria-label="Noir"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Gris"
+                style="--dot:#919ba7" aria-label="Gris"
+                aria-pressed="true"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Vert"
+                style="--dot:#32a568" aria-label="Vert"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Bleu"
+                style="--dot:#2878d0" aria-label="Bleu"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Rose"
+                style="--dot:#db4588" aria-label="Rose"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Rouge"
+                style="--dot:#fa0606" aria-label="Rouge"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+        <button class="color-dot" type="button" data-color="Jaune"
+                style="--dot:#f1cc35" aria-label="Jaune"
+                aria-pressed="false"><span aria-hidden="true">✓</span></button>
+      </div>
     </div>
 
-    <div id="hb3d-upload-text" class="upload-text">
-      En attente de fichier<br>
-      Fichier 0 / 0
+    <div class="quantity-group">
+      <span class="toolbox-label" id="quantity-label">Quantité</span>
+      <div class="quantity-control" role="group"
+           aria-labelledby="quantity-label">
+        <button id="minus" type="button"
+                aria-label="Diminuer la quantité">−</button>
+        <output id="quantity" aria-live="polite">1</output>
+        <button id="plus" type="button"
+                aria-label="Augmenter la quantité">+</button>
+      </div>
     </div>
-  </div>
 
+    <select id="color" hidden aria-label="Couleur">
+      <option>Blanc</option>
+      <option>Noir</option>
+      <option>Gris</option>
+      <option>Vert</option>
+      <option>Bleu</option>
+      <option>Rose</option>
+      <option>Rouge</option>
+      <option>Jaune</option>
+    </select>
+  </section>
 
+</div>
 </div>
 </div>
 
- <div class="devis-workflow-column">
-<!-- VOLET 1 : téléversement -->
-
-  <div class="panel hb3d-viewer-panel">
-    <h2 align="center">1. Téléversez vos fichiers 3D</h2>
-
-    <div class="upload-zone hb3d-upload-workspace">
-
-  <!-- Colonne gauche : fichiers réellement chargés -->
-  <aside class="hb3d-upload-files">
-  <h3>Fichiers sélectionnés</h3>
-
-  <div
-    id="hb3d-files-summary"
-    class="hb3d-files-summary"
-    aria-live="polite"
-  >
-    Aucun fichier sélectionné — 0 / 5
+<footer class="metrics" aria-label="Mesures et estimation">
+  <div>
+    <span>Dimensions de la pièce active</span>
+    <strong id="metric-dimensions">En attente</strong>
   </div>
 
-  <div
-    id="hb3d-files-list"
-    class="hb3d-files-list"
-    aria-live="polite"
-  ></div>
-</aside>
-
-<!-- Colonne droite : ajout de fichiers -->
-<div class="hb3d-upload-picker">
-  <div class="hb3d-upload-heading">
-
-<button
-  type="button"
-  class="hb3d-upload-icon-button"
-  id="hb3d-upload-icon-button"
-  aria-label="Sélectionner vos fichiers 3D"
-  title="Sélectionner vos fichiers 3D"
->
-  <span aria-hidden="true">⇧</span>
-</button>
-
-    <div class="hb3d-upload-heading-text">
-      <strong>Zone de dépôt</strong>
-
-      <p>
-        Glissez-déposez vos fichiers ici<br>
-        ou cliquez pour sélectionner<br>
-        (STL, OBJ)
-      </p>
-    </div>
+  <div>
+    <span>Volume unitaire estimé</span>
+    <strong id="metric-volume">En attente</strong>
   </div>
 
-  <label for="file"><b>Vos fichiers 3D :</b></label>
-
-  <input
-    type="file"
-    name="files[]"
-    id="file"
-    accept=".stl,.obj"
-
-  >
-</div>
-
- </div>
-</div>
-
-
-<!-- Fin .devis-viewer-column -->
-
-
- <!-- COLONNE DROITE : configuration, panier, envoi -->
-
-
-      <!-- VOLET 3 -->
-
-<div class="panel hb3d-order-panel">
-  <h2 align="center">2. VOTRE PANIER</h2>
-  <div class="devis-order-grid">
-  <div class="devis-cart-column">
-
-  <h3>Votre panier <img src="images/card.jpg" alt="caddie" width="26" height="25"></h3>
-
-  <div class="panier-stack">
-  <div class="panier-row">
-  <div class="panier-label">Lot de fichiers</div>
-  <div class="panier-value">
-    <span id="lot-fichiers-panier">Aucun fichier sélectionné</span>
+  <div>
+    <span>Total estimatif du lot</span>
+    <strong id="metric-total">En attente</strong>
   </div>
-</div>
-<!-- DEBUT recapitulatif panier temporairement masque
-<div class="panier-row">
-  <div class="panier-label">Aperçu actif</div>
-  <div class="panier-value">
-    <span id="nom-fichier-panier">Aucun aperçu</span>
-  </div>
-</div>
-
-  <div class="panier-row">
-    <div class="panier-label">Techno</div>
-    <div class="panier-value">
-      <span id="techno-panier">FDM</span>
-    </div>
-  </div>
-
-  <div class="panier-row">
-    <div class="panier-label">Matériau</div>
-    <div class="panier-value">
-      <span id="materiau-panier">PLA</span>
-    </div>
-  </div>
-
-  <div class="panier-row">
-    <div class="panier-label">Couleur</div>
-    <div class="panier-value panier-couleur">
-      <span class="swatch-panier" id="swatch-panier"></span>
-      <span id="couleur-panier">Blanc</span>
-    </div>
-  </div>
-
-  <div class="panier-row">
-    <div class="panier-label">Quantité de chaque fichier</div>
-    <div class="panier-value">
-      <span id="qte-panier">1</span>
-    </div>
-  </div>
-   <!-- FIN recapitulatif panier temporairement masque -->
-
-  <div id="hb3d-cart-file-details" class="hb3d-cart-file-details">
-  <div class="hb3d-cart-file-empty">
-    Les détails des fichiers analysés apparaîtront ici.
-  </div>
-</div>
-
-<div class="panier-row panier-row-total">
-  <div class="panier-label">Total estimatif du lot</div>
-
-  <div class="panier-value">
-    <span id="prix-panier">En attente</span>
-  </div>
-</div>
-
-<div class="panier-estimation-action">
-  <button type="button" class="btn" id="btn-devis">
-    Obtenir une estimation
-  </button>
-</div>
-
-<div class="devis-row">
-  <span>Remise</span>
-  <span id="remise-info"></span>
-</div>
-
-<div id="remise-message" class="panier-remise-message"></div>
-
-</div>
-  </div>
-
-    <!-- Fin .devis-personal-column -->
-
-    <div class="hb3d-instructions">
-  <h3>Avant l’envoi</h3>
-  <p>Sur mobile, votre fichier doit être stocké localement.</p>
-  <p>Choisissez la technologie, le matériau, la couleur et la quantité.</p>
-  <p>Formats acceptés : STL, OBJ. Taille max : 50 Mo.</p>
-  <p>Une fois le fichier envoyé, HB3D reçoit automatiquement votre demande.</p>
-  </div>
-
- </div>
-  <!-- Fin .devis-order-grid -->
-
-</div>
-<!-- Fin VOLET 3 : .panel.hb3d-order-panel -->
-
-</div>
-<!-- Fin .devis-workflow-column -->
-
-</section>
-<!-- Fin .devis-layout -->
-</main>
- <div class="panel hb3d-order-panel">
-  <div id="footer color">
-   <footer class="hb3d-footer">
-  <div class="hb3d-footer-inner">
-    <img src="images/hb3d-logo.png" width="27" height="25" alt="HB3D">
-    <span class="hb3d-footer-main">HB3D / CALCULATEUR DE VOLUME EN LIGNE</span>
-  </div>
-  <span class="footer-copy">Copyright © 2015 - 2026 HB3D</span>
 </footer>
 
-  <!-- scripts JSC3D -->
-<script src="dist/js/jquery-1.11.1.min.js"></script>
-  <script src="dist/js/bootstrap.min.js"></script>
-  <script src="dist/js/jsc3d_mod.js"></script>
-  <script src="dist/js/jsc3d.console.js"></script>
-  <script src="dist/js/object_viewer.js"></script>
-  <script src="dist/js/upload_handler.js"></script>
-  <script src="dist/js/hb3d-mobile-layout.js"></script>
-  <script src="dist/js/hb3d-viewer-touch.js"></script>
+<!-- Barre visuelle uniquement : aucun chatbot chargé. -->
+<aside class="hb3d-ai-bar" aria-labelledby="hb3d-ai-title">
+  <div class="hb3d-ai-identity">
+    <svg
+      class="hb3d-ai-icon"
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <g
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M20 5v5"/>
+        <circle cx="20" cy="4" r="1" fill="currentColor"/>
+        <rect x="8" y="11" width="24" height="22" rx="7"/>
+        <path d="M4 18v8M36 18v8M15 28h10"/>
+      </g>
+      <circle cx="15" cy="21" r="2" fill="currentColor"/>
+      <circle cx="25" cy="21" r="2" fill="currentColor"/>
+    </svg>
 
- <script>
-// =========================
-// Couleurs & viewer
-// =========================
-const MATERIAUX = {
-  pla_blanc:  { label: 'PLA Blanc',  color: '#F5F5F5' },
-  pla_noir:   { label: 'PLA Noir',   color: '#222222' },
-  pla_gris:   { label: 'PLA Gris',   color: '#9F9F9F' },
-  pla_rouge:  { label: 'PLA Rouge',  color: '#FF3333' },
-  pla_vert:   { label: 'PLA Vert',   color: '#00B050' },
-  pla_bleu:   { label: 'PLA Bleu',   color: '#3366FF' },
-  pla_orange: { label: 'PLA Orange', color: '#FF8800' },
-  pla_jaune:  { label: 'PLA Jaune',  color: '#FFD800' },
-  pla_purple: { label: 'PLA Purple', color: '#800080' }
-};
+    <span id="hb3d-ai-title">Assistant HB3D</span>
+  </div>
 
-function appliquerCouleurViewer(codeMateriau) {
-  const mat = MATERIAUX[codeMateriau];
-  if (!mat || !window.viewer) return;
-  viewer.setParameter('ModelColor', mat.color);
-  viewer.update();
-}
+  <div class="hb3d-ai-field">
+    <label class="sr-only" for="hb3d-ai-question">
+      Question à l’assistant HB3D — non disponible dans cette maquette
+    </label>
 
-function majCouleursSelonTechno() {
-  const technoVal = $('#techno').val();
-  const isSLA = (technoVal === 'SLA');
-  const couleursAutoriseesSLA = ['plablanc', 'planoir', 'plagris'];
+    <input
+      id="hb3d-ai-question"
+      type="text"
+      placeholder="Posez une question sur votre pièce"
+      aria-describedby="hb3d-ai-status"
+      disabled
+    >
+  </div>
 
-  $('input[name="couleur"]').each(function () {
-    const $radio = $(this);
-    const value  = $radio.val();
-    const $chip  = $radio.closest('.chip-color');
+  <small id="hb3d-ai-status" class="hb3d-ai-status">
+    Démonstration — assistant non raccordé
+  </small>
+</aside>
 
-    if (isSLA) {
-      const autorisee = couleursAutoriseesSLA.includes(value);
-      if (!autorisee) {
-        $radio.prop('disabled', true).prop('checked', false);
-        $chip.css({
-          opacity: 0.12,
-          cursor: 'not-allowed',
-          filter: 'grayscale(100%)'
-        });
-      } else {
-        $radio.prop('disabled', false);
-        $chip.css({
-          opacity: 1,
-          cursor: 'pointer',
-          filter: 'none'
-        });
-      }
-    } else {
-      $radio.prop('disabled', false);
-      $chip.css({
-        opacity: 1,
-        cursor: 'pointer',
-        filter: 'none'
+<p class="demo-caption">
+   Estimation indicative soumise à validation technique humaine.
+</p></section>
+<aside class="progress" aria-label="Avancement de votre demande">
+  <ol>
+    <li
+      id="progress-import"
+      class="current"
+      aria-current="step"
+    >
+      <span>1</span>
+      Importer
+    </li>
+
+    <li id="progress-analysis">
+      <span>2</span>
+      Analyser
+    </li>
+
+    <li id="progress-config">
+      <span>3</span>
+      Configurer
+    </li>
+
+    <li id="progress-send">
+      <span>4</span>
+      Envoyer
+    </li>
+  </ol>
+
+  <small id="progress-status" role="status">
+    Ajoutez vos fichiers pour commencer.
+  </small>
+</aside>
+</main>
+
+<footer class="site-footer" aria-label="Pied de page HB3D">
+  <div class="footer-identity">
+    <strong>HB3D</strong>
+    <span class="footer-divider" aria-hidden="true">/</span>
+    <span>CALCULATEUR DE VOLUME EN LIGNE</span>
+  </div>
+
+  <small>Copyright © 2015 - 2026 HB3D</small>
+</footer>
+
+<script>
+(function () {
+  function initMetricHighlights() {
+    const ids = [
+      "metric-dimensions",
+      "metric-volume",
+      "metric-total"
+    ];
+
+    ids.forEach(function (id) {
+      const value = document.getElementById(id);
+      if (!value) return;
+
+      const zone = value.parentElement;
+      let previousText = value.textContent.trim();
+
+      zone.addEventListener("animationend", function (event) {
+        if (event.target === zone) {
+          zone.classList.remove("metric-updated");
+        }
       });
-    }
-  });
 
-  if (isSLA && !$('input[name="couleur"]:checked').length) {
-    const $defaut = $('input[name="couleur"][value="plablanc"]:enabled').first();
-    if ($defaut.length) {
-      $defaut.prop('checked', true).trigger('change');
-    }
-  }
+      const observer = new MutationObserver(function () {
+        const currentText = value.textContent.trim();
 
-  if (typeof updateEstimationButtonState === 'function') {
-    updateEstimationButtonState();
-  }
-}
+        if (currentText === previousText) return;
+        previousText = currentText;
 
+        zone.classList.remove("metric-updated");
 
-document.addEventListener('DOMContentLoaded', function () {
-  const radiosCouleur = document.querySelectorAll('input[name="couleur"]');
+        /* Permet de relancer l'effet en cas de changements rapprochés. */
+        void zone.offsetWidth;
 
-  radiosCouleur.forEach(function (radio) {
-    radio.addEventListener('change', function (e) {
-      if (!e.target.checked) return;
-      appliquerCouleurViewer(e.target.value);
+        zone.classList.add("metric-updated");
+      });
+
+      observer.observe(value, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
     });
-  });
-
-  const radioActif = document.querySelector('input[name="couleur"]:checked');
-  if (radioActif) {
-    appliquerCouleurViewer(radioActif.value);
   }
 
-  // couleurs dispo selon techno
-  majCouleursSelonTechno();
-  $('#techno').on('change', majCouleursSelonTechno);
-});
-
-// =========================
-// Matériaux par techno
-// =========================
-const MATERIAUX_PAR_TECHNO = {
-  FDM: [
-    'PLA','ABS','PET','PETG','ASA','TPU','PA-CF','HIPS'
-  ],
-  SLA: [
-    'Résine Standard','Résine Tough','Résine Calcinable','Résine Flexible'
-  ],
-  SLS: []
-};
-
-function remplirMateriauxPourTechno(techno) {
-  const selectMateriau = document.getElementById('materiau');
-  if (!selectMateriau) return;
-
-  const liste = MATERIAUX_PAR_TECHNO[techno] || [];
-  selectMateriau.innerHTML = '';
-
-  if (liste.length === 0) {
-    const opt = document.createElement('option');
-    opt.textContent = '—';
-    opt.value = '';
-    selectMateriau.appendChild(opt);
-    return;
-  }
-
-  liste.forEach((nom) => {
-    const opt = document.createElement('option');
-    opt.textContent = nom;
-    opt.value = nom;
-    selectMateriau.appendChild(opt);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const selectTechno = document.getElementById('techno');
-  if (!selectTechno) return;
-
-
-  remplirMateriauxPourTechno(selectTechno.value);
-  selectTechno.addEventListener('change', function () {
-    remplirMateriauxPourTechno(this.value);
-  });
-});
-
-// =========================
-// Volume / panier (pas de prix ici)
-// =========================
-window.currentVolumeMm3 = 0;
-
-function mettreAJourPrixDepuisVolume(volumeCm3, dureeHeures) {
-  const vol = Number(volumeCm3);
-
-// En mode multi-fichiers, le cumul est maintenu par object_viewer.js.
-// On ne doit donc pas le remplacer par le volume du STL actuellement aperçu.
-const volumeLotMm3 = (
-  typeof window.hb3dGetVolumeTotalMm3 === 'function'
-)
-  ? window.hb3dGetVolumeTotalMm3()
-  : 0;
-
-if (volumeLotMm3 > 0) {
-  window.currentVolumeMm3 = volumeLotMm3;
-} else {
-  window.currentVolumeMm3 =
-    (!vol || !isFinite(vol) || vol <= 0) ? 0 : (vol * 1000);
-}
-
-  const inputQte = document.getElementById('quantite');
-  const qte = inputQte ? Math.max(1, parseInt(inputQte.value || '1', 10)) : 1;
-
-  const spanPrix = document.getElementById('prix-panier');
-  const spanQte  = document.getElementById('qte-panier');
-
-  if (spanQte) spanQte.textContent = qte;
-  if (spanPrix) spanPrix.textContent = 'en attente';
-
-  const selectTechno   = document.getElementById('techno');
-  const selectMateriau = document.getElementById('materiau');
-  const radioCouleur   = document.querySelector('input[name="couleur"]:checked');
-
-  const technoPanier   = document.getElementById('techno-panier');
-  const materiauPanier = document.getElementById('materiau-panier');
-  const couleurPanier  = document.getElementById('couleur-panier');
-
-  if (technoPanier && selectTechno)   technoPanier.textContent   = selectTechno.value;
-  if (materiauPanier && selectMateriau) materiauPanier.textContent = selectMateriau.value;
-  if (couleurPanier && radioCouleur) {
-    const labelCouleur = radioCouleur.parentElement.textContent.trim();
-    couleurPanier.textContent = labelCouleur;
-  }
-
-  console.log('[HB3D] Volume charge', {
-  volumeCm3: vol,
-  volumeMm3: vol * 1000
-});
-}
-
-function majNomFichierPanier(nomFichier) {
-  const span = document.getElementById('nom-fichier-panier');
-
-  if (span) {
-    span.textContent = nomFichier;
-    span.title = nomFichier;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const spanPrix = document.getElementById('prix-panier');
-  const spanQte  = document.getElementById('qte-panier');
-  if (spanPrix) spanPrix.textContent = 'en attente';
-  if (spanQte)  spanQte.textContent  = '1';
-});
-
-// =========================
-// Bouton estimation (ancienne logique volumique)
-// =========================
-console.log('[HB3D] init bouton estimation');
-
-$(document).ready(function () {
-  const $techno    = $('#techno');
-  const $materiau  = $('#materiau');
-  const $quantite  = $('#quantite');
-  const $btnEstime = $('#btn-devis');
-
-  const $prixPanier     = $('#prix-panier');
-  const $qtePanier      = $('#qte-panier');
-  const $technoPanier   = $('#techno-panier');
-  const $materiauPanier = $('#materiau-panier');
-  const $couleurPanier  = $('#couleur-panier');
-
-
-  function isConfigComplete() {
-    const technoVal    = $techno.val();
-    const materiauVal  = $materiau.val();
-    const qte          = parseInt($quantite.val(), 10);
-    const couleurVal   = $('input[name="couleur"]:checked').val();
-
-    if (!technoVal || !materiauVal || !couleurVal) return false;
-    if (Number.isNaN(qte) || qte < 1) return false;
-    return true;
-  }
-
-  window.updateEstimationButtonState = function () {
-    if (isConfigComplete()) {
-      $btnEstime.prop('disabled', false).css('opacity', 1);
-    } else {
-      $btnEstime.prop('disabled', true).css('opacity', 0.5);
-    }
-  };
-
-const TARIFS = {
-  FDM: {
-    PLA:        { A: 12.99, B: 0.224 },
-    PETG:       { A: 14.50, B: 0.245 },
-    ABS:        { A: 15.50, B: 0.255 },
-    ASA:        { A: 16.50, B: 0.270 },
-    TPU:        { A: 18.50, B: 0.295 },
-    'PA-CF':    { A: 23.00, B: 0.345 },
-    HIPS:       { A: 14.20, B: 0.238 },
-    PET:        { A: 14.00, B: 0.235 }
-  },
-
-  SLA: {
-    'Résine Standard':   { A: 19.44, B: 0.467 },
-    'Résine Tough':      { A: 24.00, B: 0.560 },
-    'Résine Flexible':   { A: 26.00, B: 0.620 },
-    'Résine Calcinable': { A: 29.00, B: 0.700 }
-  },
-
-  SLS: {
-    'Nylon PA12':        { A: 30.00, B: 0.800 }
-  }
-};
-
-function getDiscountRate(qty) {
-  if (qty >= 500) return 0.40;   // 40 %
-  if (qty >= 400) return 0.35;
-  if (qty >= 300) return 0.30;
-  if (qty >= 200) return 0.25;
-  if (qty >= 100) return 0.20;
-  if (qty >= 50)  return 0.15;
-  if (qty >= 20)  return 0.10;
-  if (qty >= 10)  return 0.05;
-  return 0;
-}
-
-function calculerEstimation() {
-  const volumesParFichier = window.hb3dVolumesParFichier || {};
-  const configsParFichier = window.hb3dConfigParFichier || {};
-
-  let prixBrut = 0;
-  let volumeMm3Total = 0;
-  let fichiersFactures = 0;
-
-  Object.keys(volumesParFichier).forEach(function(fileKey) {
-    const volumeMm3 = Number(volumesParFichier[fileKey]) || 0;
-
-    if (volumeMm3 <= 0) {
-      return;
-    }
-
-    const config = configsParFichier[fileKey] || {
-      techno: 'FDM',
-      materiau: 'PLA',
-      couleur: 'plablanc',
-      quantite: 1
-    };
-
-    const technoTarifs = TARIFS[config.techno];
-    const tarif = technoTarifs
-      ? technoTarifs[config.materiau]
-      : null;
-
-    if (!tarif) {
-      console.warn(
-        '[HB3D] Tarif introuvable pour :',
-        fileKey,
-        config.techno,
-        config.materiau
-      );
-      return;
-    }
-
-    const volumeCm3 = volumeMm3 / 1000;
-    const quantiteFichier = Math.max(
-      1,
-      parseInt(config.quantite || '1', 10)
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initMetricHighlights,
+      { once: true }
     );
-
-    const prixUnitaireFichier =
-      tarif.A + (tarif.B * volumeCm3);
-
-    const prixLigne =
-      prixUnitaireFichier * quantiteFichier;
-
-    prixBrut += prixLigne;
-    volumeMm3Total += volumeMm3 * quantiteFichier;
-    fichiersFactures += 1;
-
-    console.log('[HB3D] Prix fichier :', {
-      fileKey: fileKey,
-      techno: config.techno,
-      materiau: config.materiau,
-      volumeCm3: volumeCm3,
-      quantite: quantiteFichier,
-      prixUnitaire: prixUnitaireFichier,
-      prixLigne: prixLigne
-    });
-  });
-
-  const quantiteGlobale = Math.max(
-    1,
-    parseInt(quantite.value || '1', 10)
-  );
-
-  const rate = getDiscountRate(quantiteGlobale);
-  const remise = prixBrut * rate;
-  const prixNet = prixBrut - remise;
-
-  const prixFormatte = prixNet.toLocaleString('fr-FR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
-
-  $('#volume-mm3').text(volumeMm3Total.toFixed(0) + ' mm³');
-  $('#volume-cm3').text(
-    (volumeMm3Total / 1000).toFixed(2).replace('.', ',') + ' cm³'
-  );
-
-  console.log('[HB3D] Prix total du lot :', {
-    fichiersFactures: fichiersFactures,
-    prixBrut: prixBrut,
-    remise: remise,
-    prixNet: prixNet,
-    tauxRemise: rate
-  });
-
-  return {
-    prixFormatte: prixFormatte,
-    rate: rate
-  };
-}
-
-  function syncQuantiteEtPanier() {
-    let qte = parseInt($quantite.val(), 10) || 1;
-    if (qte < 1) qte = 1;
-    $quantite.val(qte);
-    $('#quantite-hidden').val(qte);
-    if ($qtePanier.length) $qtePanier.text(qte);
+  } else {
+    initMetricHighlights();
   }
-
-  console.log('[HB3D click btn-devis]');
-
-  function recalculerPanierAutomatiquement() {
-  if (!isConfigComplete()) return;
-
-  const result = calculerEstimation();
-  const prixEstime = result.prixFormatte;
-  const rate = result.rate;
-
-  const couleurLabel = $('input[name="couleur"]:checked')
-    .closest('.chip-color')
-    .find('.swatch-label')
-    .text()
-    .trim();
-
-  if ($technoPanier.length)   $technoPanier.text($techno.val());
-  if ($materiauPanier.length) $materiauPanier.text($materiau.val());
-  if ($couleurPanier.length)  $couleurPanier.text(couleurLabel);
-  if ($qtePanier.length)      $qtePanier.text($quantite.val());
-  if ($prixPanier.length)     $prixPanier.text(prixEstime + ' € TTC');
-
-  // Affichage de l’info remise
-  const $remiseInfo = $('#remise-info');
-  if ($remiseInfo.length) {
-    if (rate > 0) {
-      $remiseInfo.text('-' + Math.round(rate * 100) + '%');
-    } else {
-      $remiseInfo.text('');
-    }
-  }
-
-
-  // Message spécial gros volumes
-  const $remiseMessage = $('#remise-message');
-  if ($remiseMessage.length) {
-    const qte = parseInt($quantite.val(), 10) || 1;
-
-    if (qte >= 1000) {
-      $remiseMessage.text('Volume exceptionnel : devis ajusté sur demande.');
-    } else if (qte >= 500) {
-      $remiseMessage.text('Remise maximale appliquée.');
-    } else {
-      $remiseMessage.text('');
-    }
-  }
-}
-
-// Pont entre le calculateur local et le système multi-fichiers.
-window.hb3dCalculerEstimation = calculerEstimation;
-window.hb3dRecalculerPanier = recalculerPanierAutomatiquement;
-  let estimationActive = false;
-
-  $techno.on('change', function () {
-    updateEstimationButtonState();
-    if (estimationActive) recalculerPanierAutomatiquement();
-  });
-
-  $materiau.on('change', function () {
-    updateEstimationButtonState();
-    if (estimationActive) recalculerPanierAutomatiquement();
-  });
-
-  $quantite.on('input change', function () {
-    syncQuantiteEtPanier();
-    updateEstimationButtonState();
-    if (estimationActive) recalculerPanierAutomatiquement();
-  });
-
-  $('input[name="couleur"]').on('change', function () {
-    updateEstimationButtonState();
-    if (estimationActive) recalculerPanierAutomatiquement();
-  });
-
-  syncQuantiteEtPanier();
-  updateEstimationButtonState();
-
-  $btnEstime.on('click', function (e) {
-    e.preventDefault();
-
-    if (!isConfigComplete()) {
-      alert('Merci de compléter techno, matériau, couleur et quantité avant de demander une estimation. Important ! : La Tchnologie SLS sera disponible prochainement.');
-      return;
-    }
-
-    const volumeLotMm3 = (
-  typeof window.hb3dGetVolumeTotalMm3 === 'function'
-)
-  ? window.hb3dGetVolumeTotalMm3()
-  : (window.currentVolumeMm3 || 0);
-
-if (!volumeLotMm3 || volumeLotMm3 <= 0) {
-  alert('Merci de charger au moins un fichier STL valide avant de demander une estimation.');
-  return;
-}
-
-    estimationActive = true;
-    recalculerPanierAutomatiquement();
-  });
-});
+})();
 </script>
 
-<script src="jquery-3.6.3.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init({
-      publicKey: 'yMCFNhgV27X8SzqIp',
-    });
-  })();
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const technoSelect = document.getElementById("techno");
-  const technoCards = document.querySelectorAll(
-    ".devis-techno-card[data-techno]:not(:disabled)"
-  );
-
-  if (!technoSelect || !technoCards.length) {
-    return;
-  }
-
-  function synchroniserCartesTechnologie() {
-    const technologieActive = technoSelect.value;
-
-    technoCards.forEach(function (card) {
-      const active = card.dataset.techno === technologieActive;
-
-      card.classList.toggle("is-active", active);
-      card.setAttribute("aria-pressed", active ? "true" : "false");
-    });
-  }
-
-  technoCards.forEach(function (card) {
-    card.addEventListener("click", function () {
-      const technologieChoisie = card.dataset.techno;
-
-      if (technoSelect.value !== technologieChoisie) {
-        technoSelect.value = technologieChoisie;
-
-        technoSelect.dispatchEvent(
-          new Event("change", { bubbles: true })
-        );
-      }
-
-      synchroniserCartesTechnologie();
-    });
-  });
-
-  technoSelect.addEventListener("change", synchroniserCartesTechnologie);
-
-  synchroniserCartesTechnologie();
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const uploadIcon = document.getElementById("hb3d-upload-icon-button");
-  const fileInput = document.getElementById("file");
-
-  if (!uploadIcon || !fileInput) {
-    return;
-  }
-
-  uploadIcon.addEventListener("click", function () {
-    fileInput.click();
-  });
-});
-</script>
-
-
-</body>
-</html>
-
-
-
+</body></html>
