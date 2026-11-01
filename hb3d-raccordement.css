@@ -1280,3 +1280,33 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Desktop : conserver les lignes du lot et faire défiler le volet. */
+@media (min-width: 1025px) {
+  #panel-cart {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  #cart-summary {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #cart-summary > #cart-list {
+    flex: 0 0 auto;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  #cart-summary > #cart-notes {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+}
