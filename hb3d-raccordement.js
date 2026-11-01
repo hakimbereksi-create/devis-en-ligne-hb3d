@@ -101,6 +101,50 @@
 
       var viewer = new window.JSC3D.Viewer(canvas);
 
+      /*
+ * Tactile : compléter la détection ancienne de JSC3D.
+ * Si le moteur a déjà installé ses contrôles tactiles,
+ * ne pas les installer une seconde fois.
+ */
+if (
+  !window.JSC3D.PlatformInfo.isTouchDevice &&
+  !canvas.dataset.hb3dNativeTouchReady
+) {
+  canvas.dataset.hb3dNativeTouchReady = 'true';
+
+  canvas.addEventListener(
+    'touchstart',
+    function (event) {
+      viewer.touchStartHandler(event);
+    },
+    { passive: false }
+  );
+
+  canvas.addEventListener(
+    'touchmove',
+    function (event) {
+      viewer.touchMoveHandler(event);
+    },
+    { passive: false }
+  );
+
+  canvas.addEventListener(
+    'touchend',
+    function (event) {
+      viewer.touchEndHandler(event);
+    },
+    { passive: false }
+  );
+
+  canvas.addEventListener(
+    'touchcancel',
+    function () {
+      viewer.buttonStates[0] = false;
+    },
+    { passive: false }
+  );
+}
+
       viewer.setParameter('InitRotationX', 20);
       viewer.setParameter('InitRotationY', 20);
       viewer.setParameter('InitRotationZ', 0);

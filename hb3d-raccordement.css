@@ -24,6 +24,10 @@
   display: block;
   width: 100%;
   height: 100%;
+
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Message provisoire, sans interception des interactions. */
@@ -804,3 +808,475 @@
   cursor: default;
 }
 
+/* ==========================================================
+   HB3D — Présentation smartphone / tablette
+   Jusqu'à 1024 px :
+   - viewer pleine largeur ;
+   - outils sous le viewer ;
+   - défilement général de la page.
+   Desktop au-dessus de 1024 px : inchangé.
+   ========================================================== */
+
+@media (max-width: 1024px) {
+
+  /* Cadre général : ne plus comprimer la page dans 100dvh. */
+  body {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 0;
+    grid-template-rows: auto auto auto;
+  }
+
+  .topbar {
+    min-height: 64px;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 12px;
+  }
+
+  .topbar .prototype {
+    position: static;
+    transform: none;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Viewer au-dessus des volets. */
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .workspace > .stage {
+    grid-column: 1;
+    grid-row: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .workspace > .navigation {
+    grid-column: 1;
+    grid-row: 2;
+
+    min-width: 0;
+    min-height: 0;
+    border-top: 1px solid var(--line);
+    border-right: 0;
+  }
+
+  .workspace > .progress {
+    display: none;
+  }
+
+  .navigation > .panel,
+  .navigation > .panel:has(
+    .panel-toggle[aria-expanded="true"]
+  ) {
+    flex: 0 0 auto;
+  }
+
+  .navigation .panel-body {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  /* En-tête du viewer sur deux lignes. */
+  .stage > .viewer {
+    flex: 0 0 auto;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .viewer-header {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+  }
+
+  .viewer-header > .active-piece {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .viewer-header > .hb3d-view-switch {
+    grid-column: 1;
+    grid-row: 2;
+
+    justify-self: center;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  /* Une seule colonne : aucune palette latérale. */
+  .stage .scene {
+    display: grid;
+    flex: 0 0 auto;
+
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 32px 8px 10px;
+
+    overflow: visible;
+  }
+
+  .stage .scene > .scene-note {
+    top: 5px;
+    left: 8px;
+    right: 8px;
+
+    font-size: 8px;
+    line-height: 1.3;
+  }
+
+  /* Surface 3D indépendante des outils. */
+  .stage .scene > .hb3d-real-viewer {
+    grid-column: 1;
+    grid-row: 1;
+
+    align-self: stretch;
+    justify-self: stretch;
+
+    width: 100%;
+    height: clamp(300px, 48vh, 480px);
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+  }
+
+  /* Commandes : navigation, affichage, vues, puis repère. */
+  .stage .scene > .viewer-toolbar {
+    position: relative;
+
+    grid-column: 1;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(4, auto);
+
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 6px 0;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-navigation,
+  .stage .scene .viewer-toolbar > .viewer-modes,
+  .stage .scene .viewer-toolbar > .viewer-views {
+    position: static;
+
+    grid-column: 1;
+    justify-self: center;
+    align-self: center;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+
+    transform: none;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-navigation {
+    grid-row: 1;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-modes {
+    grid-row: 2;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-views {
+    grid-row: 3;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-axis {
+    position: static;
+
+    grid-column: 1;
+    grid-row: 4;
+    justify-self: center;
+
+    width: 60px;
+    height: 44px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+
+    transform: none;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-modes::before,
+  .stage .scene .viewer-toolbar > .viewer-views::before {
+    content: none;
+  }
+
+  .stage .viewer-toolbar button {
+    min-height: 32px;
+  }
+
+  /* Outils sous le viewer, dans leur propre grille. */
+  .stage .scene > .toolbox {
+    grid-column: 1;
+    grid-row: 3;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stage .scene .toolbox > .toolbox-card {
+    grid-column: auto;
+    grid-row: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    align-self: stretch;
+
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 10px;
+
+    overflow: visible;
+  }
+
+  .stage .scene .toolbox > .toolbox-card:first-child,
+  .stage .scene .toolbox > .toolbox-card:last-child {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .stage .toolbox .technology-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .stage .toolbox .machine-choice {
+    flex: 1 1 54px;
+
+    width: auto;
+    max-width: 100px;
+    min-width: 0;
+    height: 66px;
+    padding: 4px;
+  }
+
+  .stage .toolbox .machine-choice img {
+    width: 46px;
+    max-width: 100%;
+    height: 38px;
+  }
+
+  .stage .toolbox .color-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    padding: 6px 0;
+  }
+
+  .stage .toolbox .color-options .color-dot {
+    flex: 0 0 24px;
+
+    width: 24px;
+    min-width: 24px;
+    max-width: 24px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+  }
+
+  .stage .toolbox .material-group,
+  .stage .toolbox .quantity-group {
+    width: 100%;
+    min-width: 0;
+    margin-top: auto;
+    padding-top: 10px;
+    padding-left: 0;
+
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .stage .toolbox .material-group select {
+    height: 34px;
+  }
+
+  .stage .toolbox .quantity-control {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    height: 34px;
+  }
+
+  .stage .toolbox .quantity-control button {
+    width: 32px;
+    height: 30px;
+  }
+
+  /* Mesures : hauteur naturelle, sans ligne fixée à 45 px. */
+  .stage > .metrics {
+    flex: 0 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    height: auto;
+    min-height: 0;
+    padding: 14px 10px;
+  }
+
+  .stage > .metrics > div {
+    min-width: 0;
+  }
+
+  /* Assistance dans le flux de la page. */
+  .stage > .hb3d-ai-bar {
+    flex: 0 0 auto;
+
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+
+    height: auto;
+    min-height: 0;
+    margin: 6px;
+    padding: 10px;
+  }
+
+  .hb3d-ai-status {
+    grid-column: 1;
+    max-width: none;
+    text-align: left;
+  }
+
+  .hb3d-ai-field {
+    width: 100%;
+  }
+
+  .hb3d-ai-field input {
+    height: 36px;
+  }
+
+  .stage > .hb3d-chat-conversation {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  .demo-caption {
+    display: block;
+    padding: 6px 10px;
+  }
+
+/* Panier : réserver la hauteur réelle de tout son contenu. */
+#panel-cart {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+#cart-summary {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+#cart-summary > #cart-list {
+  flex: 0 0 auto;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  overflow: visible;
+}
+
+#cart-notes {
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
+}
+
+  #cart-list .cart-piece-config {
+    flex-wrap: wrap;
+    white-space: normal;
+    row-gap: 6px;
+  }
+
+  .site-footer {
+    min-height: 58px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stage > .metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hb3d-viewer-placeholder {
+    padding: 8px;
+  }
+
+  .hb3d-viewer-placeholder > span {
+    font-size: 11px;
+  }
+
+  .hb3d-viewer-placeholder > small,
+  .hb3d-import-invitation .hb3d-import-formats {
+    font-size: 9px;
+  }
+
+  .hb3d-import-button {
+    padding: 10px 6px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage .scene > .toolbox {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

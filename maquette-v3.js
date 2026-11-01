@@ -1096,15 +1096,24 @@ function renderCart() {
    ========================================== */
 
 function cartView(id) {
-  var views = [
-    'cart-summary',
-    'cart-detail',
-    'cart-notes'
-  ];
+  var inlineNotes = window.matchMedia(
+    '(min-width: 1025px)'
+  ).matches;
 
-  views.forEach(function (key) {
-    byId(key).hidden = key !== id;
-  });
+  /*
+   * Sur Desktop, les précisions font partie
+   * du récapitulatif, et non d'une vue séparée.
+   */
+  if (inlineNotes && id === 'cart-notes') {
+    id = 'cart-summary';
+  }
+
+  byId('cart-summary').hidden = id !== 'cart-summary';
+  byId('cart-detail').hidden = id !== 'cart-detail';
+
+  byId('cart-notes').hidden = inlineNotes
+    ? id !== 'cart-summary'
+    : id !== 'cart-notes';
 }
 
 
@@ -2618,10 +2627,61 @@ renderImportProgress();
       renderCart();
     });
 
-    render();
-    showSend();
-    showNotes();
+    /*
+ * Présentation des précisions :
+ * Desktop : sous le récapitulatif, avant les actions.
+ * Compact : conserver la vue séparée existante.
+ */
+var notesLayoutQuery = window.matchMedia(
+  '(min-width: 1025px)'
+);
+
+var notesSection = byId('cart-notes');
+var notesOriginalPosition = document.createComment(
+  'HB3D : emplacement compact des précisions'
+);
+
+notesSection.parentNode.insertBefore(
+  notesOriginalPosition,
+  notesSection
+);
+
+function syncNotesLayout() {
+  var summary = byId('cart-summary');
+  var actions = summary.querySelector('.actions');
+
+  if (notesLayoutQuery.matches) {
+    actions.insertAdjacentElement(
+      'beforebegin',
+      notesSection
+    );
+  } else {
+    notesOriginalPosition.parentNode.insertBefore(
+      notesSection,
+      notesOriginalPosition.nextSibling
+    );
   }
+
+  /*
+   * Revenir au récapitulatif après un changement
+   * de présentation, sans effacer les notes.
+   */
+  cartView('cart-summary');
+  showNotes();
+}
+
+notesLayoutQuery.addEventListener(
+  'change',
+  syncNotesLayout
+);
+
+syncNotesLayout();
+
+render();
+showSend();
+showNotes();
+
+}
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
