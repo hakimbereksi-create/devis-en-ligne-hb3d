@@ -59,7 +59,19 @@
     header.className = 'hb3d-chat-heading';
 
     var title = document.createElement('h2');
-    title.textContent = 'Assistant HB3D';
+    title.className = 'hb3d-chat-title';
+
+    var logo = document.createElement('img');
+    logo.className = 'hb3d-chat-logo';
+    logo.src = 'images/Logo Rond HB3D.png';
+    logo.alt = '';
+    logo.width = 24;
+    logo.height = 24;
+
+    var titleText = document.createElement('span');
+    titleText.textContent = 'Assistant HB3D';
+
+    title.append(logo, titleText);
 
     var closeButton = document.createElement('button');
     closeButton.type = 'button';

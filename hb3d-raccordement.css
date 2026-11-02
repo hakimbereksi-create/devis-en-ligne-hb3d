@@ -1415,3 +1415,27 @@
     transform: none;
   }
 }
+
+/* HB3D — logo dans l'en-tête du chat. */
+#hb3d-help-dialog .hb3d-chat-heading .hb3d-chat-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+  margin: 0;
+}
+
+#hb3d-help-dialog .hb3d-chat-title > .hb3d-chat-logo {
+  display: block;
+  flex: 0 0 24px;
+
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* HB3D — champ de saisie aux arrondis discrets. */
+#hb3d-help-dialog .hb3d-ai-field > #hb3d-ai-question {
+  border-radius: 4px;
+}
