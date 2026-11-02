@@ -1317,3 +1317,39 @@
     overflow: visible;
   }
 }
+
+/* HB3D — barre d'outils compacte sur tablette paysage. */
+/* HB3D — barre d'outils compacte sur tablette,
+   en portrait comme en paysage. */
+@media (min-width: 601px) and (max-width: 1366px)
+       and (hover: none)
+       and (pointer: coarse) {
+
+  .stage .scene > .viewer-toolbar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px 12px;
+    padding: 4px 0;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-navigation,
+  .stage .scene .viewer-toolbar > .viewer-modes,
+  .stage .scene .viewer-toolbar > .viewer-views {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .stage .scene .viewer-toolbar > .viewer-axis {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 32px;
+    margin: 0;
+    align-self: center;
+  }
+}
