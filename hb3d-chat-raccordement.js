@@ -106,6 +106,52 @@
       messages.scrollTop = messages.scrollHeight;
     }
 
+    /* Indicateur temporaire pendant l'attente de la réponse. */
+var waitingMessage = null;
+
+function showWaiting() {
+  hideWaiting();
+
+  waitingMessage = document.createElement('div');
+  waitingMessage.className =
+    'hb3d-chat-message bot hb3d-chat-waiting';
+
+  /*
+   * L'annonce accessible est assurée par le statut,
+   * pour ne pas annoncer également les points décoratifs.
+   */
+  waitingMessage.setAttribute('aria-hidden', 'true');
+
+  var label = document.createElement('strong');
+  label.textContent = 'Assistant HB3D';
+
+  var content = document.createElement('p');
+  content.className = 'hb3d-chat-waiting-content';
+
+  var dots = document.createElement('span');
+  dots.className = 'hb3d-chat-waiting-dots';
+
+  for (var i = 0; i < 3; i++) {
+    dots.appendChild(document.createElement('span'));
+  }
+
+  var text = document.createElement('span');
+  text.textContent = 'Prépare sa réponse…';
+
+  content.append(dots, text);
+  waitingMessage.append(label, content);
+  messages.appendChild(waitingMessage);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function hideWaiting() {
+  if (!waitingMessage) return;
+
+  waitingMessage.remove();
+  waitingMessage = null;
+}
+
     function openConversation() {
       panel.hidden = false;
       sendButton.setAttribute('aria-expanded', 'true');
@@ -141,6 +187,8 @@
       sendButton.textContent = '…';
       status.textContent = 'L’assistant prépare sa réponse…';
       panel.setAttribute('aria-busy', 'true');
+
+      showWaiting();
 
       var controller = new AbortController();
 
@@ -196,9 +244,12 @@
           );
         }
 
+        hideWaiting();
         addMessage('bot', data.reply);
         status.textContent = 'Assistant HB3D connecté';
       } catch (error) {
+        hideWaiting();
+
         var message = error.name === 'AbortError'
           ? 'Le délai d’attente est dépassé. ' +
             'Le traitement peut encore être en cours côté serveur.'
@@ -212,7 +263,9 @@
 
         /* Conserver la question pour une éventuelle nouvelle tentative. */
         input.value = text;
-      } finally {
+       } finally {
+        hideWaiting();
+
         window.clearTimeout(timeout);
         sending = false;
         input.disabled = false;

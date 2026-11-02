@@ -1352,3 +1352,66 @@
     align-self: center;
   }
 }
+
+/* HB3D — attente de la réponse de l'assistant. */
+#hb3d-chat-conversation .hb3d-chat-waiting-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  color: #586579;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.hb3d-chat-waiting-dots {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  min-height: 18px;
+}
+
+.hb3d-chat-waiting-dots > span {
+  display: block;
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+  background: #142548;
+  opacity: 0.35;
+
+  animation: hb3d-chat-dot-pulse 1.2s ease-in-out infinite;
+}
+
+.hb3d-chat-waiting-dots > span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.hb3d-chat-waiting-dots > span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes hb3d-chat-dot-pulse {
+  0%, 60%, 100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* Garder un indicateur statique si les animations sont réduites. */
+@media (prefers-reduced-motion: reduce) {
+  .hb3d-chat-waiting-dots > span {
+    animation: none;
+    opacity: 0.7;
+    transform: none;
+  }
+}
