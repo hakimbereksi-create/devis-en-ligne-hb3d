@@ -7,7 +7,8 @@ ini_set('display_errors', 1);
 // ----------------------
 $allowedOrigins = [
     'https://hakimbereksi-create.github.io',
-    'http://localhost:8080'
+    'http://localhost:8080',
+    'http://127.0.0.1:3000'
 ];
 
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';

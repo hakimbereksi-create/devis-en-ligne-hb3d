@@ -7,7 +7,8 @@
 // Origines front autorisées : GitHub Pages et environnement local XAMPP.
 $allowedOrigins = [
     'https://hakimbereksi-create.github.io',
-    'http://localhost:8080'
+    'http://localhost:8080',
+    'http://127.0.0.1:3000'
 ];
 
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
@@ -34,7 +35,14 @@ $data = array();
 if (isset($_GET['files'])) {
 
     // Formats autorisés
-    $formats_autorises = array('stl', 'obj');
+    $formats_autorises = array(
+    'stl',
+    'obj',
+    'step',
+    'stp',
+    'igs',
+    'iges'
+);
     
     // Taille max : 50 Mo
     $taille_max = 50 * 1024 * 1024;
@@ -61,7 +69,7 @@ if (isset($_GET['files'])) {
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if (!in_array($extension, $formats_autorises)) {
             $error = true;
-            $data  = array('error' => 'Format non supporté. Utilisez STL ou OBJ.');
+            $data  = array('error' => 'Format non supporté. Utilisez STL, OBJ, STEP, STP, IGS ou IGES.');
             break;
         }
 
