@@ -810,14 +810,21 @@
 
 /* ==========================================================
    HB3D — Présentation smartphone / tablette
-   Jusqu'à 1024 px :
-   - viewer pleine largeur ;
-   - outils sous le viewer ;
-   - défilement général de la page.
-   Desktop au-dessus de 1024 px : inchangé.
+
+   - Présentation existante jusqu'à 1024 px.
+   - Extension aux écrans tactiles en paysage :
+     largeur de 1025 à 1366 px, hauteur maximale de 900 px,
+     pointeur principal tactile et absence de survol.
+
+   Le contenu du bloc reste inchangé.
    ========================================================== */
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px),
+       (min-width: 1025px) and (max-width: 1366px)
+       and (max-height: 900px)
+       and (orientation: landscape)
+       and (hover: none)
+       and (pointer: coarse) {
 
   /* Cadre général : ne plus comprimer la page dans 100dvh. */
   body {
