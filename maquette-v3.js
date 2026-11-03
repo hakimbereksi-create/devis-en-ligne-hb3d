@@ -2441,6 +2441,18 @@ byId('send-next').addEventListener('click', async function () {
 
     submitBody.set('quantite', String(pricing.quantity));
     submitBody.set('prix_affiche', pricing.net.toFixed(2));
+
+    submitBody.set(
+    'pricing_json',
+    JSON.stringify({
+    quantity: pricing.quantity,
+    gross: pricing.gross,
+    rate: pricing.rate,
+    discount: pricing.discount,
+    net: pricing.net
+     })
+    );
+
     submitBody.set('commentaire', customerNotes);
     submitBody.set('notes', submittedNotes);
 
@@ -2480,6 +2492,73 @@ byId('send-next').addEventListener('click', async function () {
     recorded = true;
     submissionLocked = true;
     quote = data.quote_number || data.devis_id || '';
+
+    /*
+ * Préparer le lien dès la confirmation serveur.
+ * Il restera disponible même si EmailJS échoue ensuite.
+ */
+var pdfLink = byId('hb3d-quote-pdf-link');
+var pdfStatus = byId('hb3d-quote-pdf-status');
+
+if (pdfLink) pdfLink.remove();
+if (pdfStatus) pdfStatus.remove();
+
+if (data.pdf_download_path) {
+  var submitEndpoint = new URL(
+    HB3D_PHP_BASE_URL + 'submit.php',
+    window.location.href
+  );
+
+  var downloadUrl = new URL(
+    data.pdf_download_path,
+    submitEndpoint
+  );
+
+  var expectedDownloadUrl = new URL(
+    'download-quote.php',
+    submitEndpoint
+  );
+
+  if (
+    downloadUrl.origin === expectedDownloadUrl.origin &&
+    downloadUrl.pathname === expectedDownloadUrl.pathname
+  ) {
+    pdfLink = document.createElement('a');
+    pdfLink.id = 'hb3d-quote-pdf-link';
+    pdfLink.href = downloadUrl.href;
+    pdfLink.textContent = 'Télécharger mon estimation PDF';
+    pdfLink.target = '_blank';
+    pdfLink.rel = 'noopener noreferrer';
+    pdfLink.referrerPolicy = 'no-referrer';
+
+    pdfLink.style.display = 'inline-block';
+    pdfLink.style.marginTop = '16px';
+    pdfLink.style.padding = '12px 18px';
+    pdfLink.style.borderRadius = '8px';
+    pdfLink.style.backgroundColor = '#c90045';
+    pdfLink.style.color = '#ffffff';
+    pdfLink.style.textDecoration = 'none';
+
+    byId('send-done').appendChild(pdfLink);
+
+    pdfStatus = document.createElement('p');
+    pdfStatus.id = 'hb3d-quote-pdf-status';
+    pdfStatus.textContent =
+      'Lien confidentiel valable 7 jours. ' +
+      'Conservez le PDF après téléchargement.';
+
+    byId('send-done').appendChild(pdfStatus);
+  }
+} else {
+  pdfStatus = document.createElement('p');
+  pdfStatus.id = 'hb3d-quote-pdf-status';
+  pdfStatus.textContent =
+    data.pdf_download_warning ||
+    data.pdf_warning ||
+    'Le téléchargement du PDF est indisponible.';
+
+  byId('send-done').appendChild(pdfStatus);
+}
 
     var params = {
       HB3D: contact.nom,
