@@ -876,6 +876,141 @@ if (
   }
 
   /* HB3D — vue globale du lot. */
+
+/*
+ * Vignettes PDF : rendu séparé du viewer visible.
+ * Aucun transfert réseau et aucun changement des prix.
+ */
+var quoteThumbnailViewer = null;
+var quoteThumbnailCanvas = null;
+var quoteThumbnailQueue = Promise.resolve();
+
+function getQuoteThumbnailViewer() {
+  if (quoteThumbnailViewer) return quoteThumbnailViewer;
+
+  var canvas = document.createElement('canvas');
+  canvas.width = 480;
+  canvas.height = 360;
+
+  var viewer = new window.JSC3D.Viewer(canvas);
+
+  viewer.setParameter('BackgroundColor1', '#ffffff');
+  viewer.setParameter('BackgroundColor2', '#ffffff');
+  viewer.setParameter('RenderMode', 'smooth');
+  viewer.setParameter('Definition', 'standard');
+  viewer.setParameter('CreaseAngle', '35');
+
+  viewer.init();
+  viewer.enableDefaultInputHandler(false);
+
+  quoteThumbnailCanvas = canvas;
+  quoteThumbnailViewer = viewer;
+
+  return viewer;
+}
+
+async function renderQuoteThumbnail(file, colorName) {
+  if (!file || !window.JSC3D) {
+    throw new Error('Fichier ou moteur 3D indisponible.');
+  }
+
+  var extension = file.name.split('.').pop().toLowerCase();
+  var sourceScene = await getScene(file, extension);
+
+  var scene = new window.JSC3D.Scene('hb3d-pdf-thumbnail');
+
+  var hex = lotColors[colorName] || '#919ba7';
+
+  var material = new window.JSC3D.Material(
+    'hb3d-pdf-material',
+    0,
+    parseInt(hex.slice(1), 16),
+    0,
+    false
+  );
+
+  sourceScene.getChildren().forEach(function (source) {
+    if (
+      source.hb3dDisplayGrid ||
+      !source.vertexBuffer ||
+      !source.indexBuffer
+    ) {
+      return;
+    }
+
+    var mesh = copyLotMesh(source);
+    mesh.setMaterial(material);
+    mesh.setRenderMode('smooth');
+    scene.addChild(mesh);
+  });
+
+  if (!scene.getChildren().length) {
+    throw new Error('Aucun maillage disponible pour la vignette.');
+  }
+
+  var viewer = getQuoteThumbnailViewer();
+
+  return new Promise(function (resolve, reject) {
+    var completed = false;
+
+    var timer = window.setTimeout(function () {
+      finish(new Error('Délai de rendu de la vignette dépassé.'));
+    }, 10000);
+
+    function finish(error, image) {
+      if (completed) return;
+
+      completed = true;
+      window.clearTimeout(timer);
+      viewer.afterupdate = null;
+
+      if (error) reject(error);
+      else resolve(image);
+    }
+
+    try {
+      viewer.replaceScene(scene);
+
+      viewer.rotMatrix.identity();
+      viewer.rotMatrix.rotateAboutXAxis(-90);
+      viewer.rotMatrix.rotateAboutYAxis(45);
+      viewer.rotMatrix.rotateAboutXAxis(35.26438968);
+
+      viewer.panning[0] = 0;
+      viewer.panning[1] = 0;
+      viewer.zoomFactor *= 0.85;
+
+      viewer.afterupdate = function () {
+        try {
+          var image = quoteThumbnailCanvas.toDataURL('image/png');
+
+          if (image.indexOf('data:image/png;base64,') !== 0) {
+            throw new Error('Image de vignette invalide.');
+          }
+
+          finish(null, image);
+        } catch (error) {
+          finish(error);
+        }
+      };
+
+      viewer.update();
+    } catch (error) {
+      finish(error);
+    }
+  });
+}
+
+/* Sérialiser les rendus pour ne pas mélanger les pièces. */
+window.hb3dCreateQuoteThumbnail = function (file, colorName) {
+  var task = quoteThumbnailQueue.then(function () {
+    return renderQuoteThumbnail(file, colorName);
+  });
+
+  quoteThumbnailQueue = task.catch(function () {});
+  return task;
+};
+
 var lotState = null;
 var lotFiles = [];
 var lotRevision = 0;

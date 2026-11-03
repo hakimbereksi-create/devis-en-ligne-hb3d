@@ -40,3 +40,7 @@ index.before-mobile-order-*.html
 vendor/*
 !vendor/occt/
 !vendor/occt/**
+
+# Outils locaux de mise au point PDF
+/php/preview-quote.php
+/php/test-pdf.php

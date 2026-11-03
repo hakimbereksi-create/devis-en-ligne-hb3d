@@ -2404,6 +2404,37 @@ byId('send-next').addEventListener('click', async function () {
   startSendProgress();
 
   try {
+    /*
+     * Préparer une vignette par ligne.
+     * Le viewer visible et les prix restent inchangés.
+     */
+    if (typeof window.hb3dCreateQuoteThumbnail !== 'function') {
+      throw new Error(
+        'Le générateur de vignettes PDF est indisponible.'
+      );
+    }
+
+    var quoteThumbnails = [];
+
+    for (var thumbnailIndex = 0;
+         thumbnailIndex < rows.length;
+         thumbnailIndex++) {
+      var thumbnailRow = rows[thumbnailIndex];
+
+      showSendNotice(
+        'Préparation des vues 3D : ' +
+        (thumbnailIndex + 1) + ' / ' + rows.length + '…'
+      );
+
+      var thumbnailImage =
+        await window.hb3dCreateQuoteThumbnail(
+          thumbnailRow.file,
+          thumbnailRow.color
+        );
+
+      quoteThumbnails.push(thumbnailImage);
+    }
+
     window.emailjs.init({
       publicKey: HB3D_EMAIL_PUBLIC_KEY
     });
@@ -2474,6 +2505,24 @@ byId('send-next').addEventListener('click', async function () {
       'configurations_json',
       JSON.stringify(configurations)
     );
+
+    /*
+ * Associer chaque vignette au nom du fichier transféré.
+ * Ne pas placer les images dans les notes ou dans EmailJS.
+ */
+var thumbnailsPayload = configurations.map(
+  function (configuration, index) {
+    return {
+      filename: configuration.filename,
+      image: quoteThumbnails[index]
+    };
+  }
+);
+
+submitBody.set(
+  'thumbnails_json',
+  JSON.stringify(thumbnailsPayload)
+);
 
     uploaded.files.forEach(function (filename) {
       submitBody.append('filenames[]', filename);

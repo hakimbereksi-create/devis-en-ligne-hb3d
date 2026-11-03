@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
 
 // ----------------------
 // CORS pour GitHub Pages
@@ -72,6 +73,329 @@ $filenames = isset($_POST['filenames']) ? $_POST['filenames'] : [];
 if (!is_array($filenames)) {
     $filenames = [$filenames];
 }
+
+// ----------------------
+// Données détaillées destinées au devis PDF
+// ----------------------
+function hb3dInvalidQuoteData($message)
+{
+    http_response_code(400);
+
+    echo json_encode(
+        ['error' => $message],
+        JSON_UNESCAPED_UNICODE
+    );
+
+    exit;
+}
+
+$configurationsRaw = $_POST['configurations_json'] ?? '';
+$pricingRaw = $_POST['pricing_json'] ?? '';
+
+if (
+    !is_string($configurationsRaw) ||
+    !is_string($pricingRaw) ||
+    $configurationsRaw === '' ||
+    $pricingRaw === ''
+) {
+    hb3dInvalidQuoteData(
+        'Les détails du devis sont incomplets.'
+    );
+}
+
+$configurations = json_decode($configurationsRaw, true);
+
+if (
+    json_last_error() !== JSON_ERROR_NONE ||
+    !is_array($configurations) ||
+    count($configurations) === 0 ||
+    array_keys($configurations) !==
+        range(0, count($configurations) - 1)
+) {
+    hb3dInvalidQuoteData(
+        'La liste des configurations est invalide.'
+    );
+}
+
+$pricingData = json_decode($pricingRaw, true);
+
+if (
+    json_last_error() !== JSON_ERROR_NONE ||
+    !is_array($pricingData)
+) {
+    hb3dInvalidQuoteData(
+        'Le récapitulatif financier est invalide.'
+    );
+}
+
+$requiredPricingFields = [
+    'quantity',
+    'gross',
+    'rate',
+    'discount',
+    'net'
+];
+
+foreach ($requiredPricingFields as $field) {
+    $value = $pricingData[$field] ?? null;
+
+    if (
+        (!is_int($value) && !is_float($value)) ||
+        !is_finite((float) $value) ||
+        $value < 0
+    ) {
+        hb3dInvalidQuoteData(
+            'Valeur financière invalide : ' . $field
+        );
+    }
+}
+
+if (
+    $pricingData['quantity'] < 1 ||
+    floor((float) $pricingData['quantity']) !==
+        (float) $pricingData['quantity'] ||
+    $pricingData['rate'] > 1
+) {
+    hb3dInvalidQuoteData(
+        'La quantité totale ou le taux de remise est invalide.'
+    );
+}
+
+if (count($configurations) !== count($filenames)) {
+    hb3dInvalidQuoteData(
+        'Le nombre de configurations ne correspond pas aux fichiers.'
+    );
+}
+
+$textFields = [
+    'filename',
+    'original_name',
+    'tech',
+    'material',
+    'color',
+    'finish'
+];
+
+foreach ($configurations as $index => $configuration) {
+    if (!is_array($configuration)) {
+        hb3dInvalidQuoteData(
+            'Configuration invalide à la ligne ' . ($index + 1)
+        );
+    }
+
+    foreach ($textFields as $field) {
+        if (
+            !isset($configuration[$field]) ||
+            !is_string($configuration[$field])
+        ) {
+            hb3dInvalidQuoteData(
+                'Champ de configuration invalide : ' . $field
+            );
+        }
+    }
+
+    if (
+        $configuration['filename'] === '' ||
+        $configuration['original_name'] === '' ||
+        $configuration['filename'] !== $filenames[$index]
+    ) {
+        hb3dInvalidQuoteData(
+            'Le fichier de la ligne ' . ($index + 1) .
+            ' ne correspond pas au transfert.'
+        );
+    }
+
+    foreach (['quantity', 'unit', 'amount'] as $field) {
+        $value = $configuration[$field] ?? null;
+
+        if (
+            (!is_int($value) && !is_float($value)) ||
+            !is_finite((float) $value) ||
+            $value < 0
+        ) {
+            hb3dInvalidQuoteData(
+                'Valeur de ligne invalide : ' . $field
+            );
+        }
+    }
+
+    if (
+        $configuration['quantity'] < 1 ||
+        floor((float) $configuration['quantity']) !==
+            (float) $configuration['quantity']
+    ) {
+        hb3dInvalidQuoteData(
+            'Quantité invalide à la ligne ' . ($index + 1)
+        );
+    }
+}
+
+// ----------------------
+// Vignettes PDF : contrôle séparé des données journalisées
+// ----------------------
+$thumbnailsRaw = $_POST['thumbnails_json'] ?? '';
+
+if (
+    !is_string($thumbnailsRaw) ||
+    $thumbnailsRaw === '' ||
+    strlen($thumbnailsRaw) > 3000000
+) {
+    hb3dInvalidQuoteData(
+        'Les vignettes du devis sont absentes ou trop volumineuses.'
+    );
+}
+
+$thumbnailsData = json_decode($thumbnailsRaw, true);
+
+if (
+    json_last_error() !== JSON_ERROR_NONE ||
+    !is_array($thumbnailsData) ||
+    count($thumbnailsData) < 1 ||
+    count($thumbnailsData) > 5 ||
+    count($thumbnailsData) !== count($configurations) ||
+    array_keys($thumbnailsData) !==
+        range(0, count($thumbnailsData) - 1)
+) {
+    hb3dInvalidQuoteData(
+        'La liste des vignettes ne correspond pas aux pièces.'
+    );
+}
+
+if (
+    !function_exists('getimagesizefromstring') ||
+    !function_exists('imagecreatefromstring') ||
+    !function_exists('imagepng')
+) {
+    http_response_code(500);
+
+    echo json_encode(
+        [
+            'error' =>
+                'Le traitement des vignettes nécessite ' .
+                'l’extension PHP GD avec le support PNG.'
+        ],
+        JSON_UNESCAPED_UNICODE
+    );
+
+    exit;
+}
+
+$quoteThumbnails = [];
+$thumbnailPrefix = 'data:image/png;base64,';
+
+foreach ($thumbnailsData as $index => $thumbnail) {
+    $lineNumber = $index + 1;
+
+    if (
+        !is_array($thumbnail) ||
+        !isset($thumbnail['filename'], $thumbnail['image']) ||
+        !is_string($thumbnail['filename']) ||
+        !is_string($thumbnail['image']) ||
+        $thumbnail['filename'] !== $filenames[$index]
+    ) {
+        hb3dInvalidQuoteData(
+            'Correspondance de vignette invalide à la ligne ' .
+            $lineNumber
+        );
+    }
+
+    $imageData = $thumbnail['image'];
+
+    if (
+        strlen($imageData) > 550000 ||
+        strncmp(
+            $imageData,
+            $thumbnailPrefix,
+            strlen($thumbnailPrefix)
+        ) !== 0
+    ) {
+        hb3dInvalidQuoteData(
+            'Format ou taille de vignette invalide à la ligne ' .
+            $lineNumber
+        );
+    }
+
+    $binary = base64_decode(
+        substr($imageData, strlen($thumbnailPrefix)),
+        true
+    );
+
+    if (
+        $binary === false ||
+        strlen($binary) > 400 * 1024 ||
+        substr($binary, 0, 8) !== "\x89PNG\r\n\x1a\n"
+    ) {
+        hb3dInvalidQuoteData(
+            'Données PNG invalides à la ligne ' . $lineNumber
+        );
+    }
+
+    /*
+     * Vérifier les dimensions avant le décodage GD.
+     * Ce contrôle ne remplace pas le décodage ci-dessous.
+     */
+    $imageInfo = @getimagesizefromstring($binary);
+
+    if (
+        $imageInfo === false ||
+        $imageInfo[0] !== 480 ||
+        $imageInfo[1] !== 360 ||
+        $imageInfo[2] !== IMAGETYPE_PNG
+    ) {
+        hb3dInvalidQuoteData(
+            'La vignette doit être un PNG de 480 × 360 pixels ' .
+            'à la ligne ' . $lineNumber
+        );
+    }
+
+    $image = @imagecreatefromstring($binary);
+
+    if ($image === false) {
+        hb3dInvalidQuoteData(
+            'Vignette illisible à la ligne ' . $lineNumber
+        );
+    }
+
+    /*
+     * Réencoder l’image : ne pas transmettre directement
+     * le contenu reçu au générateur PDF.
+     */
+    ob_start();
+
+    try {
+        $encoded = @imagepng($image, null, 6);
+        $normalizedPng = ob_get_contents();
+    } finally {
+        ob_end_clean();
+        imagedestroy($image);
+    }
+
+    if (
+        !$encoded ||
+        !is_string($normalizedPng) ||
+        $normalizedPng === '' ||
+        strlen($normalizedPng) > 400 * 1024
+    ) {
+        hb3dInvalidQuoteData(
+            'Préparation de vignette impossible à la ligne ' .
+            $lineNumber
+        );
+    }
+
+    $quoteThumbnails[] = [
+        'filename' => $filenames[$index],
+        'image' =>
+            $thumbnailPrefix . base64_encode($normalizedPng)
+    ];
+}
+
+unset(
+    $thumbnailsRaw,
+    $thumbnailsData,
+    $binary,
+    $imageData,
+    $normalizedPng
+);
 
 // Infos serveur
 $ip        = $_SERVER['REMOTE_ADDR']     ?? '';
@@ -184,6 +508,8 @@ $cleanData = [
 'prix_affiche'=> $prixAffiche,
 'notes' => $notes,
 'filenames' => $filenames,
+'configurations' => $configurations,
+'pricing' => $pricingData,
 'ip' => $ip,
 'user_agent' => $userAgent,
 ];
@@ -220,7 +546,206 @@ $finalLogBlock .= $entryJson . PHP_EOL;
 $finalLogBlock .= "------------------------" . PHP_EOL;
 
 $logFile = __DIR__ . '/devis_log.txt';
-file_put_contents($logFile, $finalLogBlock, FILE_APPEND);
+
+$logWritten = @file_put_contents(
+    $logFile,
+    $finalLogBlock,
+    FILE_APPEND | LOCK_EX
+);
+
+if (
+    $logWritten === false ||
+    $logWritten !== strlen($finalLogBlock)
+) {
+    error_log(
+        '[HB3D] Écriture du journal non confirmée pour ' .
+        $quoteNumber
+    );
+
+    http_response_code(500);
+
+    echo json_encode(
+        [
+            'success' => false,
+            'error' =>
+                'Enregistrement non confirmé. ' .
+                'Vérifiez le journal avant toute nouvelle tentative.'
+        ],
+        JSON_UNESCAPED_UNICODE
+    );
+
+    exit;
+}
+
+
+// ----------------------
+// Génération du PDF privé
+// ----------------------
+$pdfGenerated = false;
+$pdfWarning = null;
+$pdfFilename = null;
+
+$pdfDownloadPath = null;
+$pdfDownloadWarning = null;
+
+/*
+ * Chemin local XAMPP, hors de C:\xampp\htdocs.
+ * À adapter explicitement lors d'une mise en production.
+ */
+$pdfStorageDirectory = 'C:/xampp/hb3d-private/quotes';
+
+try {
+    require_once __DIR__ . '/lib/quote-pdf.php';
+
+    /*
+ * Ajouter les vignettes uniquement aux données du PDF.
+ * Ne pas modifier $cleanData, utilisé pour le journal.
+ */
+$pdfData = $cleanData;
+$pdfData['thumbnails'] = $quoteThumbnails;
+
+$pdfResult = hb3dGenerateQuotePdf(
+    $pdfData,
+    $pdfStorageDirectory
+);
+
+/*
+ * Données d'aperçu : uniquement sur le XAMPP local.
+ * Le fichier reste hors de htdocs.
+ * Un échec de sauvegarde ne bloque pas le devis.
+ */
+if (
+    PHP_OS_FAMILY === 'Windows' &&
+    in_array(
+        $_SERVER['REMOTE_ADDR'] ?? '',
+        ['127.0.0.1', '::1'],
+        true
+    )
+) {
+    try {
+        $previewJson = json_encode(
+            $pdfData,
+            JSON_UNESCAPED_UNICODE |
+            JSON_UNESCAPED_SLASHES |
+            JSON_THROW_ON_ERROR
+        );
+
+        $previewDataPath =
+            'C:/xampp/hb3d-private/quotes/preview-data.json';
+
+        $previewWritten = @file_put_contents(
+            $previewDataPath,
+            $previewJson,
+            LOCK_EX
+        );
+
+        if (
+            $previewWritten === false ||
+            $previewWritten !== strlen($previewJson)
+        ) {
+            error_log(
+                '[HB3D PREVIEW] Sauvegarde des données incomplète.'
+            );
+        }
+    } catch (\Throwable $previewError) {
+        error_log(
+            '[HB3D PREVIEW] Impossible de préparer les données.'
+        );
+    }
+}
+
+unset($pdfData);
+
+    $pdfFilename = $pdfResult['filename'];
+    $pdfGenerated = true;
+
+    error_log(
+        '[HB3D PDF] Généré pour ' .
+        $quoteNumber . ' : ' . $pdfFilename
+    );
+} catch (\Throwable $error) {
+    $pdfWarning =
+        'Demande enregistrée, mais PDF indisponible.';
+
+    error_log(
+        '[HB3D PDF] Échec pour ' .
+        $quoteNumber . ' : ' . $error->getMessage()
+    );
+}
+
+// ----------------------
+// Création d'un accès temporaire au PDF
+// ----------------------
+if ($pdfGenerated && $pdfFilename !== null) {
+    try {
+        $accessDirectory = 'C:/xampp/hb3d-private/quote-access';
+
+        if (
+            !is_dir($accessDirectory) &&
+            !@mkdir($accessDirectory, 0700, true) &&
+            !is_dir($accessDirectory)
+        ) {
+            throw new RuntimeException(
+                'Impossible de créer le dossier des accès PDF.'
+            );
+        }
+
+        $downloadToken = bin2hex(random_bytes(32));
+        $tokenHash = hash('sha256', $downloadToken);
+
+        $accessData = [
+            'quote_number' => $quoteNumber,
+            'filename' => $pdfFilename,
+            'expires_at' => time() + (7 * 24 * 60 * 60)
+        ];
+
+        $accessJson = json_encode(
+            $accessData,
+            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+        );
+
+        if ($accessJson === false) {
+            throw new RuntimeException(
+                'Impossible de préparer l’accès PDF.'
+            );
+        }
+
+        $accessFile =
+            $accessDirectory . '/' . $tokenHash . '.json';
+
+        $accessWritten = @file_put_contents(
+            $accessFile,
+            $accessJson,
+            LOCK_EX
+        );
+
+        if (
+            $accessWritten === false ||
+            $accessWritten !== strlen($accessJson)
+        ) {
+            @unlink($accessFile);
+
+            throw new RuntimeException(
+                'Impossible d’enregistrer l’accès PDF.'
+            );
+        }
+
+        /*
+         * Chemin relatif à submit.php.
+         * Aucun domaine calculé à partir des en-têtes HTTP.
+         */
+        $pdfDownloadPath =
+            'download-quote.php?token=' . $downloadToken;
+    } catch (\Throwable $error) {
+        $pdfDownloadWarning =
+            'PDF généré, mais lien de téléchargement indisponible.';
+
+        error_log(
+            '[HB3D PDF ACCESS] Échec pour ' .
+            $quoteNumber . ' : ' . $error->getMessage()
+        );
+    }
+}
 
 // ----------------------
 // Construction du corps d'email
@@ -321,5 +846,10 @@ echo json_encode([
 'notes' => $notes,
 'filenames' => $filenames,
 'stripe_link' => $stripe_link,
+'pdf_generated' => $pdfGenerated,
+'pdf_filename' => $pdfFilename,
+'pdf_warning' => $pdfWarning,
+'pdf_download_path' => $pdfDownloadPath,
+'pdf_download_warning' => $pdfDownloadWarning,
 ]);
 
