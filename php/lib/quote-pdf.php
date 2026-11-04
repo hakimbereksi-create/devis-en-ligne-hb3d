@@ -718,7 +718,43 @@ table.quote-header {
     line-height: 0;
 }
 
+.company-legal {
+    margin-top: 4px;
+    font-size: 8px;
+    line-height: 1.15;
+    color: #555555;
+}
 
+.company-legal-table {
+    width: auto !important;
+    margin: 0 !important;
+    border: none !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 8px;
+    line-height: 1.15;
+    color: #555555;
+}
+
+.company-legal-table td {
+    width: auto !important;
+    padding: 0 !important;
+    border: none !important;
+    vertical-align: top;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.company-legal-table td:first-child {
+    padding-right: 8px !important;
+}
+
+.company-heading {
+    font-family: 'HB3DOrbitron', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #d71920;
+}
 
     </style>
 </head>
@@ -736,12 +772,24 @@ table.quote-header {
                 <div class="company-heading">HB3D SAS</div>
 
                 <div class="company-details">
-                    129, rue de Dunkerque<br>
-                    59155 Faches-Thumesnil<br>
-                    Tél. : 06 84 88 25 54<br>
-                    E-mail :
-                    <a href="mailto:hbereksi@hb3d.fr">hbereksi@hb3d.fr</a>
-                </div>
+    129, rue de Dunkerque<br>
+    59155 Faches-Thumesnil<br>
+    Tél. : 06 84 88 25 54<br>
+    E-mail :
+    <a href="mailto:hbereksi@hb3d.fr">hbereksi@hb3d.fr</a>
+
+    <div class="company-legal">
+    <table class="company-legal-table">
+        <tr>
+            <td>N.I.I. : FR 31 813332558</td>
+            <td>R.C.S. : Lille Metropole</td>
+        </tr>
+        <tr>
+            <td>S.I.R.E.T. : 813332558 00010</td>
+            <td>N.A.F. (A.P.E.) : 1813Z</td>
+        </tr>
+    </table>
+</div>
             </td>
 
             <td class="quote-meta">
@@ -900,18 +948,49 @@ table.quote-header {
 </html>
 HTML;
 
-    $options = new \Dompdf\Options();
-    $options->set('isRemoteEnabled', false);
-    $options->set('isPhpEnabled', false);
-    $options->set('isJavascriptEnabled', false);
-    $options->set('defaultFont', 'DejaVu Sans');
+$options = new \Dompdf\Options();
 
-    $pdf = new \Dompdf\Dompdf($options);
-    $pdf->loadHtml($html, 'UTF-8');
-    $pdf->setPaper('A4', 'portrait');
-    $pdf->render();
+$options->set('isRemoteEnabled', false);
+$options->set('isPhpEnabled', false);
+$options->set('isJavascriptEnabled', false);
+$options->set('defaultFont', 'DejaVu Sans');
+$projectRoot = dirname(__DIR__, 2);
 
-    $content = $pdf->output();
+$orbitronPath =
+    $projectRoot . '/Font/Orbitron-Bold.ttf';
+
+if (!is_readable($orbitronPath)) {
+    throw new \RuntimeException(
+        'Le fichier de police Orbitron-Bold.ttf est absent ou illisible.'
+    );
+}
+
+$options->setChroot($projectRoot);
+
+// Créer le générateur AVANT tout appel à ses méthodes.
+$pdf = new \Dompdf\Dompdf($options);
+
+// Enregistrer ensuite la police.
+$orbitronRegistered = $pdf->getFontMetrics()->registerFont(
+    [
+        'family' => 'HB3DOrbitron',
+        'style' => 'normal',
+        'weight' => 'bold',
+    ],
+    $orbitronPath
+);
+
+if (!$orbitronRegistered) {
+    throw new \RuntimeException(
+        'Impossible d’enregistrer la police Orbitron pour le PDF.'
+    );
+}
+
+$pdf->loadHtml($html, 'UTF-8');
+$pdf->setPaper('A4', 'portrait');
+$pdf->render();
+
+$content = $pdf->output();
 
     if (
         !is_string($content) ||
