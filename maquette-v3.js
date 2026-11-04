@@ -2619,7 +2619,7 @@ if (data.pdf_download_path) {
       quote_number: quote,
       quantite_totale: pricing.quantity,
       prix_total: money(pricing.net),
-      message: submittedNotes
+      message: customerNotes
     };
 
     params.sous_total = money(pricing.gross);
