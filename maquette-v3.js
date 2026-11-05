@@ -2661,10 +2661,10 @@ if (data.pdf_download_path) {
     animateSendProgress(95, 'Envoi de votre estimation…');
 
     await window.emailjs.send(
-      'service_np51rgo',
-      'template_7mjwzt9',
-      params
-    );
+    'service_ql8effj',
+    'template_7mjwzt9',
+     params
+     );
     
     await finishSendProgress();
 
