@@ -590,6 +590,7 @@ function confirmConfigurationForSend() {
    */
   if (
     id === 'panel-send' &&
+    progressSendState !== 'success' &&
     !confirmConfigurationForSend()
   ) {
     return;
@@ -620,54 +621,59 @@ function confirmConfigurationForSend() {
 
     function chunkSize(){return window.innerWidth<=760||window.innerHeight<700?2:3;}
 
-    /* Nouvelle simulation après un envoi confirmé et un lot vidé. */
-function resetCompletedRequestIfEmpty() {
-  /*
-   * Ne jamais déverrouiller un envoi en cours,
-   * un résultat incertain ou une notification non confirmée.
-   */
-  if (
-    pieces.length !== 0 ||
-    sendingRequest ||
-    progressSendState !== 'success'
-  ) {
+    /* Nouvelle demande uniquement après une confirmation complète. */
+function startNewQuote() {
+  if (sendingRequest || importChecking || progressSendState !== 'success') {
     return;
   }
 
+  stopSendProgress();
+  pieces = [];
+  active = 0;
+  detail = 0;
+  filePage = 0;
+  cartPage = 0;
+  notes = [''];
+  notesIndex = 0;
+  duplicateBuffers = new WeakMap();
+  hideDuplicateNotice();
+
+  byId('demo-form').reset();
+  ['demo-name', 'demo-email', 'demo-company', 'demo-phone'].forEach(
+    function (id) { byId(id).value = ''; }
+  );
+  byId('files').value = '';
+  byId('files').disabled = false;
+
+  ['hb3d-quote-pdf-link', 'hb3d-quote-pdf-status', 'hb3d-send-notice'].forEach(
+    function (id) {
+      var element = byId(id);
+      if (element) element.remove();
+    }
+  );
+
+  byId('send-done').querySelector('h3').textContent = 'Parcours terminé';
+  byId('send-done').querySelector('p').textContent = '';
+  byId('send-done').querySelector('.hint').textContent = '';
+
+  byId('hb3d-send-progress').hidden = true;
+  byId('hb3d-send-disc').classList.remove('is-success', 'is-error');
+  setSendProgress(0, 'Préparation de la demande');
+
   progressSendState = 'idle';
   configurationConfirmed = false;
-
-  /* Autoriser une nouvelle demande distincte. */
   submissionLocked = false;
   sendStep = 0;
-
-  stopSendProgress();
-
-  var progress = byId('hb3d-send-progress');
-
-  if (progress) {
-    progress.hidden = true;
-  }
-
-  var disc = byId('hb3d-send-disc');
-
-  if (disc) {
-    disc.classList.remove('is-success', 'is-error');
-  }
-
-  var notice = byId('hb3d-send-notice');
-
-  if (notice) {
-    notice.remove();
-  }
-
   byId('send-next').disabled = false;
-  byId('send-next').textContent =
-    'Envoyer ma demande de devis';
 
-  byId('send-restart').hidden = false;
-
+  showNotes();
+  cartView('cart-summary');
+  render();
   showSend();
+  openPanel('panel-files');
+  byId('file-feedback').textContent =
+    'Nouveau devis : ajoutez vos fichiers pour commencer.';
+  byId('files').focus();
 }
 
     /* Retirer une pièce tout en conservant une sélection cohérente. */
@@ -681,8 +687,7 @@ function removePiece(index) {
 /* Tout changement du lot annule sa confirmation précédente. */
    configurationConfirmed = false;
 
-/* Réinitialiser l'envoi uniquement si le lot est désormais vide. */
-   resetCompletedRequestIfEmpty();
+/* Le retrait des fichiers ne déverrouille pas une demande envoyée. */
 
 if (!pieces.length) {
     active = 0;
@@ -1846,6 +1851,7 @@ byId('files').addEventListener('change', async function (event) {
   input.value = '';
   input.disabled = false;
   importChecking = false;
+  byId('send-restart').disabled = sendingRequest;
 
   renderImportProgress();
 }
@@ -2071,7 +2077,13 @@ byId('finish').addEventListener('change',function(e){pieces[active].finish=e.tar
 
   byId('send-extra').querySelector('.hint').hidden = true;
 
-  byId('send-restart').textContent = 'Revenir aux coordonnées';
+  var restart = byId('send-restart');
+  restart.textContent = 'Commencer un nouveau devis';
+  restart.hidden = !(finished && progressSendState === 'success');
+  restart.disabled = sendingRequest || importChecking;
+  if (!restart.hidden) {
+    byId('send-done').appendChild(restart);
+  }
 
   renderReview();
 }
@@ -2683,7 +2695,10 @@ if (data.pdf_download_path) {
     byId('send-done').querySelector('.hint').textContent =
       'Estimation soumise à validation technique humaine.';
 
-    byId('send-restart').hidden = true;
+    byId('send-done').querySelector('.hint').textContent =
+      'Estimation soumise à validation technique humaine. ' +
+      'Votre demande précédente restera enregistrée. ' +
+      'Pensez à télécharger votre PDF avant de recommencer.';
 
     showSendNotice('Traitement terminé — référence : ' + quote);
   } catch (error) {
@@ -2722,6 +2737,7 @@ renderImportProgress();
     console.error('[HB3D Envoi]', error);
   } finally {
     sendingRequest = false;
+    byId('send-restart').disabled = importChecking;
 
     byId('send-next').disabled = submissionLocked;
     byId('send-next').textContent = submissionLocked
@@ -2730,7 +2746,7 @@ renderImportProgress();
   }
 });
 
-    byId('send-restart').addEventListener('click',function(){sendStep=2;showSend();});byId('demo-form').addEventListener('submit',function(e){e.preventDefault();});
+    byId('send-restart').addEventListener('click', startNewQuote);byId('demo-form').addEventListener('submit',function(e){e.preventDefault();});
     
         /* Simple emplacement du futur déclencheur du chatbot existant. */
     var assistantButton = document.querySelector('.assistant-link');
