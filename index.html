@@ -315,30 +315,94 @@
     role="group"
     aria-label="Navigation dans la vue 3D"
   >
-    <button
-      type="button"
-      data-navigation="orbit"
-      aria-pressed="true"
-      title="Rotation de la vue"
-      disabled
-    >Orbite</button>
+<button
+  type="button"
+  data-navigation="orbit"
+  aria-pressed="true"
+  title="Faire tourner la vue autour de la pièce"
+  disabled
+  style="display: inline-flex; align-items: center; gap: 3px; padding: 6px 8px; white-space: nowrap;"
+>
+  <svg
+    width="14"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+    style="flex-shrink: 0;"
+  >
+    <path d="M20 7a9 9 0 0 0-15-2L3 7" />
+    <path d="M3 3v4h4" />
+    <path d="M4 17a9 9 0 0 0 15 2l2-2" />
+    <path d="M17 17h4v4" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+  Tourner
+</button>
 
-    <button
-      type="button"
-      data-navigation="pan"
-      aria-pressed="false"
-      title="Déplacement de la vue"
-      disabled
-    >Pan</button>
+<button
+  type="button"
+  data-navigation="pan"
+  aria-pressed="false"
+  title="Déplacer la vue horizontalement ou verticalement"
+  disabled
+  style="display: inline-flex; align-items: center; gap: 3px; padding: 6px 8px; white-space: nowrap;"
+>
+  <svg
+    width="14"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+    style="flex-shrink: 0;"
+  >
+    <path d="M12 3v18M3 12h18" />
+    <path d="m9 6 3-3 3 3" />
+    <path d="m9 18 3 3 3-3" />
+    <path d="m6 9-3 3 3 3" />
+    <path d="m18 9 3 3-3 3" />
+  </svg>
+  Déplacer
+</button>
 
-    <button
-      type="button"
-      data-navigation="zoom"
-      aria-pressed="false"
-      title="Zoom dans la vue"
-      disabled
-    >Zoom</button>
-  </div>
+<button
+  type="button"
+  data-navigation="zoom"
+  aria-pressed="false"
+  title="Agrandir ou réduire la vue"
+  disabled
+  style="display: inline-flex; align-items: center; gap: 3px; padding: 6px 8px; white-space: nowrap;"
+>
+  <svg
+    width="14"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+   style="flex-shrink: 0;"
+  >
+    <circle cx="10.5" cy="10.5" r="6.5" />
+    <path d="m16 16 5 5" />
+    <path d="M7.5 10.5h6M10.5 7.5v6" />
+  </svg>
+  Zoom
+</button>
+</div>
 
   <div class="viewer-modes" role="group"
        aria-label="Modes d’affichage de la pièce">
