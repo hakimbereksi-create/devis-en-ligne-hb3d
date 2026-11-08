@@ -1076,6 +1076,195 @@ function rememberPreviewCamera() {
   }
 }
 
+/* HB3D — rotation automatique d'affichage uniquement. */
+var previewTurntable = {
+  running: false,
+  frame: 0,
+  lastTime: null,
+  angle: 0,
+  scene: null,
+  revision: 0,
+  ready: false
+};
+
+function syncPreviewTurntableButton() {
+  var button = document.getElementById('hb3d-turntable');
+  if (!button) return;
+
+  button.disabled = !lotSceneActive;
+  button.setAttribute(
+    'aria-pressed',
+    String(previewTurntable.running)
+  );
+
+  button.title = previewTurntable.running
+    ? 'Arrêter la rotation automatique'
+    : 'Démarrer la rotation automatique depuis la vue de face';
+}
+
+function stopPreviewTurntable() {
+  previewTurntable.running = false;
+  window.cancelAnimationFrame(previewTurntable.frame);
+  previewTurntable.frame = 0;
+  previewTurntable.lastTime = null;
+  previewTurntable.scene = null;
+
+  syncPreviewTurntableButton();
+}
+
+function animatePreviewTurntable(time) {
+  if (!previewTurntable.running) return;
+
+  var viewer = window.hb3dRaccordementViewer;
+  var scene = viewer && (
+    typeof viewer.getScene === 'function'
+      ? viewer.getScene()
+      : viewer.scene
+  );
+
+  if (
+    !lotSceneActive ||
+    !viewer ||
+    !viewer.rotMatrix ||
+    document.hidden ||
+    scene !== previewTurntable.scene ||
+    lotRevision !== previewTurntable.revision
+  ) {
+    stopPreviewTurntable();
+    return;
+  }
+
+  if (previewTurntable.lastTime === null) {
+    previewTurntable.lastTime = time;
+  }
+
+  var elapsed = time - previewTurntable.lastTime;
+
+  /* Limiter les demandes de rendu à environ 30 par seconde. */
+  if (elapsed >= 1000 / 30) {
+    previewTurntable.lastTime = time;
+
+    /* 55 degrés/seconde : un tour en environ 8 secondes. */
+    previewTurntable.angle = (
+      previewTurntable.angle +
+      Math.min(elapsed, 100) * 0.055
+    ) % 360;
+
+    viewer.rotMatrix.identity();
+    viewer.rotMatrix.rotateAboutXAxis(-90);
+    viewer.rotMatrix.rotateAboutYAxis(previewTurntable.angle);
+    viewer.update();
+  }
+
+  previewTurntable.frame = window.requestAnimationFrame(
+    animatePreviewTurntable
+  );
+}
+
+function startPreviewTurntable() {
+  var viewer = window.hb3dRaccordementViewer;
+
+  if (!lotSceneActive || !viewer || !viewer.rotMatrix) return;
+
+  stopPreviewTurntable();
+
+  previewTurntable.scene =
+    typeof viewer.getScene === 'function'
+      ? viewer.getScene()
+      : viewer.scene;
+
+  previewTurntable.revision = lotRevision;
+  previewTurntable.angle = 0;
+  previewTurntable.lastTime = null;
+
+  /* Même orientation initiale que le bouton Face. */
+  viewer.rotMatrix.identity();
+  viewer.rotMatrix.rotateAboutXAxis(-90);
+  viewer.update();
+
+  previewTurntable.running = true;
+  syncPreviewTurntableButton();
+
+  previewTurntable.frame = window.requestAnimationFrame(
+    animatePreviewTurntable
+  );
+}
+
+function connectPreviewTurntable() {
+  var button = document.getElementById('hb3d-turntable');
+  var canvas = document.getElementById('cv');
+
+  if (!button || !canvas) return;
+
+  if (!previewTurntable.ready) {
+    previewTurntable.ready = true;
+
+    button.addEventListener('click', function () {
+      if (previewTurntable.running) {
+        stopPreviewTurntable();
+      } else {
+        startPreviewTurntable();
+      }
+    });
+
+    /* Rendre la main avant les contrôles souris ou tactiles. */
+    canvas.addEventListener(
+      'pointerdown',
+      stopPreviewTurntable,
+      true
+    );
+
+    canvas.addEventListener(
+      'mousedown',
+      stopPreviewTurntable,
+      true
+    );
+
+
+    canvas.addEventListener(
+      'wheel',
+      stopPreviewTurntable,
+      { capture: true, passive: true }
+    );
+
+    /* Arrêter avant toute autre commande de la barre. */
+    var toolbar = button.closest('.viewer-toolbar');
+
+    if (toolbar) {
+      toolbar.addEventListener('click', function (event) {
+        var clickedButton = event.target.closest('button');
+
+        if (clickedButton && clickedButton !== button) {
+          stopPreviewTurntable();
+        }
+      }, true);
+    }
+
+    /* Arrêter avant de changer entre Lot et Pièce. */
+    var viewSwitch = document.querySelector('.hb3d-view-switch');
+
+    if (viewSwitch) {
+      viewSwitch.addEventListener(
+        'click',
+        stopPreviewTurntable,
+        true
+      );
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) stopPreviewTurntable();
+    });
+
+    window.addEventListener('blur', stopPreviewTurntable);
+  }
+
+  if (!lotSceneActive && previewTurntable.running) {
+    stopPreviewTurntable();
+  }
+
+  syncPreviewTurntableButton();
+}
+
 /* Vues prédéfinies : orientation uniquement.
    Convention du modèle : Y vertical, sol dans le plan XZ. */
 function syncPreviewOrientationButtons() {
@@ -1354,8 +1543,11 @@ function updatePreviewViewButtons() {
   /* Activer et raccorder Plan / Face / Iso. */
   syncPreviewOrientationButtons();
 
-  /* Activer et raccorder Orbite / Pan / Zoom. */
-  syncPreviewNavigationButtons();
+/* Activer et raccorder Orbite / Pan / Zoom. */
+syncPreviewNavigationButtons();
+
+/* Activer et raccorder la rotation automatique. */
+connectPreviewTurntable();
 }
 
 function updatePreviewViewNote() {
@@ -1861,9 +2053,11 @@ window.hb3dSyncPreviewLot = function (state) {
   return;
 }
 
-  lotFiles = files.slice();
+stopPreviewTurntable();
 
-  var revision = ++lotRevision;
+lotFiles = files.slice();
+
+var revision = ++lotRevision;
 
     var lotLoadingPlaceholder = document.getElementById(
     'hb3d-viewer-placeholder'
