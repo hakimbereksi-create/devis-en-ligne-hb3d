@@ -663,19 +663,22 @@
     <span id="hb3d-ai-title">Assistant HB3D</span>
   </div>
 
-  <div class="hb3d-ai-field">
-    <label class="sr-only" for="hb3d-ai-question">
-      Question à l’assistant HB3D — non disponible dans cette maquette
-    </label>
+<div class="hb3d-ai-field">
+  <label class="sr-only" for="hb3d-ai-question">
+    Question à l’assistant HB3D
+  </label>
 
-    <input
-      id="hb3d-ai-question"
-      type="text"
-      placeholder="Posez une question sur votre pièce"
-      aria-describedby="hb3d-ai-status"
-      disabled
-    >
-  </div>
+  <textarea
+    id="hb3d-ai-question"
+    rows="1"
+    wrap="soft"
+    maxlength="1500"
+    placeholder="Posez une question sur votre pièce"
+    aria-describedby="hb3d-ai-status"
+    disabled
+    style="box-sizing:border-box;flex:1;min-width:0;height:36px;min-height:36px;max-height:120px;padding:7px 10px;font:inherit;line-height:20px;white-space:pre-wrap;overflow-wrap:anywhere;overflow-y:hidden;resize:none;"
+  ></textarea>
+</div>
 
   <small id="hb3d-ai-status" class="hb3d-ai-status">
     Démonstration — assistant non raccordé

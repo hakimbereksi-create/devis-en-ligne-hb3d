@@ -230,6 +230,72 @@ foreach ($configurations as $index => $configuration) {
     }
 }
 
+/*
+ * Dimensions facultatives.
+ * Contrôle de structure uniquement :
+ * les valeurs du navigateur ne sont pas certifiées par le serveur.
+ */
+foreach ($configurations as $index => $configuration) {
+    $dimensions = $configuration['dimensions'] ?? null;
+    $cleanDimensions = null;
+
+    if (is_array($dimensions)) {
+        $valid = true;
+
+        foreach (['x', 'y', 'z'] as $axis) {
+            $value = $dimensions[$axis] ?? null;
+
+            if (
+                (!is_int($value) && !is_float($value)) ||
+                !is_finite((float) $value) ||
+                $value < 0
+            ) {
+                $valid = false;
+            }
+        }
+
+        $unit = $dimensions['unit'] ?? null;
+        $basis = $dimensions['unitBasis'] ?? null;
+
+        $extension = strtolower(pathinfo(
+            $configuration['original_name'],
+            PATHINFO_EXTENSION
+        ));
+
+        $validUnit =
+            (
+                $unit === 'mm' &&
+                $basis === 'mesh-assumed-mm' &&
+                in_array($extension, ['stl', 'obj'], true)
+            ) ||
+            (
+                $unit === 'mm' &&
+                $basis === 'occt-output-mm' &&
+                in_array(
+                    $extension,
+                    ['step', 'stp', 'igs', 'iges'],
+                    true
+                )
+            ) ||
+            (
+                $unit === 'model-units' &&
+                $basis === 'unconfirmed'
+            );
+
+        if ($valid && $validUnit) {
+            $cleanDimensions = [
+                'x' => (float) $dimensions['x'],
+                'y' => (float) $dimensions['y'],
+                'z' => (float) $dimensions['z'],
+                'unit' => $unit,
+                'unitBasis' => $basis,
+            ];
+        }
+    }
+
+    $configurations[$index]['dimensions'] = $cleanDimensions;
+}
+
 // ----------------------
 // Vignettes PDF : contrôle séparé des données journalisées
 // ----------------------

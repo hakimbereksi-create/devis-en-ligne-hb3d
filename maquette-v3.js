@@ -189,6 +189,45 @@ function calculateLot() {
   };
 }
 
+/* Dimensions d'un exemplaire, indépendantes de la vue et de la quantité. */
+function getQuoteDimensions(p) {
+  var geometry = p.geometry;
+  var dimensions = geometry && geometry.dimensionsModelUnits;
+
+  if (
+    !dimensions ||
+    ![dimensions.x, dimensions.y, dimensions.z].every(function(value) {
+      return Number.isFinite(value) && value >= 0;
+    })
+  ) {
+    return null;
+  }
+
+  var isMesh = Boolean(
+    p.file && /\.(stl|obj)$/i.test(p.file.name)
+  );
+
+  var cadOutputInMm = Boolean(
+    p.file &&
+    /\.(step|stp|igs|iges)$/i.test(p.file.name) &&
+    geometry.linearUnit === 'mm' &&
+    geometry.unitStatus === 'specified-output' &&
+    geometry.unitSource === 'occt-output'
+  );
+
+  return {
+    x: dimensions.x,
+    y: dimensions.y,
+    z: dimensions.z,
+    unit: isMesh || cadOutputInMm ? 'mm' : 'model-units',
+    unitBasis: cadOutputInMm
+      ? 'occt-output-mm'
+      : isMesh
+        ? 'mesh-assumed-mm'
+        : 'unconfirmed'
+  };
+}
+
 function lineTotal(p) {
   return Number.isFinite(p.unit)
     ? p.unit * p.quantity
@@ -2375,7 +2414,8 @@ byId('send-next').addEventListener('click', async function () {
       finish: p.finish,
       quantity: p.quantity,
       unit: p.unit,
-      amount: lineTotal(p)
+      amount: lineTotal(p),
+      dimensions: getQuoteDimensions(p)
     };
   });
 
@@ -2509,7 +2549,8 @@ byId('send-next').addEventListener('click', async function () {
         finish: p.finish,
         quantity: p.quantity,
         unit: p.unit,
-        amount: p.amount
+        amount: p.amount,
+        dimensions: p.dimensions
       };
     });
 

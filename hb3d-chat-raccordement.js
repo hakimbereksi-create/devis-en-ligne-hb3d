@@ -35,6 +35,19 @@
 
     var sending = false;
 
+    /* Saisie compacte au départ, puis hauteur adaptée au texte. */
+function resizeQuestionField() {
+  input.style.height = '36px';
+
+  var height = Math.min(120, Math.max(36, input.scrollHeight));
+
+  input.style.height = height + 'px';
+  input.style.overflowY =
+    input.scrollHeight > 120 ? 'auto' : 'hidden';
+}
+
+input.addEventListener('input', resizeQuestionField);
+
     var sendButton = document.createElement('button');
     sendButton.type = 'button';
     sendButton.className = 'hb3d-chat-send';
@@ -194,6 +207,7 @@ function hideWaiting() {
 
       sending = true;
       input.value = '';
+      resizeQuestionField();
       input.disabled = true;
       sendButton.disabled = true;
       sendButton.textContent = '…';
@@ -275,6 +289,7 @@ function hideWaiting() {
 
         /* Conserver la question pour une éventuelle nouvelle tentative. */
         input.value = text;
+        resizeQuestionField();
        } finally {
         hideWaiting();
 

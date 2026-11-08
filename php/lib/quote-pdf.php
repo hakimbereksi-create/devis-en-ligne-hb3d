@@ -80,10 +80,68 @@ foreach ($configurations as $index => $piece) {
     }
 
     $configurationText =
+    $dimensionsText = 'Dimensions indisponibles';
+$dimensionNote = '';
+
+$dimensions = $piece['dimensions'] ?? null;
+
+if (is_array($dimensions)) {
+    $validDimensions = true;
+
+    foreach (['x', 'y', 'z'] as $axis) {
+        $value = $dimensions[$axis] ?? null;
+
+        if (
+            (!is_int($value) && !is_float($value)) ||
+            !is_finite((float) $value) ||
+            $value < 0
+        ) {
+            $validDimensions = false;
+        }
+    }
+
+    $basis = $dimensions['unitBasis'] ?? null;
+    $unit = $dimensions['unit'] ?? null;
+
+    $knownMm =
+        $unit === 'mm' &&
+        in_array(
+            $basis,
+            ['mesh-assumed-mm', 'occt-output-mm'],
+            true
+        );
+
+    $unknownUnit =
+        $unit === 'model-units' &&
+        $basis === 'unconfirmed';
+
+    if ($validDimensions && ($knownMm || $unknownUnit)) {
+        $dimensionsText =
+            'Dimensions (X × Y × Z) : ' .
+            number_format($dimensions['x'], 2, ',', ' ') . ' × ' .
+            number_format($dimensions['y'], 2, ',', ' ') . ' × ' .
+            number_format($dimensions['z'], 2, ',', ' ') .
+            ($knownMm ? ' mm' : ' unités du modèle');
+
+        if ($basis === 'mesh-assumed-mm') {
+            $dimensionNote = 'Coordonnées interprétées en mm.';
+        } elseif ($basis === 'unconfirmed') {
+            $dimensionNote = 'Unité à confirmer.';
+        }
+    }
+}
+
+$configurationText =
+    $dimensionsText . "\n" .
     'Technologie : ' . $piece['tech'] . "\n" .
     'Matériau : ' . $piece['material'] . "\n" .
     'Couleur : ' . $piece['color'] . "\n" .
     'Finition : ' . $piece['finish'];
+
+/* Conserver une réserve uniquement si l'unité reste inconnue. */
+if ($dimensionNote === 'Unité à confirmer.') {
+    $configurationText .= "\n" . $dimensionNote;
+}
 
     $rowsHtml .=
         '<tr>' .
