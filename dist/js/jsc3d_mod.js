@@ -152,8 +152,13 @@ JSC3D.Viewer = function(canvas, parameters) {
         this.canvas.addEventListener('mousedown', function(e){self.mouseDownHandler(e);}, false);
         this.canvas.addEventListener('mouseup', function(e){self.mouseUpHandler(e);}, false);
         this.canvas.addEventListener('mousemove', function(e){self.mouseMoveHandler(e);}, false);
-        this.canvas.addEventListener(JSC3D.PlatformInfo.browser == 'firefox' ? 'DOMMouseScroll' : 'mousewheel',
-                                     function(e){self.mouseWheelHandler(e);}, false);
+        this.canvas.addEventListener(
+        'wheel',
+        function(e) {
+        self.mouseWheelHandler(e);
+        },
+        { passive: false } 
+    );
         document.addEventListener('keydown', function(e){self.keyDownHandler(e);}, false);
         document.addEventListener('keyup', function(e){self.keyUpHandler(e);}, false);
     }
@@ -719,21 +724,33 @@ JSC3D.Viewer.prototype.mouseMoveHandler = function(e) {
 };
 
 JSC3D.Viewer.prototype.mouseWheelHandler = function(e) {
-    if(!this.isLoaded)
-        return;
+    if (!this.isLoaded) return;
 
-    if(this.onmousewheel) {
+    if (this.onmousewheel) {
         var info = this.pick(e.clientX, e.clientY);
-        this.onmousewheel(info.canvasX, info.canvasY, e.button, info.depth, info.mesh);
+
+        this.onmousewheel(
+            info.canvasX,
+            info.canvasY,
+            e.button,
+            info.depth,
+            info.mesh
+        );
     }
 
-    e.preventDefault();
+    if (!this.isDefaultInputHandlerEnabled) return;
+
+    var delta = e.deltaY;
+
+    if (!Number.isFinite(delta) || delta === 0) return;
+
+    if (e.cancelable) {
+        e.preventDefault();
+    }
+
     e.stopPropagation();
 
-    if(!this.isDefaultInputHandlerEnabled)
-        return;
-
-    this.zoomFactor *= (JSC3D.PlatformInfo.browser == 'firefox' ? -e.detail : e.wheelDelta) < 0 ? 1.1 : 0.91;
+    this.zoomFactor *= delta < 0 ? 1.1 : 0.91;
     this.update();
 };
 

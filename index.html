@@ -453,32 +453,62 @@
 
   </div>
 
-    <div
-    class="viewer-views"
-    role="group"
-    aria-label="Vues prédéfinies du modèle"
+<div
+  class="viewer-views"
+  role="group"
+  aria-label="Vues prédéfinies et rotation automatique du modèle"
+>
+  <button
+    type="button"
+    data-view="plan"
+    title="Vue en plan"
+    disabled
+  >Plan</button>
+
+  <button
+    type="button"
+    data-view="face"
+    title="Vue de face"
+    disabled
+  >Face</button>
+
+  <button
+    type="button"
+    data-view="iso"
+    title="Vue isométrique"
+    disabled
+  >Iso</button>
+
+  <button
+    id="hb3d-turntable"
+    type="button"
+    aria-label="Rotation automatique"
+    aria-pressed="false"
+    title="Démarrer la rotation automatique depuis la vue de face"
+    disabled
+    style="display: inline-flex; align-items: center; gap: 3px; padding: 6px 8px; white-space: nowrap;"
   >
-    <button
-      type="button"
-      data-view="plan"
-      title="Vue en plan"
-      disabled
-    >Plan</button>
-
-    <button
-      type="button"
-      data-view="face"
-      title="Vue de face"
-      disabled
-    >Face</button>
-
-    <button
-      type="button"
-      data-view="iso"
-      title="Vue isométrique"
-      disabled
-    >Iso</button>
-  </div>
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+      style="flex-shrink: 0;"
+    >
+      <path d="M20 7a9 9 0 0 0-15-2L3 7" />
+      <path d="M3 3v4h4" />
+      <path d="M4 17a9 9 0 0 0 15 2l2-2" />
+      <path d="M17 17h4v4" />
+    </svg>
+    <span>Auto</span>
+  </button>
+</div>
 
 
 
